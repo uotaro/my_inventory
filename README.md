@@ -2,6 +2,8 @@
 
 個人用在庫管理アプリ「my在庫（My Inventory）」
 
+不具合報告・お問い合わせは [Issues](https://github.com/uotaro/my_inventory/issues) までお願いします。
+
 ## 概要
 
 手芸用品など、自分で用意したカテゴリー・サブカテゴリー・色・単位のマスタデータをもとに、

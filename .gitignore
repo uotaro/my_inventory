@@ -57,4 +57,5 @@ app.*.map.json
 *.p12
 *.mobileprovision
 
+**/yahoo_shopping_api_config.dart
 **/yahoo_shopping_api_config_org.dart
