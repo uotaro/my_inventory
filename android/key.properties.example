@@ -1,0 +1,8 @@
+# keytoolで作成したアップロード鍵の情報をここに設定する。
+# このファイルをコピーして `android/key.properties` を作成し、値を実際のものに書き換えること。
+# key.properties 自体は .gitignore で除外されており、絶対にコミットしないこと。
+
+storePassword=キーストア作成時に設定したパスワード
+keyPassword=鍵のパスワード（キーストアと同じにした場合は同じ値）
+keyAlias=upload
+storeFile=/Users/あなたのユーザー名/keystores/inventory_manager_upload.jks
