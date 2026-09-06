@@ -8,6 +8,10 @@ abstract class ShoppingListRepository {
 
   Future<void> removeEntry(int entryId);
 
+  /// アイテムIDを指定して買い物リストから除外する。
+  /// 購入数がセットされていても在庫には反映しない。
+  Future<void> removeItemByItemId(int itemId);
+
   Future<void> setPurchaseQuantity(int entryId, double quantity);
 
   /// 該当エントリの購入数をアイテムの在庫数に反映し、買い物リストから削除する。

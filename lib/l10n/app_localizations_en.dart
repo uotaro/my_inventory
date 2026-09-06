@@ -107,6 +107,9 @@ class L10nEn extends L10n {
   String get alreadyInShoppingListTooltip => 'Already in the shopping list';
 
   @override
+  String get removeFromShoppingListLabel => 'Remove';
+
+  @override
   String get searchByNameLabel => 'Search by name';
 
   @override

@@ -49,6 +49,7 @@
     "appInfoTooltip": "アプリ情報",
     "addToShoppingListLabel": "追加",
     "alreadyInShoppingListTooltip": "買い物リストに追加済みです",
+    "removeFromShoppingListLabel": "除外",
     "searchByNameLabel": "品名で検索",
     "searchResetTooltip": "検索リセット",
     "inventoryTypeLabel": "大分類",

@@ -34,6 +34,7 @@
     "appInfoTooltip": "App info",
     "addToShoppingListLabel": "Add",
     "alreadyInShoppingListTooltip": "Already in the shopping list",
+    "removeFromShoppingListLabel": "Remove",
     "searchByNameLabel": "Search by name",
     "searchResetTooltip": "Reset search",
     "inventoryTypeLabel": "Department",
