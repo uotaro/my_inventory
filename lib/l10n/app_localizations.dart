@@ -136,7 +136,7 @@ abstract class L10n {
   /// No description provided for @errorTitle.
   ///
   /// In ja, this message translates to:
-  /// **'エラー'**
+  /// **'CAUTION'**
   String get errorTitle;
 
   /// No description provided for @confirmDeleteTitle.
@@ -223,6 +223,12 @@ abstract class L10n {
   /// **'お気に入り'**
   String get sortByFavoriteLabel;
 
+  /// No description provided for @sortByCategoryLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'分類'**
+  String get sortByCategoryLabel;
+
   /// No description provided for @sortAscendingLabel.
   ///
   /// In ja, this message translates to:
@@ -247,11 +253,29 @@ abstract class L10n {
   /// **'マスタ管理'**
   String get masterDataTooltip;
 
+  /// No description provided for @shoppingListTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'買い物リスト'**
+  String get shoppingListTooltip;
+
   /// No description provided for @appInfoTooltip.
   ///
   /// In ja, this message translates to:
   /// **'アプリ情報'**
   String get appInfoTooltip;
+
+  /// No description provided for @addToShoppingListLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'追加'**
+  String get addToShoppingListLabel;
+
+  /// No description provided for @alreadyInShoppingListTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'買い物リストに追加済みです'**
+  String get alreadyInShoppingListTooltip;
 
   /// No description provided for @searchByNameLabel.
   ///
@@ -259,10 +283,22 @@ abstract class L10n {
   /// **'品名で検索'**
   String get searchByNameLabel;
 
+  /// No description provided for @searchResetTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'検索リセット'**
+  String get searchResetTooltip;
+
+  /// No description provided for @inventoryTypeLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類'**
+  String get inventoryTypeLabel;
+
   /// No description provided for @categoryLabel.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリー'**
+  /// **'中分類'**
   String get categoryLabel;
 
   /// No description provided for @colorGroupLabel.
@@ -316,13 +352,13 @@ abstract class L10n {
   /// No description provided for @subCategoryLabel.
   ///
   /// In ja, this message translates to:
-  /// **'サブカテゴリー'**
+  /// **'小分類'**
   String get subCategoryLabel;
 
   /// No description provided for @filterByFavoriteLabel.
   ///
   /// In ja, this message translates to:
-  /// **'お気に入りで絞り込み'**
+  /// **'お気に入り'**
   String get filterByFavoriteLabel;
 
   /// No description provided for @favoriteFilterDialogTitle.
@@ -346,7 +382,7 @@ abstract class L10n {
   /// No description provided for @favoriteRangeAny.
   ///
   /// In ja, this message translates to:
-  /// **'指定なし'**
+  /// **'すべて'**
   String get favoriteRangeAny;
 
   /// No description provided for @favoriteRangeAtLeast.
@@ -373,11 +409,29 @@ abstract class L10n {
   /// **'★{value}'**
   String favoriteRangeExact(int value);
 
-  /// No description provided for @inStockOnlyLabel.
+  /// No description provided for @stockFilterLabel.
   ///
   /// In ja, this message translates to:
-  /// **'在庫ありのみ表示'**
-  String get inStockOnlyLabel;
+  /// **'在庫'**
+  String get stockFilterLabel;
+
+  /// No description provided for @stockFilterInStock.
+  ///
+  /// In ja, this message translates to:
+  /// **'在庫あり'**
+  String get stockFilterInStock;
+
+  /// No description provided for @stockFilterLowStock.
+  ///
+  /// In ja, this message translates to:
+  /// **'在庫不足'**
+  String get stockFilterLowStock;
+
+  /// No description provided for @stockFilterZero.
+  ///
+  /// In ja, this message translates to:
+  /// **'在庫0'**
+  String get stockFilterZero;
 
   /// No description provided for @noMatchingItems.
   ///
@@ -409,12 +463,6 @@ abstract class L10n {
   /// **'アイテムを登録'**
   String get addItemTitle;
 
-  /// No description provided for @selectCategoryAndUnit.
-  ///
-  /// In ja, this message translates to:
-  /// **'カテゴリーと単位を選択してください'**
-  String get selectCategoryAndUnit;
-
   /// No description provided for @barcodeAlreadyRegistered.
   ///
   /// In ja, this message translates to:
@@ -445,16 +493,34 @@ abstract class L10n {
   /// **'入力をクリア'**
   String get clearInputTooltip;
 
+  /// No description provided for @inventoryTypeLabelRequired.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類 *'**
+  String get inventoryTypeLabelRequired;
+
+  /// No description provided for @selectTypeFirst.
+  ///
+  /// In ja, this message translates to:
+  /// **'先に大分類を選択してください'**
+  String get selectTypeFirst;
+
   /// No description provided for @categoryLabelRequired.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリー *'**
+  /// **'中分類 *'**
   String get categoryLabelRequired;
+
+  /// No description provided for @categoryRequiredError.
+  ///
+  /// In ja, this message translates to:
+  /// **'中分類を選択してください'**
+  String get categoryRequiredError;
 
   /// No description provided for @selectCategoryFirst.
   ///
   /// In ja, this message translates to:
-  /// **'先にカテゴリーを選択してください'**
+  /// **'先に中分類を選択してください'**
   String get selectCategoryFirst;
 
   /// No description provided for @colorLabel.
@@ -468,6 +534,12 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'単位 *'**
   String get unitLabelRequired;
+
+  /// No description provided for @unitRequiredError.
+  ///
+  /// In ja, this message translates to:
+  /// **'単位を選択してください'**
+  String get unitRequiredError;
 
   /// No description provided for @favoriteRatingLabel.
   ///
@@ -496,7 +568,7 @@ abstract class L10n {
   /// No description provided for @lowStockThresholdLabel.
   ///
   /// In ja, this message translates to:
-  /// **'在庫不足の目安'**
+  /// **'在庫不足の目安 *'**
   String get lowStockThresholdLabel;
 
   /// No description provided for @barcodeLabel.
@@ -553,16 +625,22 @@ abstract class L10n {
   /// **'マスタ管理'**
   String get masterDataTitle;
 
+  /// No description provided for @typesTab.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類'**
+  String get typesTab;
+
   /// No description provided for @categoriesTab.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリー'**
+  /// **'中分類'**
   String get categoriesTab;
 
   /// No description provided for @subCategoriesTab.
   ///
   /// In ja, this message translates to:
-  /// **'サブカテゴリー'**
+  /// **'小分類'**
   String get subCategoriesTab;
 
   /// No description provided for @colorsTab.
@@ -595,28 +673,58 @@ abstract class L10n {
   /// **'「{name}」は{count}件のアイテムで使われているため削除できません'**
   String inUseCannotDelete(String name, int count);
 
+  /// No description provided for @typeInUseCannotDelete.
+  ///
+  /// In ja, this message translates to:
+  /// **'「{name}」は{count}件の中分類で使われているため削除できません'**
+  String typeInUseCannotDelete(String name, int count);
+
+  /// No description provided for @lastInventoryTypeCannotDelete.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類は1件以上データが必要です'**
+  String get lastInventoryTypeCannotDelete;
+
+  /// No description provided for @noTypesRegistered.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類が登録されていません'**
+  String get noTypesRegistered;
+
+  /// No description provided for @addCategoryToType.
+  ///
+  /// In ja, this message translates to:
+  /// **'「{typeName}」に中分類を追加'**
+  String addCategoryToType(String typeName);
+
+  /// No description provided for @noCategoriesInType.
+  ///
+  /// In ja, this message translates to:
+  /// **'中分類なし'**
+  String get noCategoriesInType;
+
   /// No description provided for @noCategoriesRegistered.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリーが登録されていません'**
+  /// **'中分類が登録されていません'**
   String get noCategoriesRegistered;
 
   /// No description provided for @addSubCategoryToCategory.
   ///
   /// In ja, this message translates to:
-  /// **'「{categoryName}」にサブカテゴリーを追加'**
+  /// **'「{categoryName}」に小分類を追加'**
   String addSubCategoryToCategory(String categoryName);
 
   /// No description provided for @noSubCategories.
   ///
   /// In ja, this message translates to:
-  /// **'サブカテゴリーなし'**
+  /// **'小分類なし'**
   String get noSubCategories;
 
   /// No description provided for @confirmDeleteSubCategoryMessage.
   ///
   /// In ja, this message translates to:
-  /// **'「{name}」を削除しますか？\nこのサブカテゴリーが設定されているアイテムは「未設定」になります。'**
+  /// **'「{name}」を削除しますか？\nこの小分類が設定されているアイテムは「未設定」になります。'**
   String confirmDeleteSubCategoryMessage(String name);
 
   /// No description provided for @noColorsRegistered.
@@ -661,70 +769,82 @@ abstract class L10n {
   /// **'名前を入力してください'**
   String get nameRequiredGeneric;
 
-  /// No description provided for @fetchInventoryTypesFailed.
+  /// No description provided for @addTypeTitle.
   ///
   /// In ja, this message translates to:
-  /// **'在庫の種類の取得に失敗しました: {message}'**
-  String fetchInventoryTypesFailed(String message);
+  /// **'新しい大分類を追加'**
+  String get addTypeTitle;
 
-  /// No description provided for @noInventoryTypesFound.
+  /// No description provided for @typeNameHint.
   ///
   /// In ja, this message translates to:
-  /// **'在庫の種類（手芸用品など）が見つかりませんでした'**
-  String get noInventoryTypesFound;
+  /// **'大分類名（例: 手芸用品）'**
+  String get typeNameHint;
 
-  /// No description provided for @addCategoryTitle.
+  /// No description provided for @duplicateTypeName.
   ///
   /// In ja, this message translates to:
-  /// **'新しいカテゴリーを追加'**
-  String get addCategoryTitle;
+  /// **'同じ名前の大分類がすでに登録されています'**
+  String get duplicateTypeName;
+
+  /// No description provided for @editTypeTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類を編集'**
+  String get editTypeTitle;
+
+  /// No description provided for @typeNameLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'大分類名'**
+  String get typeNameLabel;
 
   /// No description provided for @categoryNameHint.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリー名（例: 布）'**
+  /// **'中分類名（例: 布）'**
   String get categoryNameHint;
 
   /// No description provided for @duplicateCategoryName.
   ///
   /// In ja, this message translates to:
-  /// **'同じ名前のカテゴリーがすでに登録されています'**
+  /// **'同じ名前の中分類がすでに登録されています'**
   String get duplicateCategoryName;
 
   /// No description provided for @editCategoryTitle.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリーを編集'**
+  /// **'中分類を編集'**
   String get editCategoryTitle;
 
   /// No description provided for @categoryNameLabel.
   ///
   /// In ja, this message translates to:
-  /// **'カテゴリー名'**
+  /// **'中分類名'**
   String get categoryNameLabel;
 
   /// No description provided for @subCategoryNameHint.
   ///
   /// In ja, this message translates to:
-  /// **'サブカテゴリー名（例: フェルト）'**
+  /// **'小分類名（例: フェルト）'**
   String get subCategoryNameHint;
 
   /// No description provided for @duplicateSubCategoryName.
   ///
   /// In ja, this message translates to:
-  /// **'このカテゴリーには同じ名前のサブカテゴリーがすでに登録されています'**
+  /// **'この中分類には同じ名前の小分類がすでに登録されています'**
   String get duplicateSubCategoryName;
 
   /// No description provided for @editSubCategoryOfCategory.
   ///
   /// In ja, this message translates to:
-  /// **'「{categoryName}」のサブカテゴリーを編集'**
+  /// **'「{categoryName}」の小分類を編集'**
   String editSubCategoryOfCategory(String categoryName);
 
   /// No description provided for @subCategoryNameLabel.
   ///
   /// In ja, this message translates to:
-  /// **'サブカテゴリー名'**
+  /// **'小分類名'**
   String get subCategoryNameLabel;
 
   /// No description provided for @fetchColorGroupsFailed.
@@ -816,6 +936,48 @@ abstract class L10n {
   /// In ja, this message translates to:
   /// **'単位名'**
   String get unitNameLabel;
+
+  /// No description provided for @shoppingListTitle.
+  ///
+  /// In ja, this message translates to:
+  /// **'買い物リスト'**
+  String get shoppingListTitle;
+
+  /// No description provided for @shoppingListEmptyMessage.
+  ///
+  /// In ja, this message translates to:
+  /// **'買い物リストは空です'**
+  String get shoppingListEmptyMessage;
+
+  /// No description provided for @purchaseTooltip.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入'**
+  String get purchaseTooltip;
+
+  /// No description provided for @purchaseQuantityLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'購入数'**
+  String get purchaseQuantityLabel;
+
+  /// No description provided for @purchaseAllButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'一括購入'**
+  String get purchaseAllButton;
+
+  /// No description provided for @backToItemListButton.
+  ///
+  /// In ja, this message translates to:
+  /// **'在庫一覧へ戻る'**
+  String get backToItemListButton;
+
+  /// No description provided for @shoppingListPurchaseReason.
+  ///
+  /// In ja, this message translates to:
+  /// **'買い物リストからの購入'**
+  String get shoppingListPurchaseReason;
 }
 
 class _L10nDelegate extends LocalizationsDelegate<L10n> {

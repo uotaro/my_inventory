@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Item {
 
- int get id; Category get category; SubCategory? get subCategory; ColorOption? get color; Unit get unit; String? get barcode; String get name; int get favoriteRating; double get quantity; double? get lowStockThreshold; String? get imagePath; String? get memo; DateTime get createdAt; DateTime get updatedAt;
+ int get id; InventoryType get inventoryType; Category get category; SubCategory? get subCategory; ColorOption? get color; Unit get unit; String? get barcode; String get name; int get favoriteRating; double get quantity; double get lowStockThreshold; String? get imagePath; String? get memo; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of Item
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ItemCopyWith<Item> get copyWith => _$ItemCopyWithImpl<Item>(this as Item, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Item&&(identical(other.id, id) || other.id == id)&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.color, color) || other.color == color)&&(identical(other.unit, unit) || other.unit == unit)&&(identical(other.barcode, barcode) || other.barcode == barcode)&&(identical(other.name, name) || other.name == name)&&(identical(other.favoriteRating, favoriteRating) || other.favoriteRating == favoriteRating)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.lowStockThreshold, lowStockThreshold) || other.lowStockThreshold == lowStockThreshold)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.memo, memo) || other.memo == memo)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Item&&(identical(other.id, id) || other.id == id)&&(identical(other.inventoryType, inventoryType) || other.inventoryType == inventoryType)&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.color, color) || other.color == color)&&(identical(other.unit, unit) || other.unit == unit)&&(identical(other.barcode, barcode) || other.barcode == barcode)&&(identical(other.name, name) || other.name == name)&&(identical(other.favoriteRating, favoriteRating) || other.favoriteRating == favoriteRating)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.lowStockThreshold, lowStockThreshold) || other.lowStockThreshold == lowStockThreshold)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.memo, memo) || other.memo == memo)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,category,subCategory,color,unit,barcode,name,favoriteRating,quantity,lowStockThreshold,imagePath,memo,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,inventoryType,category,subCategory,color,unit,barcode,name,favoriteRating,quantity,lowStockThreshold,imagePath,memo,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Item(id: $id, category: $category, subCategory: $subCategory, color: $color, unit: $unit, barcode: $barcode, name: $name, favoriteRating: $favoriteRating, quantity: $quantity, lowStockThreshold: $lowStockThreshold, imagePath: $imagePath, memo: $memo, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Item(id: $id, inventoryType: $inventoryType, category: $category, subCategory: $subCategory, color: $color, unit: $unit, barcode: $barcode, name: $name, favoriteRating: $favoriteRating, quantity: $quantity, lowStockThreshold: $lowStockThreshold, imagePath: $imagePath, memo: $memo, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $ItemCopyWith<$Res>  {
   factory $ItemCopyWith(Item value, $Res Function(Item) _then) = _$ItemCopyWithImpl;
 @useResult
 $Res call({
- int id, Category category, SubCategory? subCategory, ColorOption? color, Unit unit, String? barcode, String name, int favoriteRating, double quantity, double? lowStockThreshold, String? imagePath, String? memo, DateTime createdAt, DateTime updatedAt
+ int id, InventoryType inventoryType, Category category, SubCategory? subCategory, ColorOption? color, Unit unit, String? barcode, String name, int favoriteRating, double quantity, double lowStockThreshold, String? imagePath, String? memo, DateTime createdAt, DateTime updatedAt
 });
 
 
-$CategoryCopyWith<$Res> get category;$SubCategoryCopyWith<$Res>? get subCategory;$ColorOptionCopyWith<$Res>? get color;$UnitCopyWith<$Res> get unit;
+$InventoryTypeCopyWith<$Res> get inventoryType;$CategoryCopyWith<$Res> get category;$SubCategoryCopyWith<$Res>? get subCategory;$ColorOptionCopyWith<$Res>? get color;$UnitCopyWith<$Res> get unit;
 
 }
 /// @nodoc
@@ -62,10 +62,11 @@ class _$ItemCopyWithImpl<$Res>
 
 /// Create a copy of Item
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? category = null,Object? subCategory = freezed,Object? color = freezed,Object? unit = null,Object? barcode = freezed,Object? name = null,Object? favoriteRating = null,Object? quantity = null,Object? lowStockThreshold = freezed,Object? imagePath = freezed,Object? memo = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? inventoryType = null,Object? category = null,Object? subCategory = freezed,Object? color = freezed,Object? unit = null,Object? barcode = freezed,Object? name = null,Object? favoriteRating = null,Object? quantity = null,Object? lowStockThreshold = null,Object? imagePath = freezed,Object? memo = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as int,inventoryType: null == inventoryType ? _self.inventoryType : inventoryType // ignore: cast_nullable_to_non_nullable
+as InventoryType,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
 as SubCategory?,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as ColorOption?,unit: null == unit ? _self.unit : unit // ignore: cast_nullable_to_non_nullable
@@ -73,8 +74,8 @@ as Unit,barcode: freezed == barcode ? _self.barcode : barcode // ignore: cast_nu
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,favoriteRating: null == favoriteRating ? _self.favoriteRating : favoriteRating // ignore: cast_nullable_to_non_nullable
 as int,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as double,lowStockThreshold: freezed == lowStockThreshold ? _self.lowStockThreshold : lowStockThreshold // ignore: cast_nullable_to_non_nullable
-as double?,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
+as double,lowStockThreshold: null == lowStockThreshold ? _self.lowStockThreshold : lowStockThreshold // ignore: cast_nullable_to_non_nullable
+as double,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,memo: freezed == memo ? _self.memo : memo // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -82,6 +83,15 @@ as DateTime,
   ));
 }
 /// Create a copy of Item
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InventoryTypeCopyWith<$Res> get inventoryType {
+  
+  return $InventoryTypeCopyWith<$Res>(_self.inventoryType, (value) {
+    return _then(_self.copyWith(inventoryType: value));
+  });
+}/// Create a copy of Item
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -205,10 +215,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double? lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  InventoryType inventoryType,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Item() when $default != null:
-return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.inventoryType,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -226,10 +236,10 @@ return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double? lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  InventoryType inventoryType,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Item():
-return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.inventoryType,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -246,10 +256,10 @@ return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double? lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  InventoryType inventoryType,  Category category,  SubCategory? subCategory,  ColorOption? color,  Unit unit,  String? barcode,  String name,  int favoriteRating,  double quantity,  double lowStockThreshold,  String? imagePath,  String? memo,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Item() when $default != null:
-return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.inventoryType,_that.category,_that.subCategory,_that.color,_that.unit,_that.barcode,_that.name,_that.favoriteRating,_that.quantity,_that.lowStockThreshold,_that.imagePath,_that.memo,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -261,10 +271,11 @@ return $default(_that.id,_that.category,_that.subCategory,_that.color,_that.unit
 
 
 class _Item implements Item {
-  const _Item({required this.id, required this.category, this.subCategory, this.color, required this.unit, this.barcode, required this.name, this.favoriteRating = 0, required this.quantity, this.lowStockThreshold, this.imagePath, this.memo, required this.createdAt, required this.updatedAt});
+  const _Item({required this.id, required this.inventoryType, required this.category, this.subCategory, this.color, required this.unit, this.barcode, required this.name, this.favoriteRating = 0, required this.quantity, required this.lowStockThreshold, this.imagePath, this.memo, required this.createdAt, required this.updatedAt});
   
 
 @override final  int id;
+@override final  InventoryType inventoryType;
 @override final  Category category;
 @override final  SubCategory? subCategory;
 @override final  ColorOption? color;
@@ -273,7 +284,7 @@ class _Item implements Item {
 @override final  String name;
 @override@JsonKey() final  int favoriteRating;
 @override final  double quantity;
-@override final  double? lowStockThreshold;
+@override final  double lowStockThreshold;
 @override final  String? imagePath;
 @override final  String? memo;
 @override final  DateTime createdAt;
@@ -289,16 +300,16 @@ _$ItemCopyWith<_Item> get copyWith => __$ItemCopyWithImpl<_Item>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Item&&(identical(other.id, id) || other.id == id)&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.color, color) || other.color == color)&&(identical(other.unit, unit) || other.unit == unit)&&(identical(other.barcode, barcode) || other.barcode == barcode)&&(identical(other.name, name) || other.name == name)&&(identical(other.favoriteRating, favoriteRating) || other.favoriteRating == favoriteRating)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.lowStockThreshold, lowStockThreshold) || other.lowStockThreshold == lowStockThreshold)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.memo, memo) || other.memo == memo)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Item&&(identical(other.id, id) || other.id == id)&&(identical(other.inventoryType, inventoryType) || other.inventoryType == inventoryType)&&(identical(other.category, category) || other.category == category)&&(identical(other.subCategory, subCategory) || other.subCategory == subCategory)&&(identical(other.color, color) || other.color == color)&&(identical(other.unit, unit) || other.unit == unit)&&(identical(other.barcode, barcode) || other.barcode == barcode)&&(identical(other.name, name) || other.name == name)&&(identical(other.favoriteRating, favoriteRating) || other.favoriteRating == favoriteRating)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.lowStockThreshold, lowStockThreshold) || other.lowStockThreshold == lowStockThreshold)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.memo, memo) || other.memo == memo)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,category,subCategory,color,unit,barcode,name,favoriteRating,quantity,lowStockThreshold,imagePath,memo,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,inventoryType,category,subCategory,color,unit,barcode,name,favoriteRating,quantity,lowStockThreshold,imagePath,memo,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Item(id: $id, category: $category, subCategory: $subCategory, color: $color, unit: $unit, barcode: $barcode, name: $name, favoriteRating: $favoriteRating, quantity: $quantity, lowStockThreshold: $lowStockThreshold, imagePath: $imagePath, memo: $memo, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Item(id: $id, inventoryType: $inventoryType, category: $category, subCategory: $subCategory, color: $color, unit: $unit, barcode: $barcode, name: $name, favoriteRating: $favoriteRating, quantity: $quantity, lowStockThreshold: $lowStockThreshold, imagePath: $imagePath, memo: $memo, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -309,11 +320,11 @@ abstract mixin class _$ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
   factory _$ItemCopyWith(_Item value, $Res Function(_Item) _then) = __$ItemCopyWithImpl;
 @override @useResult
 $Res call({
- int id, Category category, SubCategory? subCategory, ColorOption? color, Unit unit, String? barcode, String name, int favoriteRating, double quantity, double? lowStockThreshold, String? imagePath, String? memo, DateTime createdAt, DateTime updatedAt
+ int id, InventoryType inventoryType, Category category, SubCategory? subCategory, ColorOption? color, Unit unit, String? barcode, String name, int favoriteRating, double quantity, double lowStockThreshold, String? imagePath, String? memo, DateTime createdAt, DateTime updatedAt
 });
 
 
-@override $CategoryCopyWith<$Res> get category;@override $SubCategoryCopyWith<$Res>? get subCategory;@override $ColorOptionCopyWith<$Res>? get color;@override $UnitCopyWith<$Res> get unit;
+@override $InventoryTypeCopyWith<$Res> get inventoryType;@override $CategoryCopyWith<$Res> get category;@override $SubCategoryCopyWith<$Res>? get subCategory;@override $ColorOptionCopyWith<$Res>? get color;@override $UnitCopyWith<$Res> get unit;
 
 }
 /// @nodoc
@@ -326,10 +337,11 @@ class __$ItemCopyWithImpl<$Res>
 
 /// Create a copy of Item
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? category = null,Object? subCategory = freezed,Object? color = freezed,Object? unit = null,Object? barcode = freezed,Object? name = null,Object? favoriteRating = null,Object? quantity = null,Object? lowStockThreshold = freezed,Object? imagePath = freezed,Object? memo = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? inventoryType = null,Object? category = null,Object? subCategory = freezed,Object? color = freezed,Object? unit = null,Object? barcode = freezed,Object? name = null,Object? favoriteRating = null,Object? quantity = null,Object? lowStockThreshold = null,Object? imagePath = freezed,Object? memo = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Item(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as int,inventoryType: null == inventoryType ? _self.inventoryType : inventoryType // ignore: cast_nullable_to_non_nullable
+as InventoryType,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
 as Category,subCategory: freezed == subCategory ? _self.subCategory : subCategory // ignore: cast_nullable_to_non_nullable
 as SubCategory?,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
 as ColorOption?,unit: null == unit ? _self.unit : unit // ignore: cast_nullable_to_non_nullable
@@ -337,8 +349,8 @@ as Unit,barcode: freezed == barcode ? _self.barcode : barcode // ignore: cast_nu
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,favoriteRating: null == favoriteRating ? _self.favoriteRating : favoriteRating // ignore: cast_nullable_to_non_nullable
 as int,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as double,lowStockThreshold: freezed == lowStockThreshold ? _self.lowStockThreshold : lowStockThreshold // ignore: cast_nullable_to_non_nullable
-as double?,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
+as double,lowStockThreshold: null == lowStockThreshold ? _self.lowStockThreshold : lowStockThreshold // ignore: cast_nullable_to_non_nullable
+as double,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,memo: freezed == memo ? _self.memo : memo // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -347,6 +359,15 @@ as DateTime,
 }
 
 /// Create a copy of Item
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$InventoryTypeCopyWith<$Res> get inventoryType {
+  
+  return $InventoryTypeCopyWith<$Res>(_self.inventoryType, (value) {
+    return _then(_self.copyWith(inventoryType: value));
+  });
+}/// Create a copy of Item
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

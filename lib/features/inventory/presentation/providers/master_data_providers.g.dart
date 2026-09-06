@@ -9,8 +9,49 @@ part of 'master_data_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(inventoryTypeList)
+final inventoryTypeListProvider = InventoryTypeListProvider._();
+
+final class InventoryTypeListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<InventoryType>>,
+          List<InventoryType>,
+          Stream<List<InventoryType>>
+        >
+    with
+        $FutureModifier<List<InventoryType>>,
+        $StreamProvider<List<InventoryType>> {
+  InventoryTypeListProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'inventoryTypeListProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$inventoryTypeListHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<InventoryType>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<InventoryType>> create(Ref ref) {
+    return inventoryTypeList(ref);
+  }
+}
+
+String _$inventoryTypeListHash() => r'5f8b808fd3de7e423126f4d2753f98f0e233970a';
+
 @ProviderFor(categoryList)
-final categoryListProvider = CategoryListProvider._();
+final categoryListProvider = CategoryListFamily._();
 
 final class CategoryListProvider
     extends
@@ -20,19 +61,26 @@ final class CategoryListProvider
           Stream<List<Category>>
         >
     with $FutureModifier<List<Category>>, $StreamProvider<List<Category>> {
-  CategoryListProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'categoryListProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  CategoryListProvider._({
+    required CategoryListFamily super.from,
+    required int? super.argument,
+  }) : super(
+         retry: null,
+         name: r'categoryListProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$categoryListHash();
+
+  @override
+  String toString() {
+    return r'categoryListProvider'
+        ''
+        '($argument)';
+  }
 
   @$internal
   @override
@@ -42,11 +90,40 @@ final class CategoryListProvider
 
   @override
   Stream<List<Category>> create(Ref ref) {
-    return categoryList(ref);
+    final argument = this.argument as int?;
+    return categoryList(ref, inventoryTypeId: argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CategoryListProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
   }
 }
 
-String _$categoryListHash() => r'a2d928661cc45fa4fbf9a4865f54a87fff67be89';
+String _$categoryListHash() => r'67d1adfb90cc7126a1d660e9aa0a15a86bb446fa';
+
+final class CategoryListFamily extends $Family
+    with $FunctionalFamilyOverride<Stream<List<Category>>, int?> {
+  CategoryListFamily._()
+    : super(
+        retry: null,
+        name: r'categoryListProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  CategoryListProvider call({int? inventoryTypeId}) =>
+      CategoryListProvider._(argument: inventoryTypeId, from: this);
+
+  @override
+  String toString() => r'categoryListProvider';
+}
 
 @ProviderFor(subCategoryList)
 final subCategoryListProvider = SubCategoryListFamily._();

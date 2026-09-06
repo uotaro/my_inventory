@@ -47,6 +47,7 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
   late final TextEditingController _quantityController;
   late final TextEditingController _lowStockThresholdController;
 
+  int? _inventoryTypeId;
   int? _categoryId;
   int? _subCategoryId;
   int? _colorId;
@@ -71,8 +72,11 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
       text: item == null ? '1' : item.quantity.toString(),
     );
     _lowStockThresholdController = TextEditingController(
-      text: item != null ? (item.lowStockThreshold?.toString() ?? '') : '0',
+      text: item == null ? '0' : item.lowStockThreshold.toString(),
     );
+    _quantityController.addListener(_onLowStockRelevantChanged);
+    _lowStockThresholdController.addListener(_onLowStockRelevantChanged);
+    _inventoryTypeId = item?.category.inventoryTypeId;
     _categoryId = item?.category.id;
     _subCategoryId = item?.subCategory?.id;
     _colorId = item?.color?.id;
@@ -83,12 +87,25 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
 
   @override
   void dispose() {
+    _quantityController.removeListener(_onLowStockRelevantChanged);
+    _lowStockThresholdController.removeListener(_onLowStockRelevantChanged);
     _nameController.dispose();
     _barcodeController.dispose();
     _memoController.dispose();
     _quantityController.dispose();
     _lowStockThresholdController.dispose();
     super.dispose();
+  }
+
+  /// 在庫数・在庫不足の目安の入力値が変わるたびに、背景色を更新するため再描画する。
+  void _onLowStockRelevantChanged() => setState(() {});
+
+  bool get _isLowStock {
+    final quantity = double.tryParse(_quantityController.text.trim());
+    final thresholdText = _lowStockThresholdController.text.trim();
+    if (quantity == null || thresholdText.isEmpty) return false;
+    final threshold = double.tryParse(thresholdText);
+    return threshold != null && quantity <= threshold;
   }
 
   String? _emptyToNull(String value) {
@@ -151,18 +168,10 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
   Future<void> _submit() async {
     final l10n = L10n.of(context);
     if (!_formKey.currentState!.validate()) return;
-    if (_categoryId == null || _unitId == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l10n.selectCategoryAndUnit)));
-      return;
-    }
 
     final quantity = double.tryParse(_quantityController.text.trim()) ?? 0;
-    final lowStockThresholdText = _lowStockThresholdController.text.trim();
-    final lowStockThreshold = lowStockThresholdText.isEmpty
-        ? null
-        : double.tryParse(lowStockThresholdText);
+    final lowStockThreshold =
+        double.tryParse(_lowStockThresholdController.text.trim()) ?? 0;
 
     final repository = ref.read(itemRepositoryProvider);
 
@@ -182,7 +191,9 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
           memo: _emptyToNull(_memoController.text),
         );
       } else {
-        final categories = ref.read(categoryListProvider).value ?? [];
+        final categories =
+            ref.read(categoryListProvider(inventoryTypeId: _inventoryTypeId)).value ??
+                [];
         final subCategories = _categoryId == null
             ? <SubCategory>[]
             : ref.read(subCategoryListProvider(categoryId: _categoryId)).value ??
@@ -220,9 +231,19 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
       final message = e.toString().contains('UNIQUE constraint')
           ? l10n.barcodeAlreadyRegistered
           : l10n.saveFailedWithMessage(e.toString());
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(l10n.errorTitle),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.ok),
+            ),
+          ],
+        ),
+      );
       return;
     }
 
@@ -268,15 +289,53 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
-    final categories = ref.watch(categoryListProvider).value ?? [];
-    final subCategories = _categoryId == null
-        ? <SubCategory>[]
-        : ref.watch(subCategoryListProvider(categoryId: _categoryId)).value ??
-            [];
-    final colorOptions = ref.watch(colorOptionListProvider).value ?? [];
-    final units = ref.watch(unitListProvider).value ?? [];
+    final inventoryTypesAsync = ref.watch(inventoryTypeListProvider);
+    final categoriesAsync = ref.watch(
+      categoryListProvider(inventoryTypeId: _inventoryTypeId),
+    );
+    final subCategoriesAsync = _categoryId == null
+        ? const AsyncValue<List<SubCategory>>.data(<SubCategory>[])
+        : ref.watch(subCategoryListProvider(categoryId: _categoryId));
+    final colorOptionsAsync = ref.watch(colorOptionListProvider);
+    final unitsAsync = ref.watch(unitListProvider);
+
+    // 編集時は、各ドロップダウンの選択肢（マスタデータ）が揃うまでフォームを
+    // 描画しない。読み込み中のまま描画すると、アイテムが既に持つID
+    // （種別・カテゴリー・単位など）がまだ選択肢に存在せず、
+    // DropdownButtonFormFieldのアサーションエラーになるため。
+    if (_isEditing &&
+        (!inventoryTypesAsync.hasValue ||
+            !categoriesAsync.hasValue ||
+            !subCategoriesAsync.hasValue ||
+            !colorOptionsAsync.hasValue ||
+            !unitsAsync.hasValue)) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.editItemTitle)),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final inventoryTypes = inventoryTypesAsync.value ?? [];
+    final categories = categoriesAsync.value ?? [];
+    final subCategories = subCategoriesAsync.value ?? [];
+    final colorOptions = colorOptionsAsync.value ?? [];
+    final units = unitsAsync.value ?? [];
+
+    // 新規登録時は種別のデフォルトを先頭の種別とする
+    // （種別は必ず1件以上存在する運用のため、常にこの分岐で確定する）。
+    if (!_isEditing && _inventoryTypeId == null && inventoryTypes.isNotEmpty) {
+      _inventoryTypeId = inventoryTypes.first.id;
+    }
+
+    // 新規登録時は単位のデフォルトを「個」とする（無ければ先頭の単位）。
+    if (!_isEditing && _unitId == null && units.isNotEmpty) {
+      _unitId = units
+          .firstWhere((u) => u.name == '個', orElse: () => units.first)
+          .id;
+    }
 
     return Scaffold(
+      backgroundColor: _isLowStock ? const Color(0xFFFFCFD6) : null,
       appBar: AppBar(
         title: Text(_isEditing ? l10n.editItemTitle : l10n.addItemTitle),
         actions: [
@@ -327,6 +386,20 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
             ),
             const SizedBox(height: 16),
             _DropdownWithAddButton(
+              label: l10n.inventoryTypeLabelRequired,
+              value: _inventoryTypeId,
+              items: inventoryTypes
+                  .map((t) => DropdownMenuItem(value: t.id, child: Text(t.name)))
+                  .toList(),
+              onChanged: (value) => setState(() {
+                _inventoryTypeId = value;
+                _categoryId = null;
+                _subCategoryId = null;
+              }),
+              onAdd: () => showAddInventoryTypeDialog(context, ref),
+            ),
+            const SizedBox(height: 16),
+            _DropdownWithAddButton(
               label: l10n.categoryLabelRequired,
               value: _categoryId,
               items: categories
@@ -336,7 +409,25 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
                 _categoryId = value;
                 _subCategoryId = null;
               }),
-              onAdd: () => showAddCategoryDialog(context, ref),
+              validator: (value) =>
+                  value == null ? l10n.categoryRequiredError : null,
+              onAdd: () {
+                if (_inventoryTypeId == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.selectTypeFirst)),
+                  );
+                  return;
+                }
+                final inventoryType = inventoryTypes.firstWhere(
+                  (t) => t.id == _inventoryTypeId,
+                );
+                showAddCategoryDialog(
+                  context,
+                  ref,
+                  inventoryTypeId: inventoryType.id,
+                  inventoryTypeName: inventoryType.name,
+                );
+              },
             ),
             const SizedBox(height: 16),
             _DropdownWithAddButton(
@@ -391,6 +482,8 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
                   .map((u) => DropdownMenuItem(value: u.id, child: Text(u.name)))
                   .toList(),
               onChanged: (value) => setState(() => _unitId = value),
+              validator: (value) =>
+                  value == null ? l10n.unitRequiredError : null,
               onAdd: () => showAddUnitDialog(context, ref),
             ),
             const SizedBox(height: 16),
@@ -448,9 +541,7 @@ class _ItemFormScreenState extends ConsumerState<ItemFormScreen> {
                       decimal: true,
                     ),
                     validator: (value) {
-                      final trimmed = value?.trim() ?? '';
-                      if (trimmed.isEmpty) return null;
-                      final parsed = double.tryParse(trimmed);
+                      final parsed = double.tryParse(value?.trim() ?? '');
                       if (parsed == null) return l10n.invalidNumberError;
                       if (parsed < 0) return l10n.negativeNumberError;
                       return null;
@@ -570,6 +661,7 @@ class _DropdownWithAddButton extends StatelessWidget {
     required this.onChanged,
     required this.onAdd,
     this.swatchColor,
+    this.validator,
   });
 
   final String label;
@@ -577,6 +669,7 @@ class _DropdownWithAddButton extends StatelessWidget {
   final List<DropdownMenuItem<int>> items;
   final ValueChanged<int?>? onChanged;
   final VoidCallback onAdd;
+  final FormFieldValidator<int>? validator;
 
   /// 選択中の項目にカラーコードが登録されている場合のサムネイル表示用の色。
   final Color? swatchColor;
@@ -596,6 +689,7 @@ class _DropdownWithAddButton extends StatelessWidget {
             decoration: InputDecoration(labelText: label),
             items: items,
             onChanged: onChanged,
+            validator: validator,
           ),
         ),
         IconButton(icon: const Icon(Icons.add_circle_outline), onPressed: onAdd),

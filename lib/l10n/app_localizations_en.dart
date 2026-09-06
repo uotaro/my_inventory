@@ -27,7 +27,7 @@ class L10nEn extends L10n {
   String get ok => 'OK';
 
   @override
-  String get errorTitle => 'Error';
+  String get errorTitle => 'CAUTION';
 
   @override
   String get confirmDeleteTitle => 'Confirm Delete';
@@ -80,6 +80,9 @@ class L10nEn extends L10n {
   String get sortByFavoriteLabel => 'Favorite';
 
   @override
+  String get sortByCategoryLabel => 'Classification';
+
+  @override
   String get sortAscendingLabel => 'Ascending';
 
   @override
@@ -92,10 +95,25 @@ class L10nEn extends L10n {
   String get masterDataTooltip => 'Manage master data';
 
   @override
+  String get shoppingListTooltip => 'Shopping list';
+
+  @override
   String get appInfoTooltip => 'App info';
 
   @override
+  String get addToShoppingListLabel => 'Add';
+
+  @override
+  String get alreadyInShoppingListTooltip => 'Already in the shopping list';
+
+  @override
   String get searchByNameLabel => 'Search by name';
+
+  @override
+  String get searchResetTooltip => 'Reset search';
+
+  @override
+  String get inventoryTypeLabel => 'Department';
 
   @override
   String get categoryLabel => 'Category';
@@ -128,7 +146,7 @@ class L10nEn extends L10n {
   String get subCategoryLabel => 'Subcategory';
 
   @override
-  String get filterByFavoriteLabel => 'Filter by favorite';
+  String get filterByFavoriteLabel => 'Favorite';
 
   @override
   String get favoriteFilterDialogTitle => 'Filter by Favorite';
@@ -140,7 +158,7 @@ class L10nEn extends L10n {
   String get favoriteMaxLabel => 'Max';
 
   @override
-  String get favoriteRangeAny => 'Any';
+  String get favoriteRangeAny => 'All';
 
   @override
   String favoriteRangeAtLeast(int min) {
@@ -163,7 +181,16 @@ class L10nEn extends L10n {
   }
 
   @override
-  String get inStockOnlyLabel => 'Show in-stock only';
+  String get stockFilterLabel => 'Stock';
+
+  @override
+  String get stockFilterInStock => 'In stock';
+
+  @override
+  String get stockFilterLowStock => 'Low stock';
+
+  @override
+  String get stockFilterZero => 'Zero stock';
 
   @override
   String get noMatchingItems => 'No matching items';
@@ -180,9 +207,6 @@ class L10nEn extends L10n {
 
   @override
   String get addItemTitle => 'Add Item';
-
-  @override
-  String get selectCategoryAndUnit => 'Please select a category and a unit';
 
   @override
   String get barcodeAlreadyRegistered =>
@@ -203,7 +227,16 @@ class L10nEn extends L10n {
   String get clearInputTooltip => 'Clear input';
 
   @override
+  String get inventoryTypeLabelRequired => 'Department *';
+
+  @override
+  String get selectTypeFirst => 'Please select a department first';
+
+  @override
   String get categoryLabelRequired => 'Category *';
+
+  @override
+  String get categoryRequiredError => 'Please select a category';
 
   @override
   String get selectCategoryFirst => 'Please select a category first';
@@ -213,6 +246,9 @@ class L10nEn extends L10n {
 
   @override
   String get unitLabelRequired => 'Unit *';
+
+  @override
+  String get unitRequiredError => 'Please select a unit';
 
   @override
   String get favoriteRatingLabel => 'Favorite';
@@ -227,7 +263,7 @@ class L10nEn extends L10n {
   String get negativeNumberError => 'Please enter a number of 0 or more';
 
   @override
-  String get lowStockThresholdLabel => 'Low stock threshold';
+  String get lowStockThresholdLabel => 'Low stock threshold *';
 
   @override
   String get barcodeLabel => 'Barcode (type or scan)';
@@ -257,6 +293,9 @@ class L10nEn extends L10n {
   String get masterDataTitle => 'Manage Master Data';
 
   @override
+  String get typesTab => 'Departments';
+
+  @override
   String get categoriesTab => 'Categories';
 
   @override
@@ -278,6 +317,26 @@ class L10nEn extends L10n {
   String inUseCannotDelete(String name, int count) {
     return '\"$name\" is used by $count item(s) and cannot be deleted';
   }
+
+  @override
+  String typeInUseCannotDelete(String name, int count) {
+    return '\"$name\" is used by $count categories and cannot be deleted';
+  }
+
+  @override
+  String get lastInventoryTypeCannotDelete =>
+      'At least one department is required';
+
+  @override
+  String get noTypesRegistered => 'No departments registered';
+
+  @override
+  String addCategoryToType(String typeName) {
+    return 'Add category to \"$typeName\"';
+  }
+
+  @override
+  String get noCategoriesInType => 'No categories';
 
   @override
   String get noCategoriesRegistered => 'No categories registered';
@@ -321,15 +380,19 @@ class L10nEn extends L10n {
   String get nameRequiredGeneric => 'Please enter a name';
 
   @override
-  String fetchInventoryTypesFailed(String message) {
-    return 'Failed to fetch inventory types: $message';
-  }
+  String get addTypeTitle => 'Add Department';
 
   @override
-  String get noInventoryTypesFound => 'No inventory types found';
+  String get typeNameHint => 'Department name (e.g. Craft supplies)';
 
   @override
-  String get addCategoryTitle => 'Add Category';
+  String get duplicateTypeName => 'A department with this name already exists';
+
+  @override
+  String get editTypeTitle => 'Edit Department';
+
+  @override
+  String get typeNameLabel => 'Department name';
 
   @override
   String get categoryNameHint => 'Category name (e.g. Fabric)';
@@ -405,4 +468,25 @@ class L10nEn extends L10n {
 
   @override
   String get unitNameLabel => 'Unit name';
+
+  @override
+  String get shoppingListTitle => 'Shopping List';
+
+  @override
+  String get shoppingListEmptyMessage => 'The shopping list is empty';
+
+  @override
+  String get purchaseTooltip => 'Purchase';
+
+  @override
+  String get purchaseQuantityLabel => 'Purchase quantity';
+
+  @override
+  String get purchaseAllButton => 'Purchase All';
+
+  @override
+  String get backToItemListButton => 'Back to Inventory';
+
+  @override
+  String get shoppingListPurchaseReason => 'Purchased from shopping list';
 }

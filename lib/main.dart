@@ -30,6 +30,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.blueGrey,
+          foregroundColor: Colors.white,
+        ),
+        tabBarTheme: const TabBarThemeData(
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
+        ),
       ),
       home: const ItemListScreen(),
     );

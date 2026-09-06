@@ -10,39 +10,45 @@ part 'filtered_items_provider.g.dart';
 @riverpod
 Stream<List<Item>> filteredItems(Ref ref) {
   final filter = ref.watch(itemFilterControllerProvider);
-  final itemsStream = ref.watch(itemRepositoryProvider).watchItems(
+  final itemsStream = ref
+      .watch(itemRepositoryProvider)
+      .watchItems(
+        inventoryTypeId: filter.inventoryTypeId,
         categoryId: filter.categoryId,
         subCategoryId: filter.subCategoryId,
         colorGroupId: filter.colorGroupId,
-        minQuantity: filter.inStockOnly ? 1 : null,
       );
 
   final nameQuery = filter.nameQuery.trim().toLowerCase();
   final favoriteMin = filter.favoriteMin;
   final favoriteMax = filter.favoriteMax;
+  final stockFilter = filter.stockFilter;
   final sortKey = filter.sortKey;
 
   return itemsStream.map((items) {
     Iterable<Item> result = items;
-    if (nameQuery.isNotEmpty || favoriteMin != null || favoriteMax != null) {
+    if (nameQuery.isNotEmpty ||
+        favoriteMin != null ||
+        favoriteMax != null ||
+        stockFilter != StockFilter.all) {
       result = result.where((item) {
         final matchesName =
             nameQuery.isEmpty || item.name.toLowerCase().contains(nameQuery);
         final matchesFavorite =
             (favoriteMin == null || item.favoriteRating >= favoriteMin) &&
             (favoriteMax == null || item.favoriteRating <= favoriteMax);
-        return matchesName && matchesFavorite;
+        final matchesStock = switch (stockFilter) {
+          StockFilter.all => true,
+          StockFilter.inStock => item.quantity > item.lowStockThreshold,
+          StockFilter.lowStock => item.quantity <= item.lowStockThreshold,
+          StockFilter.zero => item.quantity == 0,
+        };
+        return matchesName && matchesFavorite && matchesStock;
       });
     }
 
-    final sorted = result.toList();
-    if (sortKey != null) {
-      sorted.sort(_comparatorFor(sortKey));
-      if (!filter.sortAscending) {
-        return sorted.reversed.toList();
-      }
-    }
-    return sorted;
+    final sorted = result.toList()..sort(_comparatorFor(sortKey));
+    return filter.sortAscending ? sorted : sorted.reversed.toList();
   });
 }
 
@@ -55,6 +61,22 @@ int Function(Item, Item) _comparatorFor(ItemSortKey key) {
     case ItemSortKey.favorite:
       return (a, b) => a.favoriteRating.compareTo(b.favoriteRating);
     case ItemSortKey.category:
-      return (a, b) => naturalCompare(a.category.name, b.category.name);
+      // 大分類→中分類→小分類の順に階層的に並べ替える
+      // （小分類が未設定のアイテムは、同じ中分類内で先頭にまとめる）。
+      return (a, b) {
+        final byInventoryType = naturalCompare(
+          a.inventoryType.name,
+          b.inventoryType.name,
+        );
+        if (byInventoryType != 0) return byInventoryType;
+
+        final byCategory = naturalCompare(a.category.name, b.category.name);
+        if (byCategory != 0) return byCategory;
+
+        return naturalCompare(
+          a.subCategory?.name ?? '',
+          b.subCategory?.name ?? '',
+        );
+      };
   }
 }

@@ -20,7 +20,7 @@ class _SortOptionsDialog extends ConsumerStatefulWidget {
 }
 
 class _SortOptionsDialogState extends ConsumerState<_SortOptionsDialog> {
-  late ItemSortKey? _sortKey;
+  late ItemSortKey _sortKey;
   late bool _sortAscending;
 
   @override
@@ -40,7 +40,7 @@ class _SortOptionsDialogState extends ConsumerState<_SortOptionsDialog> {
       case ItemSortKey.favorite:
         return l10n.sortByFavoriteLabel;
       case ItemSortKey.category:
-        return l10n.categoryLabel;
+        return l10n.sortByCategoryLabel;
     }
   }
 
@@ -52,7 +52,9 @@ class _SortOptionsDialogState extends ConsumerState<_SortOptionsDialog> {
       title: Text(l10n.sortDialogTitle),
       content: RadioGroup<ItemSortKey>(
         groupValue: _sortKey,
-        onChanged: (value) => setState(() => _sortKey = value),
+        onChanged: (value) {
+          if (value != null) setState(() => _sortKey = value);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -65,12 +67,12 @@ class _SortOptionsDialogState extends ConsumerState<_SortOptionsDialog> {
             const Divider(),
             SwitchListTile(
               title: Text(
-                _sortAscending ? l10n.sortAscendingLabel : l10n.sortDescendingLabel,
+                _sortAscending
+                    ? l10n.sortAscendingLabel
+                    : l10n.sortDescendingLabel,
               ),
               value: _sortAscending,
-              onChanged: _sortKey == null
-                  ? null
-                  : (value) => setState(() => _sortAscending = value),
+              onChanged: (value) => setState(() => _sortAscending = value),
             ),
           ],
         ),
@@ -89,13 +91,9 @@ class _SortOptionsDialogState extends ConsumerState<_SortOptionsDialog> {
         ),
         FilledButton(
           onPressed: () {
-            final key = _sortKey;
-            final notifier = ref.read(itemFilterControllerProvider.notifier);
-            if (key == null) {
-              notifier.clearSort();
-            } else {
-              notifier.setSort(key, ascending: _sortAscending);
-            }
+            ref
+                .read(itemFilterControllerProvider.notifier)
+                .setSort(_sortKey, ascending: _sortAscending);
             Navigator.pop(context);
           },
           child: Text(l10n.ok),

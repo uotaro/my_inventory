@@ -1,13 +1,13 @@
 import '../entities/item.dart';
 
 abstract class ItemRepository {
-  /// [categoryId] / [subCategoryId] / [colorGroupId] / [minQuantity] を指定すると絞り込み検索になる。
-  /// 例: 「布(categoryId)で青系(colorGroupId)の在庫1個以上(minQuantity)」
+  /// [inventoryTypeId] / [categoryId] / [subCategoryId] / [colorGroupId] を指定すると絞り込み検索になる。
+  /// 例: 「布(categoryId)で青系(colorGroupId)のアイテム」
   Stream<List<Item>> watchItems({
+    int? inventoryTypeId,
     int? categoryId,
     int? subCategoryId,
     int? colorGroupId,
-    double? minQuantity,
   });
 
   Future<Item?> findByBarcode(String barcode);
@@ -21,7 +21,7 @@ abstract class ItemRepository {
     required String name,
     int favoriteRating = 0,
     double quantity = 0,
-    double? lowStockThreshold,
+    double lowStockThreshold = 0,
     String? imagePath,
     String? memo,
   });

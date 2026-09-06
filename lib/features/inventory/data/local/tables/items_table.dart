@@ -18,7 +18,7 @@ class Items extends Table {
   TextColumn get name => text()();
   IntColumn get favoriteRating => integer().withDefault(const Constant(0))();
   RealColumn get quantity => real().withDefault(const Constant(0))();
-  RealColumn get lowStockThreshold => real().nullable()();
+  RealColumn get lowStockThreshold => real().withDefault(const Constant(0))();
   TextColumn get imagePath => text().nullable()();
   TextColumn get memo => text().nullable()();
   DateTimeColumn get createdAt =>

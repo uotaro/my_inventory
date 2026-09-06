@@ -4,9 +4,11 @@ import 'package:my_inventory/l10n/app_localizations.dart';
 
 import '../../data/repositories/category_repository_impl.dart';
 import '../../data/repositories/color_option_repository_impl.dart';
+import '../../data/repositories/inventory_type_repository_impl.dart';
 import '../../data/repositories/sub_category_repository_impl.dart';
 import '../../data/repositories/unit_repository_impl.dart';
 import '../../domain/entities/category.dart';
+import '../../domain/entities/inventory_type.dart';
 import '../../domain/entities/sub_category.dart';
 import '../../domain/exceptions/master_data_in_use_exception.dart';
 import '../providers/master_data_providers.dart';
@@ -14,9 +16,9 @@ import '../widgets/add_master_data_dialogs.dart';
 import '../widgets/color_group_label.dart';
 import '../widgets/color_hex.dart';
 
-/// カテゴリー・サブカテゴリー・色・単位の一覧表示、追加・編集・削除を行う画面。
-/// サブカテゴリーはカテゴリーに従属するため、追加は各カテゴリーの見出し横の
-/// 「＋」から行う（このタブにはFABを出さない）。
+/// 種別・カテゴリー・サブカテゴリー・色・単位の一覧表示、追加・編集・削除を行う画面。
+/// カテゴリーは種別に、サブカテゴリーはカテゴリーに従属するため、追加は
+/// それぞれ親データの見出し横の「＋」から行う（このタブにはFABを出さない）。
 class MasterDataScreen extends ConsumerStatefulWidget {
   const MasterDataScreen({super.key});
 
@@ -31,7 +33,7 @@ class _MasterDataScreenState extends ConsumerState<MasterDataScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this)
+    _tabController = TabController(length: 5, vsync: this)
       ..addListener(() => setState(() {}));
   }
 
@@ -50,6 +52,7 @@ class _MasterDataScreenState extends ConsumerState<MasterDataScreen>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
+            Tab(text: l10n.typesTab),
             Tab(text: l10n.categoriesTab),
             Tab(text: l10n.subCategoriesTab),
             Tab(text: l10n.colorsTab),
@@ -60,6 +63,7 @@ class _MasterDataScreenState extends ConsumerState<MasterDataScreen>
       body: TabBarView(
         controller: _tabController,
         children: const [
+          _InventoryTypeTab(),
           _CategoryTab(),
           _SubCategoryTab(),
           _ColorOptionTab(),
@@ -74,21 +78,22 @@ class _MasterDataScreenState extends ConsumerState<MasterDataScreen>
     switch (_tabController.index) {
       case 0:
         return FloatingActionButton(
-          onPressed: () => showAddCategoryDialog(context, ref),
+          onPressed: () => showAddInventoryTypeDialog(context, ref),
           child: const Icon(Icons.add),
         );
-      case 2:
+      case 3:
         return FloatingActionButton(
           onPressed: () => showAddColorOptionDialog(context, ref),
           child: const Icon(Icons.add),
         );
-      case 3:
+      case 4:
         return FloatingActionButton(
           onPressed: () => showAddUnitDialog(context, ref),
           child: const Icon(Icons.add),
         );
       default:
-        // サブカテゴリータブ（index: 1）はカテゴリーごとの「＋」から追加するためFABなし
+        // カテゴリータブ（index: 1）・サブカテゴリータブ（index: 2）は
+        // 親データごとの「＋」から追加するためFABなし
         return null;
     }
   }
@@ -122,9 +127,16 @@ Future<bool> _confirmDelete({
 
 Future<void> _showDeleteErrorDialog(BuildContext context, Object error) async {
   final l10n = L10n.of(context);
-  final message = error is MasterDataInUseException
-      ? l10n.inUseCannotDelete(error.name, error.itemCount)
-      : l10n.deleteFailedWithMessage(error.toString());
+  final String message;
+  if (error is MasterDataInUseException) {
+    message = l10n.inUseCannotDelete(error.name, error.itemCount);
+  } else if (error is TypeInUseByCategoriesException) {
+    message = l10n.typeInUseCannotDelete(error.name, error.categoryCount);
+  } else if (error is LastInventoryTypeException) {
+    message = l10n.lastInventoryTypeCannotDelete;
+  } else {
+    message = l10n.deleteFailedWithMessage(error.toString());
+  }
   await showDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
@@ -155,42 +167,45 @@ Future<void> _handleDelete({
   }
 }
 
-class _CategoryTab extends ConsumerWidget {
-  const _CategoryTab();
+class _InventoryTypeTab extends ConsumerWidget {
+  const _InventoryTypeTab();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-    final categoriesAsync = ref.watch(categoryListProvider);
+    final inventoryTypesAsync = ref.watch(inventoryTypeListProvider);
 
-    return categoriesAsync.when(
-      data: (categories) => categories.isEmpty
-          ? Center(child: Text(l10n.noCategoriesRegistered))
+    return inventoryTypesAsync.when(
+      data: (inventoryTypes) => inventoryTypes.isEmpty
+          ? Center(child: Text(l10n.noTypesRegistered))
           : ListView.separated(
-              itemCount: categories.length,
+              itemCount: inventoryTypes.length,
               separatorBuilder: (_, _) => const Divider(height: 1),
               itemBuilder: (context, index) {
-                final category = categories[index];
+                final inventoryType = inventoryTypes[index];
                 return ListTile(
-                  title: Text(category.name),
+                  title: Text(inventoryType.name),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
                         icon: const Icon(Icons.edit_outlined),
-                        onPressed: () =>
-                            showEditCategoryDialog(context, ref, category),
+                        onPressed: () => showEditInventoryTypeDialog(
+                          context,
+                          ref,
+                          inventoryType,
+                        ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete_outline),
                         onPressed: () => _handleDelete(
                           context: context,
                           confirmMessage: l10n.confirmDeleteNamedMessage(
-                            category.name,
+                            inventoryType.name,
                           ),
                           onDelete: () => ref
-                              .read(categoryRepositoryProvider)
-                              .deleteCategory(category.id),
+                              .read(inventoryTypeRepositoryProvider)
+                              .deleteInventoryType(inventoryType.id),
                         ),
                       ),
                     ],
@@ -205,13 +220,132 @@ class _CategoryTab extends ConsumerWidget {
   }
 }
 
+class _CategoryTab extends ConsumerWidget {
+  const _CategoryTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = L10n.of(context);
+    final inventoryTypesAsync = ref.watch(inventoryTypeListProvider);
+    final categoriesAsync = ref.watch(
+      categoryListProvider(inventoryTypeId: null),
+    );
+
+    if (inventoryTypesAsync.isLoading || categoriesAsync.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (inventoryTypesAsync.hasError) {
+      return Center(
+        child: Text(l10n.errorWithMessage(inventoryTypesAsync.error.toString())),
+      );
+    }
+    if (categoriesAsync.hasError) {
+      return Center(
+        child: Text(l10n.errorWithMessage(categoriesAsync.error.toString())),
+      );
+    }
+
+    final inventoryTypes = inventoryTypesAsync.value ?? [];
+    final categories = categoriesAsync.value ?? [];
+
+    if (inventoryTypes.isEmpty) {
+      return Center(child: Text(l10n.noTypesRegistered));
+    }
+
+    return ListView(
+      children: inventoryTypes
+          .expand((t) => _buildSection(context, ref, l10n, t, categories))
+          .toList(),
+    );
+  }
+
+  List<Widget> _buildSection(
+    BuildContext context,
+    WidgetRef ref,
+    L10n l10n,
+    InventoryType inventoryType,
+    List<Category> allCategories,
+  ) {
+    final categories = allCategories
+        .where((c) => c.inventoryTypeId == inventoryType.id)
+        .toList();
+
+    return [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                inventoryType.name,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline),
+              tooltip: l10n.addCategoryToType(inventoryType.name),
+              onPressed: () => showAddCategoryDialog(
+                context,
+                ref,
+                inventoryTypeId: inventoryType.id,
+                inventoryTypeName: inventoryType.name,
+              ),
+            ),
+          ],
+        ),
+      ),
+      if (categories.isEmpty)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: Text(
+            l10n.noCategoriesInType,
+            style: const TextStyle(color: Colors.grey),
+          ),
+        )
+      else
+        ...categories.map(
+          (category) => ListTile(
+            title: Text(category.name),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () =>
+                      showEditCategoryDialog(context, ref, category),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.delete_outline),
+                  onPressed: () => _handleDelete(
+                    context: context,
+                    confirmMessage: l10n.confirmDeleteNamedMessage(
+                      category.name,
+                    ),
+                    onDelete: () => ref
+                        .read(categoryRepositoryProvider)
+                        .deleteCategory(category.id),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      const Divider(height: 1),
+    ];
+  }
+}
+
 class _SubCategoryTab extends ConsumerWidget {
   const _SubCategoryTab();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L10n.of(context);
-    final categoriesAsync = ref.watch(categoryListProvider);
+    final categoriesAsync = ref.watch(
+      categoryListProvider(inventoryTypeId: null),
+    );
     final subCategoriesAsync = ref.watch(
       subCategoryListProvider(categoryId: null),
     );

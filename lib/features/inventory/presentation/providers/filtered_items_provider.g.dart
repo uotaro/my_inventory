@@ -45,4 +45,4 @@ final class FilteredItemsProvider
   }
 }
 
-String _$filteredItemsHash() => r'6f6d5182ead05b9bd3737a8195270d2e91f8d79a';
+String _$filteredItemsHash() => r'a18051421adad4171b15572cac9f78eebeb021b6';
