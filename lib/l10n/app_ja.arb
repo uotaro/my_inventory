@@ -11,7 +11,7 @@
     "save": "保存",
     "add": "追加",
     "ok": "OK",
-    "errorTitle": "エラー",
+    "errorTitle": "CAUTION",
     "confirmDeleteTitle": "削除の確認",
     "unset": "未設定",
     "all": "すべて",
@@ -40,13 +40,19 @@
     "sortByNameLabel": "品名",
     "sortByQuantityLabel": "在庫数",
     "sortByFavoriteLabel": "お気に入り",
+    "sortByCategoryLabel": "分類",
     "sortAscendingLabel": "昇順",
     "sortDescendingLabel": "降順",
     "sortResetLabel": "リセット",
     "masterDataTooltip": "マスタ管理",
+    "shoppingListTooltip": "買い物リスト",
     "appInfoTooltip": "アプリ情報",
+    "addToShoppingListLabel": "追加",
+    "alreadyInShoppingListTooltip": "買い物リストに追加済みです",
     "searchByNameLabel": "品名で検索",
-    "categoryLabel": "カテゴリー",
+    "searchResetTooltip": "検索リセット",
+    "inventoryTypeLabel": "大分類",
+    "categoryLabel": "中分類",
     "colorGroupLabel": "色系統",
     "colorGroupBlue": "青系",
     "colorGroupRed": "赤系",
@@ -55,12 +61,12 @@
     "colorGroupMonochrome": "白黒グレー系",
     "colorGroupBeigeBrown": "ベージュ・茶系",
     "colorGroupPatternOther": "柄・その他",
-    "subCategoryLabel": "サブカテゴリー",
-    "filterByFavoriteLabel": "お気に入りで絞り込み",
+    "subCategoryLabel": "小分類",
+    "filterByFavoriteLabel": "お気に入り",
     "favoriteFilterDialogTitle": "お気に入りで絞り込み",
     "favoriteMinLabel": "最小",
     "favoriteMaxLabel": "最大",
-    "favoriteRangeAny": "指定なし",
+    "favoriteRangeAny": "すべて",
     "favoriteRangeAtLeast": "★{min}以上",
     "@favoriteRangeAtLeast": {
         "placeholders": { "min": { "type": "int" } }
@@ -80,14 +86,16 @@
     "@favoriteRangeExact": {
         "placeholders": { "value": { "type": "int" } }
     },
-    "inStockOnlyLabel": "在庫ありのみ表示",
+    "stockFilterLabel": "在庫",
+    "stockFilterInStock": "在庫あり",
+    "stockFilterLowStock": "在庫不足",
+    "stockFilterZero": "在庫0",
     "noMatchingItems": "該当するアイテムがありません",
     "itemNotFoundCreatingNew": "該当するアイテムが見つかりませんでした。新規登録します",
     "manualAdjustmentReason": "手動調整",
 
     "editItemTitle": "アイテムを編集",
     "addItemTitle": "アイテムを登録",
-    "selectCategoryAndUnit": "カテゴリーと単位を選択してください",
     "barcodeAlreadyRegistered": "このバーコードは既に他のアイテムに登録されています",
     "confirmDeleteItemMessage": "「{name}」を削除しますか？",
     "@confirmDeleteItemMessage": {
@@ -96,15 +104,19 @@
     "nameLabel": "品名 *",
     "nameRequiredError": "品名は必須です",
     "clearInputTooltip": "入力をクリア",
-    "categoryLabelRequired": "カテゴリー *",
-    "selectCategoryFirst": "先にカテゴリーを選択してください",
+    "inventoryTypeLabelRequired": "大分類 *",
+    "selectTypeFirst": "先に大分類を選択してください",
+    "categoryLabelRequired": "中分類 *",
+    "categoryRequiredError": "中分類を選択してください",
+    "selectCategoryFirst": "先に中分類を選択してください",
     "colorLabel": "色",
     "unitLabelRequired": "単位 *",
+    "unitRequiredError": "単位を選択してください",
     "favoriteRatingLabel": "お気に入り",
     "quantityLabel": "在庫数 *",
     "invalidNumberError": "数値で入力してください",
     "negativeNumberError": "0以上の数値を入力してください",
-    "lowStockThresholdLabel": "在庫不足の目安",
+    "lowStockThresholdLabel": "在庫不足の目安 *",
     "barcodeLabel": "バーコード（手入力 or スキャン）",
     "memoLabel": "メモ",
     "takePhoto": "カメラで撮影",
@@ -116,8 +128,9 @@
     "scanConfirmingLabel": "確認中...",
 
     "masterDataTitle": "マスタ管理",
-    "categoriesTab": "カテゴリー",
-    "subCategoriesTab": "サブカテゴリー",
+    "typesTab": "大分類",
+    "categoriesTab": "中分類",
+    "subCategoriesTab": "小分類",
     "colorsTab": "色",
     "unitsTab": "単位",
     "privacyPolicyLabel": "プライバシーポリシー",
@@ -129,13 +142,27 @@
             "count": { "type": "int" }
         }
     },
-    "noCategoriesRegistered": "カテゴリーが登録されていません",
-    "addSubCategoryToCategory": "「{categoryName}」にサブカテゴリーを追加",
+    "typeInUseCannotDelete": "「{name}」は{count}件の中分類で使われているため削除できません",
+    "@typeInUseCannotDelete": {
+        "placeholders": {
+            "name": { "type": "String" },
+            "count": { "type": "int" }
+        }
+    },
+    "lastInventoryTypeCannotDelete": "大分類は1件以上データが必要です",
+    "noTypesRegistered": "大分類が登録されていません",
+    "addCategoryToType": "「{typeName}」に中分類を追加",
+    "@addCategoryToType": {
+        "placeholders": { "typeName": { "type": "String" } }
+    },
+    "noCategoriesInType": "中分類なし",
+    "noCategoriesRegistered": "中分類が登録されていません",
+    "addSubCategoryToCategory": "「{categoryName}」に小分類を追加",
     "@addSubCategoryToCategory": {
         "placeholders": { "categoryName": { "type": "String" } }
     },
-    "noSubCategories": "サブカテゴリーなし",
-    "confirmDeleteSubCategoryMessage": "「{name}」を削除しますか？\nこのサブカテゴリーが設定されているアイテムは「未設定」になります。",
+    "noSubCategories": "小分類なし",
+    "confirmDeleteSubCategoryMessage": "「{name}」を削除しますか？\nこの小分類が設定されているアイテムは「未設定」になります。",
     "@confirmDeleteSubCategoryMessage": {
         "placeholders": { "name": { "type": "String" } }
     },
@@ -157,23 +184,22 @@
     "yahooAttributionLabel": "Web Services by Yahoo! JAPAN",
 
     "nameRequiredGeneric": "名前を入力してください",
-    "fetchInventoryTypesFailed": "在庫の種類の取得に失敗しました: {message}",
-    "@fetchInventoryTypesFailed": {
-        "placeholders": { "message": { "type": "String" } }
-    },
-    "noInventoryTypesFound": "在庫の種類（手芸用品など）が見つかりませんでした",
-    "addCategoryTitle": "新しいカテゴリーを追加",
-    "categoryNameHint": "カテゴリー名（例: 布）",
-    "duplicateCategoryName": "同じ名前のカテゴリーがすでに登録されています",
-    "editCategoryTitle": "カテゴリーを編集",
-    "categoryNameLabel": "カテゴリー名",
-    "subCategoryNameHint": "サブカテゴリー名（例: フェルト）",
-    "duplicateSubCategoryName": "このカテゴリーには同じ名前のサブカテゴリーがすでに登録されています",
-    "editSubCategoryOfCategory": "「{categoryName}」のサブカテゴリーを編集",
+    "addTypeTitle": "新しい大分類を追加",
+    "typeNameHint": "大分類名（例: 手芸用品）",
+    "duplicateTypeName": "同じ名前の大分類がすでに登録されています",
+    "editTypeTitle": "大分類を編集",
+    "typeNameLabel": "大分類名",
+    "categoryNameHint": "中分類名（例: 布）",
+    "duplicateCategoryName": "同じ名前の中分類がすでに登録されています",
+    "editCategoryTitle": "中分類を編集",
+    "categoryNameLabel": "中分類名",
+    "subCategoryNameHint": "小分類名（例: フェルト）",
+    "duplicateSubCategoryName": "この中分類には同じ名前の小分類がすでに登録されています",
+    "editSubCategoryOfCategory": "「{categoryName}」の小分類を編集",
     "@editSubCategoryOfCategory": {
         "placeholders": { "categoryName": { "type": "String" } }
     },
-    "subCategoryNameLabel": "サブカテゴリー名",
+    "subCategoryNameLabel": "小分類名",
     "fetchColorGroupsFailed": "色系統の取得に失敗しました: {message}",
     "@fetchColorGroupsFailed": {
         "placeholders": { "message": { "type": "String" } }
@@ -191,5 +217,13 @@
     "unitNameHint": "単位名（例: 巻）",
     "duplicateUnitName": "同じ名前の単位がすでに登録されています",
     "editUnitTitle": "単位を編集",
-    "unitNameLabel": "単位名"
+    "unitNameLabel": "単位名",
+
+    "shoppingListTitle": "買い物リスト",
+    "shoppingListEmptyMessage": "買い物リストは空です",
+    "purchaseTooltip": "購入",
+    "purchaseQuantityLabel": "購入数",
+    "purchaseAllButton": "一括購入",
+    "backToItemListButton": "在庫一覧へ戻る",
+    "shoppingListPurchaseReason": "買い物リストからの購入"
 }

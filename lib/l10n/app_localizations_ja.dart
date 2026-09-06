@@ -27,7 +27,7 @@ class L10nJa extends L10n {
   String get ok => 'OK';
 
   @override
-  String get errorTitle => 'エラー';
+  String get errorTitle => 'CAUTION';
 
   @override
   String get confirmDeleteTitle => '削除の確認';
@@ -80,6 +80,9 @@ class L10nJa extends L10n {
   String get sortByFavoriteLabel => 'お気に入り';
 
   @override
+  String get sortByCategoryLabel => '分類';
+
+  @override
   String get sortAscendingLabel => '昇順';
 
   @override
@@ -92,13 +95,28 @@ class L10nJa extends L10n {
   String get masterDataTooltip => 'マスタ管理';
 
   @override
+  String get shoppingListTooltip => '買い物リスト';
+
+  @override
   String get appInfoTooltip => 'アプリ情報';
+
+  @override
+  String get addToShoppingListLabel => '追加';
+
+  @override
+  String get alreadyInShoppingListTooltip => '買い物リストに追加済みです';
 
   @override
   String get searchByNameLabel => '品名で検索';
 
   @override
-  String get categoryLabel => 'カテゴリー';
+  String get searchResetTooltip => '検索リセット';
+
+  @override
+  String get inventoryTypeLabel => '大分類';
+
+  @override
+  String get categoryLabel => '中分類';
 
   @override
   String get colorGroupLabel => '色系統';
@@ -125,10 +143,10 @@ class L10nJa extends L10n {
   String get colorGroupPatternOther => '柄・その他';
 
   @override
-  String get subCategoryLabel => 'サブカテゴリー';
+  String get subCategoryLabel => '小分類';
 
   @override
-  String get filterByFavoriteLabel => 'お気に入りで絞り込み';
+  String get filterByFavoriteLabel => 'お気に入り';
 
   @override
   String get favoriteFilterDialogTitle => 'お気に入りで絞り込み';
@@ -140,7 +158,7 @@ class L10nJa extends L10n {
   String get favoriteMaxLabel => '最大';
 
   @override
-  String get favoriteRangeAny => '指定なし';
+  String get favoriteRangeAny => 'すべて';
 
   @override
   String favoriteRangeAtLeast(int min) {
@@ -163,7 +181,16 @@ class L10nJa extends L10n {
   }
 
   @override
-  String get inStockOnlyLabel => '在庫ありのみ表示';
+  String get stockFilterLabel => '在庫';
+
+  @override
+  String get stockFilterInStock => '在庫あり';
+
+  @override
+  String get stockFilterLowStock => '在庫不足';
+
+  @override
+  String get stockFilterZero => '在庫0';
 
   @override
   String get noMatchingItems => '該当するアイテムがありません';
@@ -179,9 +206,6 @@ class L10nJa extends L10n {
 
   @override
   String get addItemTitle => 'アイテムを登録';
-
-  @override
-  String get selectCategoryAndUnit => 'カテゴリーと単位を選択してください';
 
   @override
   String get barcodeAlreadyRegistered => 'このバーコードは既に他のアイテムに登録されています';
@@ -201,16 +225,28 @@ class L10nJa extends L10n {
   String get clearInputTooltip => '入力をクリア';
 
   @override
-  String get categoryLabelRequired => 'カテゴリー *';
+  String get inventoryTypeLabelRequired => '大分類 *';
 
   @override
-  String get selectCategoryFirst => '先にカテゴリーを選択してください';
+  String get selectTypeFirst => '先に大分類を選択してください';
+
+  @override
+  String get categoryLabelRequired => '中分類 *';
+
+  @override
+  String get categoryRequiredError => '中分類を選択してください';
+
+  @override
+  String get selectCategoryFirst => '先に中分類を選択してください';
 
   @override
   String get colorLabel => '色';
 
   @override
   String get unitLabelRequired => '単位 *';
+
+  @override
+  String get unitRequiredError => '単位を選択してください';
 
   @override
   String get favoriteRatingLabel => 'お気に入り';
@@ -225,7 +261,7 @@ class L10nJa extends L10n {
   String get negativeNumberError => '0以上の数値を入力してください';
 
   @override
-  String get lowStockThresholdLabel => '在庫不足の目安';
+  String get lowStockThresholdLabel => '在庫不足の目安 *';
 
   @override
   String get barcodeLabel => 'バーコード（手入力 or スキャン）';
@@ -255,10 +291,13 @@ class L10nJa extends L10n {
   String get masterDataTitle => 'マスタ管理';
 
   @override
-  String get categoriesTab => 'カテゴリー';
+  String get typesTab => '大分類';
 
   @override
-  String get subCategoriesTab => 'サブカテゴリー';
+  String get categoriesTab => '中分類';
+
+  @override
+  String get subCategoriesTab => '小分類';
 
   @override
   String get colorsTab => '色';
@@ -278,19 +317,38 @@ class L10nJa extends L10n {
   }
 
   @override
-  String get noCategoriesRegistered => 'カテゴリーが登録されていません';
-
-  @override
-  String addSubCategoryToCategory(String categoryName) {
-    return '「$categoryName」にサブカテゴリーを追加';
+  String typeInUseCannotDelete(String name, int count) {
+    return '「$name」は$count件の中分類で使われているため削除できません';
   }
 
   @override
-  String get noSubCategories => 'サブカテゴリーなし';
+  String get lastInventoryTypeCannotDelete => '大分類は1件以上データが必要です';
+
+  @override
+  String get noTypesRegistered => '大分類が登録されていません';
+
+  @override
+  String addCategoryToType(String typeName) {
+    return '「$typeName」に中分類を追加';
+  }
+
+  @override
+  String get noCategoriesInType => '中分類なし';
+
+  @override
+  String get noCategoriesRegistered => '中分類が登録されていません';
+
+  @override
+  String addSubCategoryToCategory(String categoryName) {
+    return '「$categoryName」に小分類を追加';
+  }
+
+  @override
+  String get noSubCategories => '小分類なし';
 
   @override
   String confirmDeleteSubCategoryMessage(String name) {
-    return '「$name」を削除しますか？\nこのサブカテゴリーが設定されているアイテムは「未設定」になります。';
+    return '「$name」を削除しますか？\nこの小分類が設定されているアイテムは「未設定」になります。';
   }
 
   @override
@@ -319,41 +377,45 @@ class L10nJa extends L10n {
   String get nameRequiredGeneric => '名前を入力してください';
 
   @override
-  String fetchInventoryTypesFailed(String message) {
-    return '在庫の種類の取得に失敗しました: $message';
-  }
+  String get addTypeTitle => '新しい大分類を追加';
 
   @override
-  String get noInventoryTypesFound => '在庫の種類（手芸用品など）が見つかりませんでした';
+  String get typeNameHint => '大分類名（例: 手芸用品）';
 
   @override
-  String get addCategoryTitle => '新しいカテゴリーを追加';
+  String get duplicateTypeName => '同じ名前の大分類がすでに登録されています';
 
   @override
-  String get categoryNameHint => 'カテゴリー名（例: 布）';
+  String get editTypeTitle => '大分類を編集';
 
   @override
-  String get duplicateCategoryName => '同じ名前のカテゴリーがすでに登録されています';
+  String get typeNameLabel => '大分類名';
 
   @override
-  String get editCategoryTitle => 'カテゴリーを編集';
+  String get categoryNameHint => '中分類名（例: 布）';
 
   @override
-  String get categoryNameLabel => 'カテゴリー名';
+  String get duplicateCategoryName => '同じ名前の中分類がすでに登録されています';
 
   @override
-  String get subCategoryNameHint => 'サブカテゴリー名（例: フェルト）';
+  String get editCategoryTitle => '中分類を編集';
 
   @override
-  String get duplicateSubCategoryName => 'このカテゴリーには同じ名前のサブカテゴリーがすでに登録されています';
+  String get categoryNameLabel => '中分類名';
+
+  @override
+  String get subCategoryNameHint => '小分類名（例: フェルト）';
+
+  @override
+  String get duplicateSubCategoryName => 'この中分類には同じ名前の小分類がすでに登録されています';
 
   @override
   String editSubCategoryOfCategory(String categoryName) {
-    return '「$categoryName」のサブカテゴリーを編集';
+    return '「$categoryName」の小分類を編集';
   }
 
   @override
-  String get subCategoryNameLabel => 'サブカテゴリー名';
+  String get subCategoryNameLabel => '小分類名';
 
   @override
   String fetchColorGroupsFailed(String message) {
@@ -401,4 +463,25 @@ class L10nJa extends L10n {
 
   @override
   String get unitNameLabel => '単位名';
+
+  @override
+  String get shoppingListTitle => '買い物リスト';
+
+  @override
+  String get shoppingListEmptyMessage => '買い物リストは空です';
+
+  @override
+  String get purchaseTooltip => '購入';
+
+  @override
+  String get purchaseQuantityLabel => '購入数';
+
+  @override
+  String get purchaseAllButton => '一括購入';
+
+  @override
+  String get backToItemListButton => '在庫一覧へ戻る';
+
+  @override
+  String get shoppingListPurchaseReason => '買い物リストからの購入';
 }

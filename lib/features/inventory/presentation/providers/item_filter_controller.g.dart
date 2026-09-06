@@ -42,7 +42,7 @@ final class ItemFilterControllerProvider
 }
 
 String _$itemFilterControllerHash() =>
-    r'94bbc9be8ed96d5c08aab7ba5eec5ff39f88cbae';
+    r'f79c2bd7665e7264f4ca0ae77be9d46722d0a26e';
 
 abstract class _$ItemFilterController extends $Notifier<ItemFilter> {
   ItemFilter build();

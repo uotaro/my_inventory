@@ -135,33 +135,23 @@ Future<void> _showSimpleAddDialog({
   );
 }
 
-Future<void> showAddCategoryDialog(BuildContext context, WidgetRef ref) async {
+/// [inventoryTypeId] はマスタ管理画面・登録フォームで既に選択済みの種別を
+/// そのまま使う（種別未選択の状態ではこのダイアログを開けない呼び出し側の制御が前提）。
+Future<void> showAddCategoryDialog(
+  BuildContext context,
+  WidgetRef ref, {
+  required int inventoryTypeId,
+  required String inventoryTypeName,
+}) async {
   final l10n = L10n.of(context);
-  List<InventoryType> inventoryTypes;
-  try {
-    inventoryTypes = await ref
-        .read(inventoryTypeRepositoryProvider)
-        .getInventoryTypes();
-  } catch (e) {
-    if (context.mounted) {
-      await _showErrorDialog(context, l10n.fetchInventoryTypesFailed(e.toString()));
-    }
-    return;
-  }
-  if (!context.mounted) return;
-  if (inventoryTypes.isEmpty) {
-    await _showErrorDialog(context, l10n.noInventoryTypesFound);
-    return;
-  }
-
   await _showSimpleAddDialog(
     context: context,
-    title: l10n.addCategoryTitle,
+    title: l10n.addCategoryToType(inventoryTypeName),
     label: l10n.categoryNameHint,
     duplicateMessage: l10n.duplicateCategoryName,
     onSubmit: (name) => ref
         .read(categoryRepositoryProvider)
-        .addCategory(inventoryTypeId: inventoryTypes.first.id, name: name),
+        .addCategory(inventoryTypeId: inventoryTypeId, name: name),
   );
 }
 
@@ -481,6 +471,40 @@ Future<void> _showColorOptionFormDialog({
         );
       },
     ),
+  );
+}
+
+Future<void> showAddInventoryTypeDialog(
+  BuildContext context,
+  WidgetRef ref,
+) async {
+  final l10n = L10n.of(context);
+  await _showSimpleAddDialog(
+    context: context,
+    title: l10n.addTypeTitle,
+    label: l10n.typeNameHint,
+    duplicateMessage: l10n.duplicateTypeName,
+    onSubmit: (name) =>
+        ref.read(inventoryTypeRepositoryProvider).addInventoryType(name: name),
+  );
+}
+
+Future<void> showEditInventoryTypeDialog(
+  BuildContext context,
+  WidgetRef ref,
+  InventoryType inventoryType,
+) async {
+  final l10n = L10n.of(context);
+  await _showSimpleAddDialog(
+    context: context,
+    title: l10n.editTypeTitle,
+    label: l10n.typeNameLabel,
+    duplicateMessage: l10n.duplicateTypeName,
+    initialValue: inventoryType.name,
+    submitLabel: l10n.save,
+    onSubmit: (name) => ref
+        .read(inventoryTypeRepositoryProvider)
+        .updateInventoryType(inventoryType.copyWith(name: name)),
   );
 }
 

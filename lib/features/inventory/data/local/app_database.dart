@@ -7,6 +7,7 @@ import 'tables/color_options_table.dart';
 import 'tables/inventory_types_table.dart';
 import 'tables/items_table.dart';
 import 'tables/product_name_cache_table.dart';
+import 'tables/shopping_list_entries_table.dart';
 import 'tables/stock_logs_table.dart';
 import 'tables/sub_categories_table.dart';
 import 'tables/units_table.dart';
@@ -24,6 +25,7 @@ part 'app_database.g.dart';
     Items,
     StockLogs,
     ProductNameCache,
+    ShoppingListEntries,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -33,31 +35,40 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (Migrator m) async {
-          await m.createAll();
-          await _seedMasterData();
-        },
-        onUpgrade: (Migrator m, int from, int to) async {
-          if (from < 2) {
-            await m.createTable(subCategories);
-            await m.addColumn(items, items.subCategoryId);
-          }
-          if (from < 3) {
-            await _migrateColorGroupsToLocaleIndependentKeys();
-          }
-          if (from < 4) {
-            await m.addColumn(items, items.favoriteRating);
-            await m.dropColumn(items, 'size');
-          }
-          if (from < 5) {
-            await m.createTable(productNameCache);
-          }
-        },
-      );
+    onCreate: (Migrator m) async {
+      await m.createAll();
+      await _seedMasterData();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from < 2) {
+        await m.createTable(subCategories);
+        await m.addColumn(items, items.subCategoryId);
+      }
+      if (from < 3) {
+        await _migrateColorGroupsToLocaleIndependentKeys();
+      }
+      if (from < 4) {
+        await m.addColumn(items, items.favoriteRating);
+        await m.dropColumn(items, 'size');
+      }
+      if (from < 5) {
+        await m.createTable(productNameCache);
+      }
+      if (from < 6) {
+        await _renameSoleInventoryTypeToDefaultName();
+      }
+      if (from < 7) {
+        await _makeLowStockThresholdRequired(m);
+      }
+      if (from < 8) {
+        await m.createTable(shoppingListEntries);
+      }
+    },
+  );
 
   /// DBファイルが初めて作られた直後（onCreate）にのみ実行される。
   /// Categories/ColorOptions は FK 必須のため、これが無いと
@@ -68,7 +79,7 @@ class AppDatabase extends _$AppDatabase {
   /// 併せて、初回起動時にすぐ試せるようサンプルのカテゴリー・単位・色も登録する。
   Future<void> _seedMasterData() async {
     final inventoryTypeId = await into(inventoryTypes).insert(
-      InventoryTypesCompanion.insert(name: '手芸用品', sortOrder: const Value(0)),
+      InventoryTypesCompanion.insert(name: '種別1', sortOrder: const Value(0)),
     );
 
     final colorGroupIds = await _seedColorGroups();
@@ -186,12 +197,14 @@ class AppDatabase extends _$AppDatabase {
     };
 
     for (final entry in legacyNameToKey.entries) {
-      await (update(colorGroups)..where((t) => t.name.equals(entry.key)))
-          .write(ColorGroupsCompanion(name: Value(entry.value)));
+      await (update(colorGroups)..where((t) => t.name.equals(entry.key))).write(
+        ColorGroupsCompanion(name: Value(entry.value)),
+      );
     }
     for (final entry in keyToSortOrder.entries) {
-      await (update(colorGroups)..where((t) => t.name.equals(entry.key)))
-          .write(ColorGroupsCompanion(sortOrder: Value(entry.value)));
+      await (update(colorGroups)..where((t) => t.name.equals(entry.key))).write(
+        ColorGroupsCompanion(sortOrder: Value(entry.value)),
+      );
     }
 
     final existingKeys = await (select(
@@ -204,12 +217,36 @@ class AppDatabase extends _$AppDatabase {
     }
     if (!existingKeys.contains('yellow')) {
       await into(colorGroups).insert(
-        ColorGroupsCompanion.insert(
-          name: 'yellow',
-          sortOrder: const Value(3),
-        ),
+        ColorGroupsCompanion.insert(name: 'yellow', sortOrder: const Value(3)),
       );
     }
+  }
+
+  /// schemaVersion 5以前は「種別」の概念がUIに存在せず、DB内部には
+  /// 常に1件（旧名称「手芸用品」）だけが存在した。3階層カテゴライズの
+  /// 導入に伴いUIへ公開するにあたり、既存データとの互換性を保つため
+  /// その唯一の種別の名前を新しいデフォルト名「種別1」へ揃える。
+  Future<void> _renameSoleInventoryTypeToDefaultName() async {
+    await update(
+      inventoryTypes,
+    ).write(const InventoryTypesCompanion(name: Value('種別1')));
+  }
+
+  /// schemaVersion 6以前は「在庫不足の目安」が未入力（NULL）を許容していたが、
+  /// 必須入力に変更した。既存データとの互換性を保つため、未入力のアイテムは
+  /// 目安0（在庫が無くなったら在庫不足とみなす）として扱う。
+  Future<void> _makeLowStockThresholdRequired(Migrator m) async {
+    await m.alterTable(
+      TableMigration(
+        items,
+        columnTransformer: {
+          items.lowStockThreshold: coalesce([
+            items.lowStockThreshold,
+            const Constant(0.0),
+          ]),
+        },
+      ),
+    );
   }
 
   static QueryExecutor _openConnection() {

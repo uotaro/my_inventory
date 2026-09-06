@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../domain/entities/category.dart';
 import '../../domain/entities/color_option.dart';
+import '../../domain/entities/inventory_type.dart';
 import '../../domain/entities/item.dart';
 import '../../domain/entities/sub_category.dart';
 import '../../domain/entities/unit.dart';
@@ -24,6 +25,10 @@ class ItemRepositoryImpl implements ItemRepository {
         _db.categories,
         _db.categories.id.equalsExp(_db.items.categoryId),
       ),
+      innerJoin(
+        _db.inventoryTypes,
+        _db.inventoryTypes.id.equalsExp(_db.categories.inventoryTypeId),
+      ),
       leftOuterJoin(
         _db.subCategories,
         _db.subCategories.id.equalsExp(_db.items.subCategoryId),
@@ -38,13 +43,16 @@ class ItemRepositoryImpl implements ItemRepository {
 
   @override
   Stream<List<Item>> watchItems({
+    int? inventoryTypeId,
     int? categoryId,
     int? subCategoryId,
     int? colorGroupId,
-    double? minQuantity,
   }) {
     final query = _baseQuery();
 
+    if (inventoryTypeId != null) {
+      query.where(_db.categories.inventoryTypeId.equals(inventoryTypeId));
+    }
     if (categoryId != null) {
       query.where(_db.items.categoryId.equals(categoryId));
     }
@@ -53,9 +61,6 @@ class ItemRepositoryImpl implements ItemRepository {
     }
     if (colorGroupId != null) {
       query.where(_db.colorOptions.colorGroupId.equals(colorGroupId));
-    }
-    if (minQuantity != null) {
-      query.where(_db.items.quantity.isBiggerOrEqualValue(minQuantity));
     }
     query.orderBy([OrderingTerm(expression: _db.items.name)]);
 
@@ -79,11 +84,13 @@ class ItemRepositoryImpl implements ItemRepository {
     required String name,
     int favoriteRating = 0,
     double quantity = 0,
-    double? lowStockThreshold,
+    double lowStockThreshold = 0,
     String? imagePath,
     String? memo,
   }) {
-    return _db.into(_db.items).insert(
+    return _db
+        .into(_db.items)
+        .insert(
           local.ItemsCompanion.insert(
             categoryId: categoryId,
             subCategoryId: Value(subCategoryId),
@@ -134,7 +141,12 @@ class ItemRepositoryImpl implements ItemRepository {
       _db.items,
     )..where((t) => t.id.equals(id))).getSingle();
 
-    await (_db.delete(_db.items)..where((t) => t.id.equals(id))).go();
+    await _db.transaction(() async {
+      await (_db.delete(
+        _db.shoppingListEntries,
+      )..where((t) => t.itemId.equals(id))).go();
+      await (_db.delete(_db.items)..where((t) => t.id.equals(id))).go();
+    });
     await deleteItemImageIfExists(item.imagePath);
   }
 
@@ -162,7 +174,9 @@ class ItemRepositoryImpl implements ItemRepository {
         ),
       );
 
-      await _db.into(_db.stockLogs).insert(
+      await _db
+          .into(_db.stockLogs)
+          .insert(
             local.StockLogsCompanion.insert(
               itemId: itemId,
               changeAmount: appliedChangeAmount,
@@ -172,50 +186,65 @@ class ItemRepositoryImpl implements ItemRepository {
     });
   }
 
-  Item _toDomain(TypedResult row) {
-    final itemRow = row.readTable(_db.items);
-    final categoryRow = row.readTable(_db.categories);
-    final subCategoryRow = row.readTableOrNull(_db.subCategories);
-    final colorRow = row.readTableOrNull(_db.colorOptions);
-    final unitRow = row.readTable(_db.units);
+  Item _toDomain(TypedResult row) => itemFromRow(_db, row);
+}
 
-    return Item(
-      id: itemRow.id,
-      category: Category(
-        id: categoryRow.id,
-        inventoryTypeId: categoryRow.inventoryTypeId,
-        name: categoryRow.name,
-        sortOrder: categoryRow.sortOrder,
-      ),
-      subCategory: subCategoryRow == null
-          ? null
-          : SubCategory(
-              id: subCategoryRow.id,
-              categoryId: subCategoryRow.categoryId,
-              name: subCategoryRow.name,
-              sortOrder: subCategoryRow.sortOrder,
-            ),
-      color: colorRow == null
-          ? null
-          : ColorOption(
-              id: colorRow.id,
-              colorGroupId: colorRow.colorGroupId,
-              name: colorRow.name,
-              hexCode: colorRow.hexCode,
-              sortOrder: colorRow.sortOrder,
-            ),
-      unit: Unit(id: unitRow.id, name: unitRow.name, sortOrder: unitRow.sortOrder),
-      barcode: itemRow.barcode,
-      name: itemRow.name,
-      favoriteRating: itemRow.favoriteRating,
-      quantity: itemRow.quantity,
-      lowStockThreshold: itemRow.lowStockThreshold,
-      imagePath: itemRow.imagePath,
-      memo: itemRow.memo,
-      createdAt: itemRow.createdAt,
-      updatedAt: itemRow.updatedAt,
-    );
-  }
+/// Items・InventoryTypes・Categories・SubCategories・ColorOptions・Unitsを
+/// 結合したクエリ結果1行分から[Item]を組み立てる。[ItemRepositoryImpl]以外にも
+/// 買い物リストなど、アイテムを結合した検索結果を扱うリポジトリから共用する。
+Item itemFromRow(local.AppDatabase db, TypedResult row) {
+  final itemRow = row.readTable(db.items);
+  final inventoryTypeRow = row.readTable(db.inventoryTypes);
+  final categoryRow = row.readTable(db.categories);
+  final subCategoryRow = row.readTableOrNull(db.subCategories);
+  final colorRow = row.readTableOrNull(db.colorOptions);
+  final unitRow = row.readTable(db.units);
+
+  return Item(
+    id: itemRow.id,
+    inventoryType: InventoryType(
+      id: inventoryTypeRow.id,
+      name: inventoryTypeRow.name,
+      sortOrder: inventoryTypeRow.sortOrder,
+    ),
+    category: Category(
+      id: categoryRow.id,
+      inventoryTypeId: categoryRow.inventoryTypeId,
+      name: categoryRow.name,
+      sortOrder: categoryRow.sortOrder,
+    ),
+    subCategory: subCategoryRow == null
+        ? null
+        : SubCategory(
+            id: subCategoryRow.id,
+            categoryId: subCategoryRow.categoryId,
+            name: subCategoryRow.name,
+            sortOrder: subCategoryRow.sortOrder,
+          ),
+    color: colorRow == null
+        ? null
+        : ColorOption(
+            id: colorRow.id,
+            colorGroupId: colorRow.colorGroupId,
+            name: colorRow.name,
+            hexCode: colorRow.hexCode,
+            sortOrder: colorRow.sortOrder,
+          ),
+    unit: Unit(
+      id: unitRow.id,
+      name: unitRow.name,
+      sortOrder: unitRow.sortOrder,
+    ),
+    barcode: itemRow.barcode,
+    name: itemRow.name,
+    favoriteRating: itemRow.favoriteRating,
+    quantity: itemRow.quantity,
+    lowStockThreshold: itemRow.lowStockThreshold,
+    imagePath: itemRow.imagePath,
+    memo: itemRow.memo,
+    createdAt: itemRow.createdAt,
+    updatedAt: itemRow.updatedAt,
+  );
 }
 
 @Riverpod(keepAlive: true)

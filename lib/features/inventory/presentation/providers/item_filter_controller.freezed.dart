@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ItemFilter {
 
- int? get categoryId; int? get subCategoryId; int? get colorGroupId; bool get inStockOnly; String get nameQuery; int? get favoriteMin; int? get favoriteMax; ItemSortKey? get sortKey; bool get sortAscending;
+ int? get inventoryTypeId; int? get categoryId; int? get subCategoryId; int? get colorGroupId; StockFilter get stockFilter; String get nameQuery; int? get favoriteMin; int? get favoriteMax; ItemSortKey get sortKey; bool get sortAscending;
 /// Create a copy of ItemFilter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ItemFilterCopyWith<ItemFilter> get copyWith => _$ItemFilterCopyWithImpl<ItemFil
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemFilter&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.colorGroupId, colorGroupId) || other.colorGroupId == colorGroupId)&&(identical(other.inStockOnly, inStockOnly) || other.inStockOnly == inStockOnly)&&(identical(other.nameQuery, nameQuery) || other.nameQuery == nameQuery)&&(identical(other.favoriteMin, favoriteMin) || other.favoriteMin == favoriteMin)&&(identical(other.favoriteMax, favoriteMax) || other.favoriteMax == favoriteMax)&&(identical(other.sortKey, sortKey) || other.sortKey == sortKey)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemFilter&&(identical(other.inventoryTypeId, inventoryTypeId) || other.inventoryTypeId == inventoryTypeId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.colorGroupId, colorGroupId) || other.colorGroupId == colorGroupId)&&(identical(other.stockFilter, stockFilter) || other.stockFilter == stockFilter)&&(identical(other.nameQuery, nameQuery) || other.nameQuery == nameQuery)&&(identical(other.favoriteMin, favoriteMin) || other.favoriteMin == favoriteMin)&&(identical(other.favoriteMax, favoriteMax) || other.favoriteMax == favoriteMax)&&(identical(other.sortKey, sortKey) || other.sortKey == sortKey)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,subCategoryId,colorGroupId,inStockOnly,nameQuery,favoriteMin,favoriteMax,sortKey,sortAscending);
+int get hashCode => Object.hash(runtimeType,inventoryTypeId,categoryId,subCategoryId,colorGroupId,stockFilter,nameQuery,favoriteMin,favoriteMax,sortKey,sortAscending);
 
 @override
 String toString() {
-  return 'ItemFilter(categoryId: $categoryId, subCategoryId: $subCategoryId, colorGroupId: $colorGroupId, inStockOnly: $inStockOnly, nameQuery: $nameQuery, favoriteMin: $favoriteMin, favoriteMax: $favoriteMax, sortKey: $sortKey, sortAscending: $sortAscending)';
+  return 'ItemFilter(inventoryTypeId: $inventoryTypeId, categoryId: $categoryId, subCategoryId: $subCategoryId, colorGroupId: $colorGroupId, stockFilter: $stockFilter, nameQuery: $nameQuery, favoriteMin: $favoriteMin, favoriteMax: $favoriteMax, sortKey: $sortKey, sortAscending: $sortAscending)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ItemFilterCopyWith<$Res>  {
   factory $ItemFilterCopyWith(ItemFilter value, $Res Function(ItemFilter) _then) = _$ItemFilterCopyWithImpl;
 @useResult
 $Res call({
- int? categoryId, int? subCategoryId, int? colorGroupId, bool inStockOnly, String nameQuery, int? favoriteMin, int? favoriteMax, ItemSortKey? sortKey, bool sortAscending
+ int? inventoryTypeId, int? categoryId, int? subCategoryId, int? colorGroupId, StockFilter stockFilter, String nameQuery, int? favoriteMin, int? favoriteMax, ItemSortKey sortKey, bool sortAscending
 });
 
 
@@ -62,17 +62,18 @@ class _$ItemFilterCopyWithImpl<$Res>
 
 /// Create a copy of ItemFilter
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? categoryId = freezed,Object? subCategoryId = freezed,Object? colorGroupId = freezed,Object? inStockOnly = null,Object? nameQuery = null,Object? favoriteMin = freezed,Object? favoriteMax = freezed,Object? sortKey = freezed,Object? sortAscending = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? inventoryTypeId = freezed,Object? categoryId = freezed,Object? subCategoryId = freezed,Object? colorGroupId = freezed,Object? stockFilter = null,Object? nameQuery = null,Object? favoriteMin = freezed,Object? favoriteMax = freezed,Object? sortKey = null,Object? sortAscending = null,}) {
   return _then(_self.copyWith(
-categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+inventoryTypeId: freezed == inventoryTypeId ? _self.inventoryTypeId : inventoryTypeId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,subCategoryId: freezed == subCategoryId ? _self.subCategoryId : subCategoryId // ignore: cast_nullable_to_non_nullable
 as int?,colorGroupId: freezed == colorGroupId ? _self.colorGroupId : colorGroupId // ignore: cast_nullable_to_non_nullable
-as int?,inStockOnly: null == inStockOnly ? _self.inStockOnly : inStockOnly // ignore: cast_nullable_to_non_nullable
-as bool,nameQuery: null == nameQuery ? _self.nameQuery : nameQuery // ignore: cast_nullable_to_non_nullable
+as int?,stockFilter: null == stockFilter ? _self.stockFilter : stockFilter // ignore: cast_nullable_to_non_nullable
+as StockFilter,nameQuery: null == nameQuery ? _self.nameQuery : nameQuery // ignore: cast_nullable_to_non_nullable
 as String,favoriteMin: freezed == favoriteMin ? _self.favoriteMin : favoriteMin // ignore: cast_nullable_to_non_nullable
 as int?,favoriteMax: freezed == favoriteMax ? _self.favoriteMax : favoriteMax // ignore: cast_nullable_to_non_nullable
-as int?,sortKey: freezed == sortKey ? _self.sortKey : sortKey // ignore: cast_nullable_to_non_nullable
-as ItemSortKey?,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
+as int?,sortKey: null == sortKey ? _self.sortKey : sortKey // ignore: cast_nullable_to_non_nullable
+as ItemSortKey,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? categoryId,  int? subCategoryId,  int? colorGroupId,  bool inStockOnly,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey? sortKey,  bool sortAscending)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? inventoryTypeId,  int? categoryId,  int? subCategoryId,  int? colorGroupId,  StockFilter stockFilter,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey sortKey,  bool sortAscending)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ItemFilter() when $default != null:
-return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.inStockOnly,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
+return $default(_that.inventoryTypeId,_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.stockFilter,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.in
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? categoryId,  int? subCategoryId,  int? colorGroupId,  bool inStockOnly,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey? sortKey,  bool sortAscending)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? inventoryTypeId,  int? categoryId,  int? subCategoryId,  int? colorGroupId,  StockFilter stockFilter,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey sortKey,  bool sortAscending)  $default,) {final _that = this;
 switch (_that) {
 case _ItemFilter():
-return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.inStockOnly,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
+return $default(_that.inventoryTypeId,_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.stockFilter,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.in
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? categoryId,  int? subCategoryId,  int? colorGroupId,  bool inStockOnly,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey? sortKey,  bool sortAscending)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? inventoryTypeId,  int? categoryId,  int? subCategoryId,  int? colorGroupId,  StockFilter stockFilter,  String nameQuery,  int? favoriteMin,  int? favoriteMax,  ItemSortKey sortKey,  bool sortAscending)?  $default,) {final _that = this;
 switch (_that) {
 case _ItemFilter() when $default != null:
-return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.inStockOnly,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
+return $default(_that.inventoryTypeId,_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.stockFilter,_that.nameQuery,_that.favoriteMin,_that.favoriteMax,_that.sortKey,_that.sortAscending);case _:
   return null;
 
 }
@@ -214,17 +215,18 @@ return $default(_that.categoryId,_that.subCategoryId,_that.colorGroupId,_that.in
 
 
 class _ItemFilter implements ItemFilter {
-  const _ItemFilter({this.categoryId, this.subCategoryId, this.colorGroupId, this.inStockOnly = false, this.nameQuery = '', this.favoriteMin, this.favoriteMax, this.sortKey, this.sortAscending = true});
+  const _ItemFilter({this.inventoryTypeId, this.categoryId, this.subCategoryId, this.colorGroupId, this.stockFilter = StockFilter.all, this.nameQuery = '', this.favoriteMin, this.favoriteMax, this.sortKey = ItemSortKey.name, this.sortAscending = true});
   
 
+@override final  int? inventoryTypeId;
 @override final  int? categoryId;
 @override final  int? subCategoryId;
 @override final  int? colorGroupId;
-@override@JsonKey() final  bool inStockOnly;
+@override@JsonKey() final  StockFilter stockFilter;
 @override@JsonKey() final  String nameQuery;
 @override final  int? favoriteMin;
 @override final  int? favoriteMax;
-@override final  ItemSortKey? sortKey;
+@override@JsonKey() final  ItemSortKey sortKey;
 @override@JsonKey() final  bool sortAscending;
 
 /// Create a copy of ItemFilter
@@ -237,16 +239,16 @@ _$ItemFilterCopyWith<_ItemFilter> get copyWith => __$ItemFilterCopyWithImpl<_Ite
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemFilter&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.colorGroupId, colorGroupId) || other.colorGroupId == colorGroupId)&&(identical(other.inStockOnly, inStockOnly) || other.inStockOnly == inStockOnly)&&(identical(other.nameQuery, nameQuery) || other.nameQuery == nameQuery)&&(identical(other.favoriteMin, favoriteMin) || other.favoriteMin == favoriteMin)&&(identical(other.favoriteMax, favoriteMax) || other.favoriteMax == favoriteMax)&&(identical(other.sortKey, sortKey) || other.sortKey == sortKey)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemFilter&&(identical(other.inventoryTypeId, inventoryTypeId) || other.inventoryTypeId == inventoryTypeId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subCategoryId, subCategoryId) || other.subCategoryId == subCategoryId)&&(identical(other.colorGroupId, colorGroupId) || other.colorGroupId == colorGroupId)&&(identical(other.stockFilter, stockFilter) || other.stockFilter == stockFilter)&&(identical(other.nameQuery, nameQuery) || other.nameQuery == nameQuery)&&(identical(other.favoriteMin, favoriteMin) || other.favoriteMin == favoriteMin)&&(identical(other.favoriteMax, favoriteMax) || other.favoriteMax == favoriteMax)&&(identical(other.sortKey, sortKey) || other.sortKey == sortKey)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,subCategoryId,colorGroupId,inStockOnly,nameQuery,favoriteMin,favoriteMax,sortKey,sortAscending);
+int get hashCode => Object.hash(runtimeType,inventoryTypeId,categoryId,subCategoryId,colorGroupId,stockFilter,nameQuery,favoriteMin,favoriteMax,sortKey,sortAscending);
 
 @override
 String toString() {
-  return 'ItemFilter(categoryId: $categoryId, subCategoryId: $subCategoryId, colorGroupId: $colorGroupId, inStockOnly: $inStockOnly, nameQuery: $nameQuery, favoriteMin: $favoriteMin, favoriteMax: $favoriteMax, sortKey: $sortKey, sortAscending: $sortAscending)';
+  return 'ItemFilter(inventoryTypeId: $inventoryTypeId, categoryId: $categoryId, subCategoryId: $subCategoryId, colorGroupId: $colorGroupId, stockFilter: $stockFilter, nameQuery: $nameQuery, favoriteMin: $favoriteMin, favoriteMax: $favoriteMax, sortKey: $sortKey, sortAscending: $sortAscending)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$ItemFilterCopyWith<$Res> implements $ItemFilterCopyWith<$
   factory _$ItemFilterCopyWith(_ItemFilter value, $Res Function(_ItemFilter) _then) = __$ItemFilterCopyWithImpl;
 @override @useResult
 $Res call({
- int? categoryId, int? subCategoryId, int? colorGroupId, bool inStockOnly, String nameQuery, int? favoriteMin, int? favoriteMax, ItemSortKey? sortKey, bool sortAscending
+ int? inventoryTypeId, int? categoryId, int? subCategoryId, int? colorGroupId, StockFilter stockFilter, String nameQuery, int? favoriteMin, int? favoriteMax, ItemSortKey sortKey, bool sortAscending
 });
 
 
@@ -274,17 +276,18 @@ class __$ItemFilterCopyWithImpl<$Res>
 
 /// Create a copy of ItemFilter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? categoryId = freezed,Object? subCategoryId = freezed,Object? colorGroupId = freezed,Object? inStockOnly = null,Object? nameQuery = null,Object? favoriteMin = freezed,Object? favoriteMax = freezed,Object? sortKey = freezed,Object? sortAscending = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? inventoryTypeId = freezed,Object? categoryId = freezed,Object? subCategoryId = freezed,Object? colorGroupId = freezed,Object? stockFilter = null,Object? nameQuery = null,Object? favoriteMin = freezed,Object? favoriteMax = freezed,Object? sortKey = null,Object? sortAscending = null,}) {
   return _then(_ItemFilter(
-categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+inventoryTypeId: freezed == inventoryTypeId ? _self.inventoryTypeId : inventoryTypeId // ignore: cast_nullable_to_non_nullable
+as int?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as int?,subCategoryId: freezed == subCategoryId ? _self.subCategoryId : subCategoryId // ignore: cast_nullable_to_non_nullable
 as int?,colorGroupId: freezed == colorGroupId ? _self.colorGroupId : colorGroupId // ignore: cast_nullable_to_non_nullable
-as int?,inStockOnly: null == inStockOnly ? _self.inStockOnly : inStockOnly // ignore: cast_nullable_to_non_nullable
-as bool,nameQuery: null == nameQuery ? _self.nameQuery : nameQuery // ignore: cast_nullable_to_non_nullable
+as int?,stockFilter: null == stockFilter ? _self.stockFilter : stockFilter // ignore: cast_nullable_to_non_nullable
+as StockFilter,nameQuery: null == nameQuery ? _self.nameQuery : nameQuery // ignore: cast_nullable_to_non_nullable
 as String,favoriteMin: freezed == favoriteMin ? _self.favoriteMin : favoriteMin // ignore: cast_nullable_to_non_nullable
 as int?,favoriteMax: freezed == favoriteMax ? _self.favoriteMax : favoriteMax // ignore: cast_nullable_to_non_nullable
-as int?,sortKey: freezed == sortKey ? _self.sortKey : sortKey // ignore: cast_nullable_to_non_nullable
-as ItemSortKey?,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
+as int?,sortKey: null == sortKey ? _self.sortKey : sortKey // ignore: cast_nullable_to_non_nullable
+as ItemSortKey,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
