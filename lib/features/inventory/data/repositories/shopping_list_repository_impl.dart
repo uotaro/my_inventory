@@ -65,6 +65,13 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   }
 
   @override
+  Future<void> removeItemByItemId(int itemId) {
+    return (_db.delete(
+      _db.shoppingListEntries,
+    )..where((t) => t.itemId.equals(itemId))).go();
+  }
+
+  @override
   Future<void> setPurchaseQuantity(int entryId, double quantity) {
     final clampedQuantity = quantity < 0 ? 0.0 : quantity;
     return (_db.update(

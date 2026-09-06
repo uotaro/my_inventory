@@ -277,6 +277,12 @@ abstract class L10n {
   /// **'買い物リストに追加済みです'**
   String get alreadyInShoppingListTooltip;
 
+  /// No description provided for @removeFromShoppingListLabel.
+  ///
+  /// In ja, this message translates to:
+  /// **'除外'**
+  String get removeFromShoppingListLabel;
+
   /// No description provided for @searchByNameLabel.
   ///
   /// In ja, this message translates to:

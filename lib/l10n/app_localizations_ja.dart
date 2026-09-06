@@ -107,6 +107,9 @@ class L10nJa extends L10n {
   String get alreadyInShoppingListTooltip => '買い物リストに追加済みです';
 
   @override
+  String get removeFromShoppingListLabel => '除外';
+
+  @override
   String get searchByNameLabel => '品名で検索';
 
   @override
