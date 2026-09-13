@@ -52,4 +52,41 @@ void main() {
     expect(rows[1].name, '目安設定済みアイテム');
     expect(rows[1].lowStockThreshold, 5.0);
   });
+
+  test('schemaVersion 8→9で、既存の買い物リストはcreatedAt昇順でsortOrderが振られる', () async {
+    final rawDb = sqlite3.sqlite3.openInMemory();
+    rawDb.execute('''
+      CREATE TABLE shopping_list_entries (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        item_id INTEGER NOT NULL UNIQUE,
+        purchase_quantity REAL NOT NULL DEFAULT 0.0,
+        created_at INTEGER NOT NULL
+      );
+    ''');
+    rawDb.execute('''
+      INSERT INTO shopping_list_entries (item_id, purchase_quantity, created_at)
+      VALUES
+        (3, 1.0, 300),
+        (1, 2.0, 100),
+        (2, 0.0, 200);
+    ''');
+    rawDb.execute('PRAGMA user_version = 8;');
+
+    final db = local.AppDatabase.forTesting(NativeDatabase.opened(rawDb));
+    addTearDown(db.close);
+
+    final rows =
+        await (db.select(db.shoppingListEntries)
+              ..orderBy([(t) => OrderingTerm(expression: t.sortOrder)]))
+            .get();
+
+    expect(rows, hasLength(3));
+    // createdAtが古い順（item_id=1,2,3）にsortOrderが0,1,2で振られる。
+    expect(rows[0].itemId, 1);
+    expect(rows[0].sortOrder, 0);
+    expect(rows[1].itemId, 2);
+    expect(rows[1].sortOrder, 1);
+    expect(rows[2].itemId, 3);
+    expect(rows[2].sortOrder, 2);
+  });
 }
