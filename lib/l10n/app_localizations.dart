@@ -103,55 +103,55 @@ abstract class L10n {
   /// **'my在庫'**
   String get appTitle;
 
-  /// No description provided for @cancel.
+  /// キャンセル操作の共通ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'キャンセル'**
   String get cancel;
 
-  /// No description provided for @delete.
+  /// 削除操作の共通ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'削除'**
   String get delete;
 
-  /// No description provided for @save.
+  /// 保存操作の共通ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'保存'**
   String get save;
 
-  /// No description provided for @add.
+  /// 追加操作の共通ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'追加'**
   String get add;
 
-  /// No description provided for @ok.
+  /// 確認ダイアログのOKボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'OK'**
   String get ok;
 
-  /// No description provided for @errorTitle.
+  /// エラーダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'CAUTION'**
   String get errorTitle;
 
-  /// No description provided for @confirmDeleteTitle.
+  /// 削除確認ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'削除の確認'**
   String get confirmDeleteTitle;
 
-  /// No description provided for @unset.
+  /// 分類・色などが未設定であることを示すラベル
   ///
   /// In ja, this message translates to:
   /// **'未設定'**
   String get unset;
 
-  /// No description provided for @all.
+  /// 絞り込み条件「すべて」のラベル
   ///
   /// In ja, this message translates to:
   /// **'すべて'**
@@ -181,211 +181,223 @@ abstract class L10n {
   /// **'「{name}」を削除しますか？'**
   String confirmDeleteNamedMessage(String name);
 
-  /// No description provided for @itemListTitle.
+  /// 在庫一覧画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'在庫一覧'**
   String get itemListTitle;
 
-  /// No description provided for @searchBarcodeTooltip.
+  /// バーコード検索ボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'バーコードで検索'**
   String get searchBarcodeTooltip;
 
-  /// No description provided for @sortTooltip.
+  /// 並べ替えボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'並べ替え'**
   String get sortTooltip;
 
-  /// No description provided for @sortDialogTitle.
+  /// 並べ替え設定ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'並べ替え設定'**
   String get sortDialogTitle;
 
-  /// No description provided for @sortByNameLabel.
+  /// 並べ替え基準「品名」のラベル
   ///
   /// In ja, this message translates to:
   /// **'品名'**
   String get sortByNameLabel;
 
-  /// No description provided for @sortByQuantityLabel.
+  /// 並べ替え基準「在庫数」のラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫数'**
   String get sortByQuantityLabel;
 
-  /// No description provided for @sortByFavoriteLabel.
+  /// 並べ替え基準「お気に入り」のラベル
   ///
   /// In ja, this message translates to:
   /// **'お気に入り'**
   String get sortByFavoriteLabel;
 
-  /// No description provided for @sortByCategoryLabel.
+  /// 並べ替え基準「分類」のラベル
   ///
   /// In ja, this message translates to:
   /// **'分類'**
   String get sortByCategoryLabel;
 
-  /// No description provided for @sortAscendingLabel.
+  /// 並び順「昇順」のラベル
   ///
   /// In ja, this message translates to:
   /// **'昇順'**
   String get sortAscendingLabel;
 
-  /// No description provided for @sortDescendingLabel.
+  /// 並び順「降順」のラベル
   ///
   /// In ja, this message translates to:
   /// **'降順'**
   String get sortDescendingLabel;
 
-  /// No description provided for @sortResetLabel.
+  /// 並べ替え設定をリセットするボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'リセット'**
   String get sortResetLabel;
 
-  /// No description provided for @masterDataTooltip.
+  /// マスタ管理画面を開くボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'マスタ管理'**
   String get masterDataTooltip;
 
-  /// No description provided for @shoppingListTooltip.
+  /// 買い物リスト画面を開くボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'買い物リスト'**
   String get shoppingListTooltip;
 
-  /// No description provided for @appInfoTooltip.
+  /// アプリ情報画面を開くボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'アプリ情報'**
   String get appInfoTooltip;
 
-  /// No description provided for @addToShoppingListLabel.
+  /// 買い物リストへ追加するボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'追加'**
   String get addToShoppingListLabel;
 
-  /// No description provided for @alreadyInShoppingListTooltip.
+  /// 既に買い物リストに追加済みであることを示すツールチップ
   ///
   /// In ja, this message translates to:
   /// **'買い物リストに追加済みです'**
   String get alreadyInShoppingListTooltip;
 
-  /// No description provided for @removeFromShoppingListLabel.
+  /// 買い物リストから除外するボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'除外'**
   String get removeFromShoppingListLabel;
 
-  /// No description provided for @searchByNameLabel.
+  /// 品名検索欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'品名で検索'**
   String get searchByNameLabel;
 
-  /// No description provided for @searchResetTooltip.
+  /// 検索条件をリセットするボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'検索リセット'**
   String get searchResetTooltip;
 
-  /// No description provided for @inventoryTypeLabel.
+  /// 検索条件エリアを縮小表示に切り替えるボタンのツールチップ
+  ///
+  /// In ja, this message translates to:
+  /// **'検索条件エリアを縮小表示'**
+  String get collapseSearchAreaTooltip;
+
+  /// 検索条件エリアを通常表示に切り替えるボタンのツールチップ
+  ///
+  /// In ja, this message translates to:
+  /// **'検索条件エリアを通常表示'**
+  String get expandSearchAreaTooltip;
+
+  /// 大分類の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'大分類'**
   String get inventoryTypeLabel;
 
-  /// No description provided for @categoryLabel.
+  /// 中分類の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'中分類'**
   String get categoryLabel;
 
-  /// No description provided for @colorGroupLabel.
+  /// 色系統の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'色系統'**
   String get colorGroupLabel;
 
-  /// No description provided for @colorGroupBlue.
+  /// 色系統「青系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'青系'**
   String get colorGroupBlue;
 
-  /// No description provided for @colorGroupRed.
+  /// 色系統「赤系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'赤系'**
   String get colorGroupRed;
 
-  /// No description provided for @colorGroupGreen.
+  /// 色系統「緑系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'緑系'**
   String get colorGroupGreen;
 
-  /// No description provided for @colorGroupYellow.
+  /// 色系統「黄系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'黄系'**
   String get colorGroupYellow;
 
-  /// No description provided for @colorGroupMonochrome.
+  /// 色系統「白黒グレー系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'白黒グレー系'**
   String get colorGroupMonochrome;
 
-  /// No description provided for @colorGroupBeigeBrown.
+  /// 色系統「ベージュ・茶系」のラベル
   ///
   /// In ja, this message translates to:
   /// **'ベージュ・茶系'**
   String get colorGroupBeigeBrown;
 
-  /// No description provided for @colorGroupPatternOther.
+  /// 色系統「柄・その他」のラベル
   ///
   /// In ja, this message translates to:
   /// **'柄・その他'**
   String get colorGroupPatternOther;
 
-  /// No description provided for @subCategoryLabel.
+  /// 小分類の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'小分類'**
   String get subCategoryLabel;
 
-  /// No description provided for @filterByFavoriteLabel.
+  /// お気に入りで絞り込むボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'お気に入り'**
   String get filterByFavoriteLabel;
 
-  /// No description provided for @favoriteFilterDialogTitle.
+  /// お気に入り絞り込みダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'お気に入りで絞り込み'**
   String get favoriteFilterDialogTitle;
 
-  /// No description provided for @favoriteMinLabel.
+  /// お気に入り絞り込みの最小値ラベル
   ///
   /// In ja, this message translates to:
   /// **'最小'**
   String get favoriteMinLabel;
 
-  /// No description provided for @favoriteMaxLabel.
+  /// お気に入り絞り込みの最大値ラベル
   ///
   /// In ja, this message translates to:
   /// **'最大'**
   String get favoriteMaxLabel;
 
-  /// No description provided for @favoriteRangeAny.
+  /// お気に入り絞り込み「すべて」のラベル
   ///
   /// In ja, this message translates to:
   /// **'すべて'**
@@ -415,61 +427,61 @@ abstract class L10n {
   /// **'★{value}'**
   String favoriteRangeExact(int value);
 
-  /// No description provided for @stockFilterLabel.
+  /// 在庫状況の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫'**
   String get stockFilterLabel;
 
-  /// No description provided for @stockFilterInStock.
+  /// 在庫状況「在庫あり」の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫あり'**
   String get stockFilterInStock;
 
-  /// No description provided for @stockFilterLowStock.
+  /// 在庫状況「在庫不足」の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫不足'**
   String get stockFilterLowStock;
 
-  /// No description provided for @stockFilterZero.
+  /// 在庫状況「在庫0」の絞り込みラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫0'**
   String get stockFilterZero;
 
-  /// No description provided for @noMatchingItems.
+  /// 検索・絞り込み結果が0件のときのメッセージ
   ///
   /// In ja, this message translates to:
   /// **'該当するアイテムがありません'**
   String get noMatchingItems;
 
-  /// No description provided for @itemNotFoundCreatingNew.
+  /// バーコード検索で該当なしのため新規登録に進むメッセージ
   ///
   /// In ja, this message translates to:
   /// **'該当するアイテムが見つかりませんでした。新規登録します'**
   String get itemNotFoundCreatingNew;
 
-  /// No description provided for @manualAdjustmentReason.
+  /// 在庫数を手動で調整した際の履歴理由
   ///
   /// In ja, this message translates to:
   /// **'手動調整'**
   String get manualAdjustmentReason;
 
-  /// No description provided for @editItemTitle.
+  /// アイテム編集画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'アイテムを編集'**
   String get editItemTitle;
 
-  /// No description provided for @addItemTitle.
+  /// アイテム登録画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'アイテムを登録'**
   String get addItemTitle;
 
-  /// No description provided for @barcodeAlreadyRegistered.
+  /// 入力したバーコードが他アイテムで使用済みの場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'このバーコードは既に他のアイテムに登録されています'**
@@ -481,193 +493,199 @@ abstract class L10n {
   /// **'「{name}」を削除しますか？'**
   String confirmDeleteItemMessage(String name);
 
-  /// No description provided for @nameLabel.
+  /// 品名入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'品名 *'**
   String get nameLabel;
 
-  /// No description provided for @nameRequiredError.
+  /// 品名未入力時のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'品名は必須です'**
   String get nameRequiredError;
 
-  /// No description provided for @clearInputTooltip.
+  /// 入力内容をクリアするボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'入力をクリア'**
   String get clearInputTooltip;
 
-  /// No description provided for @inventoryTypeLabelRequired.
+  /// 大分類選択欄（必須）のラベル
   ///
   /// In ja, this message translates to:
   /// **'大分類 *'**
   String get inventoryTypeLabelRequired;
 
-  /// No description provided for @selectTypeFirst.
+  /// 大分類が未選択のときの案内メッセージ
   ///
   /// In ja, this message translates to:
   /// **'先に大分類を選択してください'**
   String get selectTypeFirst;
 
-  /// No description provided for @categoryLabelRequired.
+  /// 中分類選択欄（必須）のラベル
   ///
   /// In ja, this message translates to:
   /// **'中分類 *'**
   String get categoryLabelRequired;
 
-  /// No description provided for @categoryRequiredError.
+  /// 中分類未選択時のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'中分類を選択してください'**
   String get categoryRequiredError;
 
-  /// No description provided for @selectCategoryFirst.
+  /// 中分類が未選択のときの案内メッセージ
   ///
   /// In ja, this message translates to:
   /// **'先に中分類を選択してください'**
   String get selectCategoryFirst;
 
-  /// No description provided for @colorLabel.
+  /// 色選択欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'色'**
   String get colorLabel;
 
-  /// No description provided for @unitLabelRequired.
+  /// 単位選択欄（必須）のラベル
   ///
   /// In ja, this message translates to:
   /// **'単位 *'**
   String get unitLabelRequired;
 
-  /// No description provided for @unitRequiredError.
+  /// 単位未選択時のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'単位を選択してください'**
   String get unitRequiredError;
 
-  /// No description provided for @favoriteRatingLabel.
+  /// お気に入り度入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'お気に入り'**
   String get favoriteRatingLabel;
 
-  /// No description provided for @quantityLabel.
+  /// 在庫数入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫数 *'**
   String get quantityLabel;
 
-  /// No description provided for @invalidNumberError.
+  /// 数値以外が入力された場合のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'数値で入力してください'**
   String get invalidNumberError;
 
-  /// No description provided for @negativeNumberError.
+  /// 負の数が入力された場合のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'0以上の数値を入力してください'**
   String get negativeNumberError;
 
-  /// No description provided for @lowStockThresholdLabel.
+  /// 在庫不足の目安入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫不足の目安 *'**
   String get lowStockThresholdLabel;
 
-  /// No description provided for @barcodeLabel.
+  /// バーコード入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'バーコード（手入力 or スキャン）'**
   String get barcodeLabel;
 
-  /// No description provided for @memoLabel.
+  /// メモ入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'メモ'**
   String get memoLabel;
 
-  /// No description provided for @takePhoto.
+  /// カメラで撮影する選択肢のラベル
   ///
   /// In ja, this message translates to:
   /// **'カメラで撮影'**
   String get takePhoto;
 
-  /// No description provided for @chooseFromGallery.
+  /// ギャラリーから画像を選択する選択肢のラベル
   ///
   /// In ja, this message translates to:
   /// **'ギャラリーから選択'**
   String get chooseFromGallery;
 
-  /// No description provided for @deleteImageLabel.
+  /// 登録済み画像を削除するボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'画像削除'**
   String get deleteImageLabel;
 
-  /// No description provided for @registerButtonLabel.
+  /// アイテム登録画面の登録ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'登録'**
   String get registerButtonLabel;
 
-  /// No description provided for @scanBarcodeTitle.
+  /// バーコードスキャン画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'バーコードをスキャン'**
   String get scanBarcodeTitle;
 
-  /// No description provided for @scanConfirmingLabel.
+  /// バーコードスキャン後、確認処理中であることを示すラベル
   ///
   /// In ja, this message translates to:
   /// **'確認中...'**
   String get scanConfirmingLabel;
 
-  /// No description provided for @masterDataTitle.
+  /// マスタ管理画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'マスタ管理'**
   String get masterDataTitle;
 
-  /// No description provided for @typesTab.
+  /// マスタ管理画面の「大分類」タブラベル
   ///
   /// In ja, this message translates to:
   /// **'大分類'**
   String get typesTab;
 
-  /// No description provided for @categoriesTab.
+  /// マスタ管理画面の「中分類」タブラベル
   ///
   /// In ja, this message translates to:
   /// **'中分類'**
   String get categoriesTab;
 
-  /// No description provided for @subCategoriesTab.
+  /// マスタ管理画面の「小分類」タブラベル
   ///
   /// In ja, this message translates to:
   /// **'小分類'**
   String get subCategoriesTab;
 
-  /// No description provided for @colorsTab.
+  /// マスタ管理画面の「色」タブラベル
   ///
   /// In ja, this message translates to:
   /// **'色'**
   String get colorsTab;
 
-  /// No description provided for @unitsTab.
+  /// マスタ管理画面の「単位」タブラベル
   ///
   /// In ja, this message translates to:
   /// **'単位'**
   String get unitsTab;
 
-  /// No description provided for @privacyPolicyLabel.
+  /// 使い方ガイドへのリンクラベル
+  ///
+  /// In ja, this message translates to:
+  /// **'このアプリの使い方'**
+  String get helpGuideLabel;
+
+  /// プライバシーポリシーへのリンクラベル
   ///
   /// In ja, this message translates to:
   /// **'プライバシーポリシー'**
   String get privacyPolicyLabel;
 
-  /// No description provided for @failedToOpenLink.
+  /// 外部リンクを開けなかった場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'リンクを開けませんでした'**
@@ -685,13 +703,13 @@ abstract class L10n {
   /// **'「{name}」は{count}件の中分類で使われているため削除できません'**
   String typeInUseCannotDelete(String name, int count);
 
-  /// No description provided for @lastInventoryTypeCannotDelete.
+  /// 大分類が最後の1件で削除できない場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'大分類は1件以上データが必要です'**
   String get lastInventoryTypeCannotDelete;
 
-  /// No description provided for @noTypesRegistered.
+  /// 大分類が1件も登録されていない場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'大分類が登録されていません'**
@@ -703,13 +721,13 @@ abstract class L10n {
   /// **'「{typeName}」に中分類を追加'**
   String addCategoryToType(String typeName);
 
-  /// No description provided for @noCategoriesInType.
+  /// 大分類配下に中分類が1件も無い場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'中分類なし'**
   String get noCategoriesInType;
 
-  /// No description provided for @noCategoriesRegistered.
+  /// 中分類が1件も登録されていない場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'中分類が登録されていません'**
@@ -721,7 +739,7 @@ abstract class L10n {
   /// **'「{categoryName}」に小分類を追加'**
   String addSubCategoryToCategory(String categoryName);
 
-  /// No description provided for @noSubCategories.
+  /// 中分類配下に小分類が1件も無い場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'小分類なし'**
@@ -733,7 +751,7 @@ abstract class L10n {
   /// **'「{name}」を削除しますか？\nこの小分類が設定されているアイテムは「未設定」になります。'**
   String confirmDeleteSubCategoryMessage(String name);
 
-  /// No description provided for @noColorsRegistered.
+  /// 色が1件も登録されていない場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'色が登録されていません'**
@@ -745,13 +763,13 @@ abstract class L10n {
   /// **'「{name}」を削除しますか？\nこの色が設定されているアイテムは「未設定」になります。'**
   String confirmDeleteColorMessage(String name);
 
-  /// No description provided for @noUnitsRegistered.
+  /// 単位が1件も登録されていない場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'単位が登録されていません'**
   String get noUnitsRegistered;
 
-  /// No description provided for @appInfoTitle.
+  /// アプリ情報画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'アプリ情報'**
@@ -763,79 +781,79 @@ abstract class L10n {
   /// **'バージョン {version} ({buildNumber})'**
   String appVersionWithBuild(String version, String buildNumber);
 
-  /// No description provided for @yahooAttributionLabel.
+  /// Yahoo! JAPAN Web APIを利用していることを示すクレジット表記
   ///
   /// In ja, this message translates to:
   /// **'Web Services by Yahoo! JAPAN'**
   String get yahooAttributionLabel;
 
-  /// No description provided for @nameRequiredGeneric.
+  /// 汎用的な名前未入力時のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'名前を入力してください'**
   String get nameRequiredGeneric;
 
-  /// No description provided for @addTypeTitle.
+  /// 大分類追加ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'新しい大分類を追加'**
   String get addTypeTitle;
 
-  /// No description provided for @typeNameHint.
+  /// 大分類名入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'大分類名（例: 手芸用品）'**
   String get typeNameHint;
 
-  /// No description provided for @duplicateTypeName.
+  /// 大分類名が重複している場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'同じ名前の大分類がすでに登録されています'**
   String get duplicateTypeName;
 
-  /// No description provided for @editTypeTitle.
+  /// 大分類編集ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'大分類を編集'**
   String get editTypeTitle;
 
-  /// No description provided for @typeNameLabel.
+  /// 大分類名入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'大分類名'**
   String get typeNameLabel;
 
-  /// No description provided for @categoryNameHint.
+  /// 中分類名入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'中分類名（例: 布）'**
   String get categoryNameHint;
 
-  /// No description provided for @duplicateCategoryName.
+  /// 中分類名が重複している場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'同じ名前の中分類がすでに登録されています'**
   String get duplicateCategoryName;
 
-  /// No description provided for @editCategoryTitle.
+  /// 中分類編集ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'中分類を編集'**
   String get editCategoryTitle;
 
-  /// No description provided for @categoryNameLabel.
+  /// 中分類名入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'中分類名'**
   String get categoryNameLabel;
 
-  /// No description provided for @subCategoryNameHint.
+  /// 小分類名入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'小分類名（例: フェルト）'**
   String get subCategoryNameHint;
 
-  /// No description provided for @duplicateSubCategoryName.
+  /// 小分類名が同一中分類内で重複している場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'この中分類には同じ名前の小分類がすでに登録されています'**
@@ -847,7 +865,7 @@ abstract class L10n {
   /// **'「{categoryName}」の小分類を編集'**
   String editSubCategoryOfCategory(String categoryName);
 
-  /// No description provided for @subCategoryNameLabel.
+  /// 小分類名入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'小分類名'**
@@ -859,127 +877,127 @@ abstract class L10n {
   /// **'色系統の取得に失敗しました: {message}'**
   String fetchColorGroupsFailed(String message);
 
-  /// No description provided for @noColorGroupsFound.
+  /// 色系統データが取得できなかった場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'色系統が見つかりませんでした'**
   String get noColorGroupsFound;
 
-  /// No description provided for @addColorOptionTitle.
+  /// 色追加ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'新しい色を追加'**
   String get addColorOptionTitle;
 
-  /// No description provided for @editColorOptionTitle.
+  /// 色編集ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'色を編集'**
   String get editColorOptionTitle;
 
-  /// No description provided for @selectColorTitle.
+  /// 色選択ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'色を選択'**
   String get selectColorTitle;
 
-  /// No description provided for @decide.
+  /// 色選択ダイアログの決定ボタンラベル
   ///
   /// In ja, this message translates to:
   /// **'決定'**
   String get decide;
 
-  /// No description provided for @colorNameRequiredError.
+  /// 色名未入力時のバリデーションエラー
   ///
   /// In ja, this message translates to:
   /// **'色名を入力してください'**
   String get colorNameRequiredError;
 
-  /// No description provided for @duplicateColorName.
+  /// 色名が重複している場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'同じ名前の色がすでに登録されています'**
   String get duplicateColorName;
 
-  /// No description provided for @colorNameHint.
+  /// 色名入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'色名（例: 水色）'**
   String get colorNameHint;
 
-  /// No description provided for @hexCodeHint.
+  /// カラーコード入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'カラーコード（任意, 例: #64B5F6）'**
   String get hexCodeHint;
 
-  /// No description provided for @addUnitTitle.
+  /// 単位追加ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'新しい単位を追加'**
   String get addUnitTitle;
 
-  /// No description provided for @unitNameHint.
+  /// 単位名入力欄のヒントテキスト
   ///
   /// In ja, this message translates to:
   /// **'単位名（例: 巻）'**
   String get unitNameHint;
 
-  /// No description provided for @duplicateUnitName.
+  /// 単位名が重複している場合のエラーメッセージ
   ///
   /// In ja, this message translates to:
   /// **'同じ名前の単位がすでに登録されています'**
   String get duplicateUnitName;
 
-  /// No description provided for @editUnitTitle.
+  /// 単位編集ダイアログのタイトル
   ///
   /// In ja, this message translates to:
   /// **'単位を編集'**
   String get editUnitTitle;
 
-  /// No description provided for @unitNameLabel.
+  /// 単位名入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'単位名'**
   String get unitNameLabel;
 
-  /// No description provided for @shoppingListTitle.
+  /// 買い物リスト画面のタイトル
   ///
   /// In ja, this message translates to:
   /// **'買い物リスト'**
   String get shoppingListTitle;
 
-  /// No description provided for @shoppingListEmptyMessage.
+  /// 買い物リストが空の場合のメッセージ
   ///
   /// In ja, this message translates to:
   /// **'買い物リストは空です'**
   String get shoppingListEmptyMessage;
 
-  /// No description provided for @purchaseTooltip.
+  /// 購入操作ボタンのツールチップ
   ///
   /// In ja, this message translates to:
   /// **'購入'**
   String get purchaseTooltip;
 
-  /// No description provided for @purchaseQuantityLabel.
+  /// 購入数入力欄のラベル
   ///
   /// In ja, this message translates to:
   /// **'購入数'**
   String get purchaseQuantityLabel;
 
-  /// No description provided for @purchaseAllButton.
+  /// 買い物リストの全アイテムを一括購入するボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'一括購入'**
   String get purchaseAllButton;
 
-  /// No description provided for @backToItemListButton.
+  /// 在庫一覧画面へ戻るボタンのラベル
   ///
   /// In ja, this message translates to:
   /// **'在庫一覧へ戻る'**
   String get backToItemListButton;
 
-  /// No description provided for @shoppingListPurchaseReason.
+  /// 買い物リストからの購入時の在庫増加履歴理由
   ///
   /// In ja, this message translates to:
   /// **'買い物リストからの購入'**

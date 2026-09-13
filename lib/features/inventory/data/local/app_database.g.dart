@@ -3187,12 +3187,25 @@ class $ShoppingListEntriesTable extends ShoppingListEntries
     requiredDuringInsert: false,
     clientDefault: () => DateTime.now(),
   );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     itemId,
     purchaseQuantity,
     createdAt,
+    sortOrder,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3232,6 +3245,12 @@ class $ShoppingListEntriesTable extends ShoppingListEntries
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
     }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
     return context;
   }
 
@@ -3257,6 +3276,10 @@ class $ShoppingListEntriesTable extends ShoppingListEntries
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
     );
   }
 
@@ -3272,11 +3295,13 @@ class ShoppingListEntry extends DataClass
   final int itemId;
   final double purchaseQuantity;
   final DateTime createdAt;
+  final int sortOrder;
   const ShoppingListEntry({
     required this.id,
     required this.itemId,
     required this.purchaseQuantity,
     required this.createdAt,
+    required this.sortOrder,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3285,6 +3310,7 @@ class ShoppingListEntry extends DataClass
     map['item_id'] = Variable<int>(itemId);
     map['purchase_quantity'] = Variable<double>(purchaseQuantity);
     map['created_at'] = Variable<DateTime>(createdAt);
+    map['sort_order'] = Variable<int>(sortOrder);
     return map;
   }
 
@@ -3294,6 +3320,7 @@ class ShoppingListEntry extends DataClass
       itemId: Value(itemId),
       purchaseQuantity: Value(purchaseQuantity),
       createdAt: Value(createdAt),
+      sortOrder: Value(sortOrder),
     );
   }
 
@@ -3307,6 +3334,7 @@ class ShoppingListEntry extends DataClass
       itemId: serializer.fromJson<int>(json['itemId']),
       purchaseQuantity: serializer.fromJson<double>(json['purchaseQuantity']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
     );
   }
   @override
@@ -3317,6 +3345,7 @@ class ShoppingListEntry extends DataClass
       'itemId': serializer.toJson<int>(itemId),
       'purchaseQuantity': serializer.toJson<double>(purchaseQuantity),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'sortOrder': serializer.toJson<int>(sortOrder),
     };
   }
 
@@ -3325,11 +3354,13 @@ class ShoppingListEntry extends DataClass
     int? itemId,
     double? purchaseQuantity,
     DateTime? createdAt,
+    int? sortOrder,
   }) => ShoppingListEntry(
     id: id ?? this.id,
     itemId: itemId ?? this.itemId,
     purchaseQuantity: purchaseQuantity ?? this.purchaseQuantity,
     createdAt: createdAt ?? this.createdAt,
+    sortOrder: sortOrder ?? this.sortOrder,
   );
   ShoppingListEntry copyWithCompanion(ShoppingListEntriesCompanion data) {
     return ShoppingListEntry(
@@ -3339,6 +3370,7 @@ class ShoppingListEntry extends DataClass
           ? data.purchaseQuantity.value
           : this.purchaseQuantity,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
     );
   }
 
@@ -3348,13 +3380,15 @@ class ShoppingListEntry extends DataClass
           ..write('id: $id, ')
           ..write('itemId: $itemId, ')
           ..write('purchaseQuantity: $purchaseQuantity, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('sortOrder: $sortOrder')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, itemId, purchaseQuantity, createdAt);
+  int get hashCode =>
+      Object.hash(id, itemId, purchaseQuantity, createdAt, sortOrder);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3362,7 +3396,8 @@ class ShoppingListEntry extends DataClass
           other.id == this.id &&
           other.itemId == this.itemId &&
           other.purchaseQuantity == this.purchaseQuantity &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.sortOrder == this.sortOrder);
 }
 
 class ShoppingListEntriesCompanion extends UpdateCompanion<ShoppingListEntry> {
@@ -3370,29 +3405,34 @@ class ShoppingListEntriesCompanion extends UpdateCompanion<ShoppingListEntry> {
   final Value<int> itemId;
   final Value<double> purchaseQuantity;
   final Value<DateTime> createdAt;
+  final Value<int> sortOrder;
   const ShoppingListEntriesCompanion({
     this.id = const Value.absent(),
     this.itemId = const Value.absent(),
     this.purchaseQuantity = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
   });
   ShoppingListEntriesCompanion.insert({
     this.id = const Value.absent(),
     required int itemId,
     this.purchaseQuantity = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
   }) : itemId = Value(itemId);
   static Insertable<ShoppingListEntry> custom({
     Expression<int>? id,
     Expression<int>? itemId,
     Expression<double>? purchaseQuantity,
     Expression<DateTime>? createdAt,
+    Expression<int>? sortOrder,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (itemId != null) 'item_id': itemId,
       if (purchaseQuantity != null) 'purchase_quantity': purchaseQuantity,
       if (createdAt != null) 'created_at': createdAt,
+      if (sortOrder != null) 'sort_order': sortOrder,
     });
   }
 
@@ -3401,12 +3441,14 @@ class ShoppingListEntriesCompanion extends UpdateCompanion<ShoppingListEntry> {
     Value<int>? itemId,
     Value<double>? purchaseQuantity,
     Value<DateTime>? createdAt,
+    Value<int>? sortOrder,
   }) {
     return ShoppingListEntriesCompanion(
       id: id ?? this.id,
       itemId: itemId ?? this.itemId,
       purchaseQuantity: purchaseQuantity ?? this.purchaseQuantity,
       createdAt: createdAt ?? this.createdAt,
+      sortOrder: sortOrder ?? this.sortOrder,
     );
   }
 
@@ -3425,6 +3467,9 @@ class ShoppingListEntriesCompanion extends UpdateCompanion<ShoppingListEntry> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
     return map;
   }
 
@@ -3434,7 +3479,8 @@ class ShoppingListEntriesCompanion extends UpdateCompanion<ShoppingListEntry> {
           ..write('id: $id, ')
           ..write('itemId: $itemId, ')
           ..write('purchaseQuantity: $purchaseQuantity, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('sortOrder: $sortOrder')
           ..write(')'))
         .toString();
   }
@@ -6957,6 +7003,7 @@ typedef $$ShoppingListEntriesTableCreateCompanionBuilder =
       required int itemId,
       Value<double> purchaseQuantity,
       Value<DateTime> createdAt,
+      Value<int> sortOrder,
     });
 typedef $$ShoppingListEntriesTableUpdateCompanionBuilder =
     ShoppingListEntriesCompanion Function({
@@ -6964,6 +7011,7 @@ typedef $$ShoppingListEntriesTableUpdateCompanionBuilder =
       Value<int> itemId,
       Value<double> purchaseQuantity,
       Value<DateTime> createdAt,
+      Value<int> sortOrder,
     });
 
 final class $$ShoppingListEntriesTableReferences
@@ -7021,6 +7069,11 @@ class $$ShoppingListEntriesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$ItemsTableFilterComposer get itemId {
     final $$ItemsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -7069,6 +7122,11 @@ class $$ShoppingListEntriesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$ItemsTableOrderingComposer get itemId {
     final $$ItemsTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -7112,6 +7170,9 @@ class $$ShoppingListEntriesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
   $$ItemsTableAnnotationComposer get itemId {
     final $$ItemsTableAnnotationComposer composer = $composerBuilder(
@@ -7177,11 +7238,13 @@ class $$ShoppingListEntriesTableTableManager
                 Value<int> itemId = const Value.absent(),
                 Value<double> purchaseQuantity = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
               }) => ShoppingListEntriesCompanion(
                 id: id,
                 itemId: itemId,
                 purchaseQuantity: purchaseQuantity,
                 createdAt: createdAt,
+                sortOrder: sortOrder,
               ),
           createCompanionCallback:
               ({
@@ -7189,11 +7252,13 @@ class $$ShoppingListEntriesTableTableManager
                 required int itemId,
                 Value<double> purchaseQuantity = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
               }) => ShoppingListEntriesCompanion.insert(
                 id: id,
                 itemId: itemId,
                 purchaseQuantity: purchaseQuantity,
                 createdAt: createdAt,
+                sortOrder: sortOrder,
               ),
           withReferenceMapper: (p0) => p0
               .map(

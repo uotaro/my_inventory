@@ -9,6 +9,7 @@ import '../../data/repositories/shopping_list_repository_impl.dart';
 import '../../domain/entities/shopping_list_entry.dart';
 import '../providers/shopping_list_provider.dart';
 import '../widgets/color_hex.dart';
+import '../widgets/reorder_helper.dart';
 
 class ShoppingListScreen extends ConsumerWidget {
   const ShoppingListScreen({super.key});
@@ -25,11 +26,22 @@ class ShoppingListScreen extends ConsumerWidget {
       body: entriesAsync.when(
         data: (list) => list.isEmpty
             ? Center(child: Text(l10n.shoppingListEmptyMessage))
-            : ListView.separated(
+            : ReorderableListView.builder(
                 itemCount: list.length,
-                separatorBuilder: (_, _) => const Divider(height: 1),
-                itemBuilder: (context, index) =>
-                    _ShoppingListTile(entry: list[index]),
+                // ignore: deprecated_member_use
+                onReorder: (oldIndex, newIndex) => handleReorder(
+                  items: list,
+                  oldIndex: oldIndex,
+                  newIndex: newIndex,
+                  sortOrderOf: (e) => e.sortOrder,
+                  persist: (e, sortOrder) => ref
+                      .read(shoppingListRepositoryProvider)
+                      .updateSortOrder(e.id, sortOrder),
+                ),
+                itemBuilder: (context, index) => _ShoppingListTile(
+                  key: ValueKey(list[index].id),
+                  entry: list[index],
+                ),
               ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) =>
@@ -119,7 +131,7 @@ Future<void> _editPurchaseQuantity(
 }
 
 class _ShoppingListTile extends ConsumerWidget {
-  const _ShoppingListTile({required this.entry});
+  const _ShoppingListTile({super.key, required this.entry});
 
   final ShoppingListEntry entry;
 

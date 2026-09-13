@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ShoppingListEntry {
 
- int get id; Item get item; double get purchaseQuantity; DateTime get createdAt;
+ int get id; Item get item; double get purchaseQuantity; DateTime get createdAt; int get sortOrder;
 /// Create a copy of ShoppingListEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ShoppingListEntryCopyWith<ShoppingListEntry> get copyWith => _$ShoppingListEntr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShoppingListEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.item, item) || other.item == item)&&(identical(other.purchaseQuantity, purchaseQuantity) || other.purchaseQuantity == purchaseQuantity)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShoppingListEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.item, item) || other.item == item)&&(identical(other.purchaseQuantity, purchaseQuantity) || other.purchaseQuantity == purchaseQuantity)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,item,purchaseQuantity,createdAt);
+int get hashCode => Object.hash(runtimeType,id,item,purchaseQuantity,createdAt,sortOrder);
 
 @override
 String toString() {
-  return 'ShoppingListEntry(id: $id, item: $item, purchaseQuantity: $purchaseQuantity, createdAt: $createdAt)';
+  return 'ShoppingListEntry(id: $id, item: $item, purchaseQuantity: $purchaseQuantity, createdAt: $createdAt, sortOrder: $sortOrder)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ShoppingListEntryCopyWith<$Res>  {
   factory $ShoppingListEntryCopyWith(ShoppingListEntry value, $Res Function(ShoppingListEntry) _then) = _$ShoppingListEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, Item item, double purchaseQuantity, DateTime createdAt
+ int id, Item item, double purchaseQuantity, DateTime createdAt, int sortOrder
 });
 
 
@@ -62,13 +62,14 @@ class _$ShoppingListEntryCopyWithImpl<$Res>
 
 /// Create a copy of ShoppingListEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? item = null,Object? purchaseQuantity = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? item = null,Object? purchaseQuantity = null,Object? createdAt = null,Object? sortOrder = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,item: null == item ? _self.item : item // ignore: cast_nullable_to_non_nullable
 as Item,purchaseQuantity: null == purchaseQuantity ? _self.purchaseQuantity : purchaseQuantity // ignore: cast_nullable_to_non_nullable
 as double,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 /// Create a copy of ShoppingListEntry
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt,  int sortOrder)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ShoppingListEntry() when $default != null:
-return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case _:
+return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt,_that.sortOrder);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt,  int sortOrder)  $default,) {final _that = this;
 switch (_that) {
 case _ShoppingListEntry():
-return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case _:
+return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt,_that.sortOrder);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +204,10 @@ return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  Item item,  double purchaseQuantity,  DateTime createdAt,  int sortOrder)?  $default,) {final _that = this;
 switch (_that) {
 case _ShoppingListEntry() when $default != null:
-return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case _:
+return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt,_that.sortOrder);case _:
   return null;
 
 }
@@ -218,13 +219,14 @@ return $default(_that.id,_that.item,_that.purchaseQuantity,_that.createdAt);case
 
 
 class _ShoppingListEntry implements ShoppingListEntry {
-  const _ShoppingListEntry({required this.id, required this.item, required this.purchaseQuantity, required this.createdAt});
+  const _ShoppingListEntry({required this.id, required this.item, required this.purchaseQuantity, required this.createdAt, required this.sortOrder});
   
 
 @override final  int id;
 @override final  Item item;
 @override final  double purchaseQuantity;
 @override final  DateTime createdAt;
+@override final  int sortOrder;
 
 /// Create a copy of ShoppingListEntry
 /// with the given fields replaced by the non-null parameter values.
@@ -236,16 +238,16 @@ _$ShoppingListEntryCopyWith<_ShoppingListEntry> get copyWith => __$ShoppingListE
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShoppingListEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.item, item) || other.item == item)&&(identical(other.purchaseQuantity, purchaseQuantity) || other.purchaseQuantity == purchaseQuantity)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ShoppingListEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.item, item) || other.item == item)&&(identical(other.purchaseQuantity, purchaseQuantity) || other.purchaseQuantity == purchaseQuantity)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.sortOrder, sortOrder) || other.sortOrder == sortOrder));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,item,purchaseQuantity,createdAt);
+int get hashCode => Object.hash(runtimeType,id,item,purchaseQuantity,createdAt,sortOrder);
 
 @override
 String toString() {
-  return 'ShoppingListEntry(id: $id, item: $item, purchaseQuantity: $purchaseQuantity, createdAt: $createdAt)';
+  return 'ShoppingListEntry(id: $id, item: $item, purchaseQuantity: $purchaseQuantity, createdAt: $createdAt, sortOrder: $sortOrder)';
 }
 
 
@@ -256,7 +258,7 @@ abstract mixin class _$ShoppingListEntryCopyWith<$Res> implements $ShoppingListE
   factory _$ShoppingListEntryCopyWith(_ShoppingListEntry value, $Res Function(_ShoppingListEntry) _then) = __$ShoppingListEntryCopyWithImpl;
 @override @useResult
 $Res call({
- int id, Item item, double purchaseQuantity, DateTime createdAt
+ int id, Item item, double purchaseQuantity, DateTime createdAt, int sortOrder
 });
 
 
@@ -273,13 +275,14 @@ class __$ShoppingListEntryCopyWithImpl<$Res>
 
 /// Create a copy of ShoppingListEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? item = null,Object? purchaseQuantity = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? item = null,Object? purchaseQuantity = null,Object? createdAt = null,Object? sortOrder = null,}) {
   return _then(_ShoppingListEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,item: null == item ? _self.item : item // ignore: cast_nullable_to_non_nullable
 as Item,purchaseQuantity: null == purchaseQuantity ? _self.purchaseQuantity : purchaseQuantity // ignore: cast_nullable_to_non_nullable
 as double,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,sortOrder: null == sortOrder ? _self.sortOrder : sortOrder // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

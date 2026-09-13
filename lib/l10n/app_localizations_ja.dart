@@ -116,6 +116,12 @@ class L10nJa extends L10n {
   String get searchResetTooltip => '検索リセット';
 
   @override
+  String get collapseSearchAreaTooltip => '検索条件エリアを縮小表示';
+
+  @override
+  String get expandSearchAreaTooltip => '検索条件エリアを通常表示';
+
+  @override
   String get inventoryTypeLabel => '大分類';
 
   @override
@@ -307,6 +313,9 @@ class L10nJa extends L10n {
 
   @override
   String get unitsTab => '単位';
+
+  @override
+  String get helpGuideLabel => 'このアプリの使い方';
 
   @override
   String get privacyPolicyLabel => 'プライバシーポリシー';

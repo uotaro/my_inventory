@@ -35,7 +35,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -65,7 +65,11 @@ class AppDatabase extends _$AppDatabase {
         await _makeLowStockThresholdRequired(m);
       }
       if (from < 8) {
+        // createTableは現在のテーブル定義（sortOrderカラムを含む）で作成するため、
+        // このタイミングで新規作成された場合はaddColumnが不要（かつ重複エラーになる）。
         await m.createTable(shoppingListEntries);
+      } else if (from < 9) {
+        await _backfillShoppingListSortOrder(m);
       }
     },
   );
@@ -247,6 +251,24 @@ class AppDatabase extends _$AppDatabase {
         },
       ),
     );
+  }
+
+  /// schemaVersion 8以前はsortOrderカラムが存在せず、買い物リストは常にcreatedAt昇順
+  /// で表示していた。カラム追加直後は全件sortOrder=0になってしまうため、
+  /// 既存データの表示順が変わらないようcreatedAt昇順で0始まりの連番を振り直す。
+  Future<void> _backfillShoppingListSortOrder(Migrator m) async {
+    await m.addColumn(shoppingListEntries, shoppingListEntries.sortOrder);
+
+    final entries = await (select(
+      shoppingListEntries,
+    )..orderBy([(t) => OrderingTerm(expression: t.createdAt)])).get();
+    for (var i = 0; i < entries.length; i++) {
+      await (update(
+        shoppingListEntries,
+      )..where((t) => t.id.equals(entries[i].id))).write(
+        ShoppingListEntriesCompanion(sortOrder: Value(i)),
+      );
+    }
   }
 
   static QueryExecutor _openConnection() {

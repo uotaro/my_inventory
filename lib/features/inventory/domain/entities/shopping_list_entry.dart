@@ -11,5 +11,6 @@ abstract class ShoppingListEntry with _$ShoppingListEntry {
     required Item item,
     required double purchaseQuantity,
     required DateTime createdAt,
+    required int sortOrder,
   }) = _ShoppingListEntry;
 }

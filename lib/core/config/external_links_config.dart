@@ -1,3 +1,6 @@
+/// 使い方ガイドページのURL（本リポジトリのdocs/help/をGitHub Pagesで公開）。
+const helpGuideUrl = 'https://uotaro.github.io/my_inventory/help/';
+
 /// プライバシーポリシーページのURL。
 const privacyPolicyUrl = 'https://uotaro.github.io/my_inventory_privacy_policy/';
 

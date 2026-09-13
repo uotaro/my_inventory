@@ -214,8 +214,8 @@ return $default(_that.inventoryTypeId,_that.categoryId,_that.subCategoryId,_that
 /// @nodoc
 
 
-class _ItemFilter implements ItemFilter {
-  const _ItemFilter({this.inventoryTypeId, this.categoryId, this.subCategoryId, this.colorGroupId, this.stockFilter = StockFilter.all, this.nameQuery = '', this.favoriteMin, this.favoriteMax, this.sortKey = ItemSortKey.name, this.sortAscending = true});
+class _ItemFilter extends ItemFilter {
+  const _ItemFilter({this.inventoryTypeId, this.categoryId, this.subCategoryId, this.colorGroupId, this.stockFilter = StockFilter.all, this.nameQuery = '', this.favoriteMin, this.favoriteMax, this.sortKey = ItemSortKey.name, this.sortAscending = true}): super._();
   
 
 @override final  int? inventoryTypeId;

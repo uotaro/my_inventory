@@ -9,4 +9,5 @@ class ShoppingListEntries extends Table {
   RealColumn get purchaseQuantity => real().withDefault(const Constant(0))();
   DateTimeColumn get createdAt =>
       dateTime().clientDefault(() => DateTime.now())();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
 }

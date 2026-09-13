@@ -43,18 +43,29 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   @override
   Stream<List<ShoppingListEntry>> watchShoppingList() {
     final query = _baseQuery()
-      ..orderBy([OrderingTerm(expression: _db.shoppingListEntries.createdAt)]);
+      ..orderBy([OrderingTerm(expression: _db.shoppingListEntries.sortOrder)]);
     return query.watch().map((rows) => rows.map(_toDomain).toList());
   }
 
   @override
   Future<void> addItem(int itemId) async {
-    await _db
-        .into(_db.shoppingListEntries)
-        .insert(
-          local.ShoppingListEntriesCompanion.insert(itemId: itemId),
-          mode: InsertMode.insertOrIgnore,
-        );
+    await _db.transaction(() async {
+      final maxSortOrder = _db.shoppingListEntries.sortOrder.max();
+      final currentMax = await (_db.selectOnly(_db.shoppingListEntries)
+            ..addColumns([maxSortOrder]))
+          .map((row) => row.read(maxSortOrder))
+          .getSingleOrNull();
+
+      await _db
+          .into(_db.shoppingListEntries)
+          .insert(
+            local.ShoppingListEntriesCompanion.insert(
+              itemId: itemId,
+              sortOrder: Value((currentMax ?? -1) + 1),
+            ),
+            mode: InsertMode.insertOrIgnore,
+          );
+    });
   }
 
   @override
@@ -80,6 +91,15 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
       local.ShoppingListEntriesCompanion(
         purchaseQuantity: Value(clampedQuantity),
       ),
+    );
+  }
+
+  @override
+  Future<void> updateSortOrder(int entryId, int sortOrder) {
+    return (_db.update(
+      _db.shoppingListEntries,
+    )..where((t) => t.id.equals(entryId))).write(
+      local.ShoppingListEntriesCompanion(sortOrder: Value(sortOrder)),
     );
   }
 
@@ -147,6 +167,7 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
       item: itemFromRow(_db, row),
       purchaseQuantity: entryRow.purchaseQuantity,
       createdAt: entryRow.createdAt,
+      sortOrder: entryRow.sortOrder,
     );
   }
 }

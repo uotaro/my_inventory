@@ -116,6 +116,12 @@ class L10nEn extends L10n {
   String get searchResetTooltip => 'Reset search';
 
   @override
+  String get collapseSearchAreaTooltip => 'Collapse search area';
+
+  @override
+  String get expandSearchAreaTooltip => 'Expand search area';
+
+  @override
   String get inventoryTypeLabel => 'Department';
 
   @override
@@ -309,6 +315,9 @@ class L10nEn extends L10n {
 
   @override
   String get unitsTab => 'Units';
+
+  @override
+  String get helpGuideLabel => 'How to Use This App';
 
   @override
   String get privacyPolicyLabel => 'Privacy Policy';

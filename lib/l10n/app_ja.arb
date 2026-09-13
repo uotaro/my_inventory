@@ -7,14 +7,41 @@
     },
 
     "cancel": "キャンセル",
+    "@cancel": {
+        "description": "キャンセル操作の共通ボタンラベル"
+    },
     "delete": "削除",
+    "@delete": {
+        "description": "削除操作の共通ボタンラベル"
+    },
     "save": "保存",
+    "@save": {
+        "description": "保存操作の共通ボタンラベル"
+    },
     "add": "追加",
+    "@add": {
+        "description": "追加操作の共通ボタンラベル"
+    },
     "ok": "OK",
+    "@ok": {
+        "description": "確認ダイアログのOKボタンラベル"
+    },
     "errorTitle": "CAUTION",
+    "@errorTitle": {
+        "description": "エラーダイアログのタイトル"
+    },
     "confirmDeleteTitle": "削除の確認",
+    "@confirmDeleteTitle": {
+        "description": "削除確認ダイアログのタイトル"
+    },
     "unset": "未設定",
+    "@unset": {
+        "description": "分類・色などが未設定であることを示すラベル"
+    },
     "all": "すべて",
+    "@all": {
+        "description": "絞り込み条件「すべて」のラベル"
+    },
 
     "errorWithMessage": "エラー: {message}",
     "@errorWithMessage": {
@@ -34,40 +61,153 @@
     },
 
     "itemListTitle": "在庫一覧",
+    "@itemListTitle": {
+        "description": "在庫一覧画面のタイトル"
+    },
     "searchBarcodeTooltip": "バーコードで検索",
+    "@searchBarcodeTooltip": {
+        "description": "バーコード検索ボタンのツールチップ"
+    },
     "sortTooltip": "並べ替え",
+    "@sortTooltip": {
+        "description": "並べ替えボタンのツールチップ"
+    },
     "sortDialogTitle": "並べ替え設定",
+    "@sortDialogTitle": {
+        "description": "並べ替え設定ダイアログのタイトル"
+    },
     "sortByNameLabel": "品名",
+    "@sortByNameLabel": {
+        "description": "並べ替え基準「品名」のラベル"
+    },
     "sortByQuantityLabel": "在庫数",
+    "@sortByQuantityLabel": {
+        "description": "並べ替え基準「在庫数」のラベル"
+    },
     "sortByFavoriteLabel": "お気に入り",
+    "@sortByFavoriteLabel": {
+        "description": "並べ替え基準「お気に入り」のラベル"
+    },
     "sortByCategoryLabel": "分類",
+    "@sortByCategoryLabel": {
+        "description": "並べ替え基準「分類」のラベル"
+    },
     "sortAscendingLabel": "昇順",
+    "@sortAscendingLabel": {
+        "description": "並び順「昇順」のラベル"
+    },
     "sortDescendingLabel": "降順",
+    "@sortDescendingLabel": {
+        "description": "並び順「降順」のラベル"
+    },
     "sortResetLabel": "リセット",
+    "@sortResetLabel": {
+        "description": "並べ替え設定をリセットするボタンのラベル"
+    },
     "masterDataTooltip": "マスタ管理",
+    "@masterDataTooltip": {
+        "description": "マスタ管理画面を開くボタンのツールチップ"
+    },
     "shoppingListTooltip": "買い物リスト",
+    "@shoppingListTooltip": {
+        "description": "買い物リスト画面を開くボタンのツールチップ"
+    },
     "appInfoTooltip": "アプリ情報",
+    "@appInfoTooltip": {
+        "description": "アプリ情報画面を開くボタンのツールチップ"
+    },
     "addToShoppingListLabel": "追加",
+    "@addToShoppingListLabel": {
+        "description": "買い物リストへ追加するボタンのラベル"
+    },
     "alreadyInShoppingListTooltip": "買い物リストに追加済みです",
+    "@alreadyInShoppingListTooltip": {
+        "description": "既に買い物リストに追加済みであることを示すツールチップ"
+    },
     "removeFromShoppingListLabel": "除外",
+    "@removeFromShoppingListLabel": {
+        "description": "買い物リストから除外するボタンのラベル"
+    },
     "searchByNameLabel": "品名で検索",
+    "@searchByNameLabel": {
+        "description": "品名検索欄のラベル"
+    },
     "searchResetTooltip": "検索リセット",
+    "@searchResetTooltip": {
+        "description": "検索条件をリセットするボタンのツールチップ"
+    },
+    "collapseSearchAreaTooltip": "検索条件エリアを縮小表示",
+    "@collapseSearchAreaTooltip": {
+        "description": "検索条件エリアを縮小表示に切り替えるボタンのツールチップ"
+    },
+    "expandSearchAreaTooltip": "検索条件エリアを通常表示",
+    "@expandSearchAreaTooltip": {
+        "description": "検索条件エリアを通常表示に切り替えるボタンのツールチップ"
+    },
     "inventoryTypeLabel": "大分類",
+    "@inventoryTypeLabel": {
+        "description": "大分類の絞り込みラベル"
+    },
     "categoryLabel": "中分類",
+    "@categoryLabel": {
+        "description": "中分類の絞り込みラベル"
+    },
     "colorGroupLabel": "色系統",
+    "@colorGroupLabel": {
+        "description": "色系統の絞り込みラベル"
+    },
     "colorGroupBlue": "青系",
+    "@colorGroupBlue": {
+        "description": "色系統「青系」のラベル"
+    },
     "colorGroupRed": "赤系",
+    "@colorGroupRed": {
+        "description": "色系統「赤系」のラベル"
+    },
     "colorGroupGreen": "緑系",
+    "@colorGroupGreen": {
+        "description": "色系統「緑系」のラベル"
+    },
     "colorGroupYellow": "黄系",
+    "@colorGroupYellow": {
+        "description": "色系統「黄系」のラベル"
+    },
     "colorGroupMonochrome": "白黒グレー系",
+    "@colorGroupMonochrome": {
+        "description": "色系統「白黒グレー系」のラベル"
+    },
     "colorGroupBeigeBrown": "ベージュ・茶系",
+    "@colorGroupBeigeBrown": {
+        "description": "色系統「ベージュ・茶系」のラベル"
+    },
     "colorGroupPatternOther": "柄・その他",
+    "@colorGroupPatternOther": {
+        "description": "色系統「柄・その他」のラベル"
+    },
     "subCategoryLabel": "小分類",
+    "@subCategoryLabel": {
+        "description": "小分類の絞り込みラベル"
+    },
     "filterByFavoriteLabel": "お気に入り",
+    "@filterByFavoriteLabel": {
+        "description": "お気に入りで絞り込むボタンのラベル"
+    },
     "favoriteFilterDialogTitle": "お気に入りで絞り込み",
+    "@favoriteFilterDialogTitle": {
+        "description": "お気に入り絞り込みダイアログのタイトル"
+    },
     "favoriteMinLabel": "最小",
+    "@favoriteMinLabel": {
+        "description": "お気に入り絞り込みの最小値ラベル"
+    },
     "favoriteMaxLabel": "最大",
+    "@favoriteMaxLabel": {
+        "description": "お気に入り絞り込みの最大値ラベル"
+    },
     "favoriteRangeAny": "すべて",
+    "@favoriteRangeAny": {
+        "description": "お気に入り絞り込み「すべて」のラベル"
+    },
     "favoriteRangeAtLeast": "★{min}以上",
     "@favoriteRangeAtLeast": {
         "placeholders": { "min": { "type": "int" } }
@@ -88,54 +228,184 @@
         "placeholders": { "value": { "type": "int" } }
     },
     "stockFilterLabel": "在庫",
+    "@stockFilterLabel": {
+        "description": "在庫状況の絞り込みラベル"
+    },
     "stockFilterInStock": "在庫あり",
+    "@stockFilterInStock": {
+        "description": "在庫状況「在庫あり」の絞り込みラベル"
+    },
     "stockFilterLowStock": "在庫不足",
+    "@stockFilterLowStock": {
+        "description": "在庫状況「在庫不足」の絞り込みラベル"
+    },
     "stockFilterZero": "在庫0",
+    "@stockFilterZero": {
+        "description": "在庫状況「在庫0」の絞り込みラベル"
+    },
     "noMatchingItems": "該当するアイテムがありません",
+    "@noMatchingItems": {
+        "description": "検索・絞り込み結果が0件のときのメッセージ"
+    },
     "itemNotFoundCreatingNew": "該当するアイテムが見つかりませんでした。新規登録します",
+    "@itemNotFoundCreatingNew": {
+        "description": "バーコード検索で該当なしのため新規登録に進むメッセージ"
+    },
     "manualAdjustmentReason": "手動調整",
+    "@manualAdjustmentReason": {
+        "description": "在庫数を手動で調整した際の履歴理由"
+    },
 
     "editItemTitle": "アイテムを編集",
+    "@editItemTitle": {
+        "description": "アイテム編集画面のタイトル"
+    },
     "addItemTitle": "アイテムを登録",
+    "@addItemTitle": {
+        "description": "アイテム登録画面のタイトル"
+    },
     "barcodeAlreadyRegistered": "このバーコードは既に他のアイテムに登録されています",
+    "@barcodeAlreadyRegistered": {
+        "description": "入力したバーコードが他アイテムで使用済みの場合のエラーメッセージ"
+    },
     "confirmDeleteItemMessage": "「{name}」を削除しますか？",
     "@confirmDeleteItemMessage": {
         "placeholders": { "name": { "type": "String" } }
     },
     "nameLabel": "品名 *",
+    "@nameLabel": {
+        "description": "品名入力欄のラベル"
+    },
     "nameRequiredError": "品名は必須です",
+    "@nameRequiredError": {
+        "description": "品名未入力時のバリデーションエラー"
+    },
     "clearInputTooltip": "入力をクリア",
+    "@clearInputTooltip": {
+        "description": "入力内容をクリアするボタンのツールチップ"
+    },
     "inventoryTypeLabelRequired": "大分類 *",
+    "@inventoryTypeLabelRequired": {
+        "description": "大分類選択欄（必須）のラベル"
+    },
     "selectTypeFirst": "先に大分類を選択してください",
+    "@selectTypeFirst": {
+        "description": "大分類が未選択のときの案内メッセージ"
+    },
     "categoryLabelRequired": "中分類 *",
+    "@categoryLabelRequired": {
+        "description": "中分類選択欄（必須）のラベル"
+    },
     "categoryRequiredError": "中分類を選択してください",
+    "@categoryRequiredError": {
+        "description": "中分類未選択時のバリデーションエラー"
+    },
     "selectCategoryFirst": "先に中分類を選択してください",
+    "@selectCategoryFirst": {
+        "description": "中分類が未選択のときの案内メッセージ"
+    },
     "colorLabel": "色",
+    "@colorLabel": {
+        "description": "色選択欄のラベル"
+    },
     "unitLabelRequired": "単位 *",
+    "@unitLabelRequired": {
+        "description": "単位選択欄（必須）のラベル"
+    },
     "unitRequiredError": "単位を選択してください",
+    "@unitRequiredError": {
+        "description": "単位未選択時のバリデーションエラー"
+    },
     "favoriteRatingLabel": "お気に入り",
+    "@favoriteRatingLabel": {
+        "description": "お気に入り度入力欄のラベル"
+    },
     "quantityLabel": "在庫数 *",
+    "@quantityLabel": {
+        "description": "在庫数入力欄のラベル"
+    },
     "invalidNumberError": "数値で入力してください",
+    "@invalidNumberError": {
+        "description": "数値以外が入力された場合のバリデーションエラー"
+    },
     "negativeNumberError": "0以上の数値を入力してください",
+    "@negativeNumberError": {
+        "description": "負の数が入力された場合のバリデーションエラー"
+    },
     "lowStockThresholdLabel": "在庫不足の目安 *",
+    "@lowStockThresholdLabel": {
+        "description": "在庫不足の目安入力欄のラベル"
+    },
     "barcodeLabel": "バーコード（手入力 or スキャン）",
+    "@barcodeLabel": {
+        "description": "バーコード入力欄のラベル"
+    },
     "memoLabel": "メモ",
+    "@memoLabel": {
+        "description": "メモ入力欄のラベル"
+    },
     "takePhoto": "カメラで撮影",
+    "@takePhoto": {
+        "description": "カメラで撮影する選択肢のラベル"
+    },
     "chooseFromGallery": "ギャラリーから選択",
+    "@chooseFromGallery": {
+        "description": "ギャラリーから画像を選択する選択肢のラベル"
+    },
     "deleteImageLabel": "画像削除",
+    "@deleteImageLabel": {
+        "description": "登録済み画像を削除するボタンのラベル"
+    },
     "registerButtonLabel": "登録",
+    "@registerButtonLabel": {
+        "description": "アイテム登録画面の登録ボタンラベル"
+    },
 
     "scanBarcodeTitle": "バーコードをスキャン",
+    "@scanBarcodeTitle": {
+        "description": "バーコードスキャン画面のタイトル"
+    },
     "scanConfirmingLabel": "確認中...",
+    "@scanConfirmingLabel": {
+        "description": "バーコードスキャン後、確認処理中であることを示すラベル"
+    },
 
     "masterDataTitle": "マスタ管理",
+    "@masterDataTitle": {
+        "description": "マスタ管理画面のタイトル"
+    },
     "typesTab": "大分類",
+    "@typesTab": {
+        "description": "マスタ管理画面の「大分類」タブラベル"
+    },
     "categoriesTab": "中分類",
+    "@categoriesTab": {
+        "description": "マスタ管理画面の「中分類」タブラベル"
+    },
     "subCategoriesTab": "小分類",
+    "@subCategoriesTab": {
+        "description": "マスタ管理画面の「小分類」タブラベル"
+    },
     "colorsTab": "色",
+    "@colorsTab": {
+        "description": "マスタ管理画面の「色」タブラベル"
+    },
     "unitsTab": "単位",
+    "@unitsTab": {
+        "description": "マスタ管理画面の「単位」タブラベル"
+    },
+    "helpGuideLabel": "このアプリの使い方",
+    "@helpGuideLabel": {
+        "description": "使い方ガイドへのリンクラベル"
+    },
     "privacyPolicyLabel": "プライバシーポリシー",
+    "@privacyPolicyLabel": {
+        "description": "プライバシーポリシーへのリンクラベル"
+    },
     "failedToOpenLink": "リンクを開けませんでした",
+    "@failedToOpenLink": {
+        "description": "外部リンクを開けなかった場合のエラーメッセージ"
+    },
     "inUseCannotDelete": "「{name}」は{count}件のアイテムで使われているため削除できません",
     "@inUseCannotDelete": {
         "placeholders": {
@@ -151,30 +421,54 @@
         }
     },
     "lastInventoryTypeCannotDelete": "大分類は1件以上データが必要です",
+    "@lastInventoryTypeCannotDelete": {
+        "description": "大分類が最後の1件で削除できない場合のエラーメッセージ"
+    },
     "noTypesRegistered": "大分類が登録されていません",
+    "@noTypesRegistered": {
+        "description": "大分類が1件も登録されていない場合のメッセージ"
+    },
     "addCategoryToType": "「{typeName}」に中分類を追加",
     "@addCategoryToType": {
         "placeholders": { "typeName": { "type": "String" } }
     },
     "noCategoriesInType": "中分類なし",
+    "@noCategoriesInType": {
+        "description": "大分類配下に中分類が1件も無い場合のメッセージ"
+    },
     "noCategoriesRegistered": "中分類が登録されていません",
+    "@noCategoriesRegistered": {
+        "description": "中分類が1件も登録されていない場合のメッセージ"
+    },
     "addSubCategoryToCategory": "「{categoryName}」に小分類を追加",
     "@addSubCategoryToCategory": {
         "placeholders": { "categoryName": { "type": "String" } }
     },
     "noSubCategories": "小分類なし",
+    "@noSubCategories": {
+        "description": "中分類配下に小分類が1件も無い場合のメッセージ"
+    },
     "confirmDeleteSubCategoryMessage": "「{name}」を削除しますか？\nこの小分類が設定されているアイテムは「未設定」になります。",
     "@confirmDeleteSubCategoryMessage": {
         "placeholders": { "name": { "type": "String" } }
     },
     "noColorsRegistered": "色が登録されていません",
+    "@noColorsRegistered": {
+        "description": "色が1件も登録されていない場合のメッセージ"
+    },
     "confirmDeleteColorMessage": "「{name}」を削除しますか？\nこの色が設定されているアイテムは「未設定」になります。",
     "@confirmDeleteColorMessage": {
         "placeholders": { "name": { "type": "String" } }
     },
     "noUnitsRegistered": "単位が登録されていません",
+    "@noUnitsRegistered": {
+        "description": "単位が1件も登録されていない場合のメッセージ"
+    },
 
     "appInfoTitle": "アプリ情報",
+    "@appInfoTitle": {
+        "description": "アプリ情報画面のタイトル"
+    },
     "appVersionWithBuild": "バージョン {version} ({buildNumber})",
     "@appVersionWithBuild": {
         "placeholders": {
@@ -183,48 +477,153 @@
         }
     },
     "yahooAttributionLabel": "Web Services by Yahoo! JAPAN",
+    "@yahooAttributionLabel": {
+        "description": "Yahoo! JAPAN Web APIを利用していることを示すクレジット表記"
+    },
 
     "nameRequiredGeneric": "名前を入力してください",
+    "@nameRequiredGeneric": {
+        "description": "汎用的な名前未入力時のバリデーションエラー"
+    },
     "addTypeTitle": "新しい大分類を追加",
+    "@addTypeTitle": {
+        "description": "大分類追加ダイアログのタイトル"
+    },
     "typeNameHint": "大分類名（例: 手芸用品）",
+    "@typeNameHint": {
+        "description": "大分類名入力欄のヒントテキスト"
+    },
     "duplicateTypeName": "同じ名前の大分類がすでに登録されています",
+    "@duplicateTypeName": {
+        "description": "大分類名が重複している場合のエラーメッセージ"
+    },
     "editTypeTitle": "大分類を編集",
+    "@editTypeTitle": {
+        "description": "大分類編集ダイアログのタイトル"
+    },
     "typeNameLabel": "大分類名",
+    "@typeNameLabel": {
+        "description": "大分類名入力欄のラベル"
+    },
     "categoryNameHint": "中分類名（例: 布）",
+    "@categoryNameHint": {
+        "description": "中分類名入力欄のヒントテキスト"
+    },
     "duplicateCategoryName": "同じ名前の中分類がすでに登録されています",
+    "@duplicateCategoryName": {
+        "description": "中分類名が重複している場合のエラーメッセージ"
+    },
     "editCategoryTitle": "中分類を編集",
+    "@editCategoryTitle": {
+        "description": "中分類編集ダイアログのタイトル"
+    },
     "categoryNameLabel": "中分類名",
+    "@categoryNameLabel": {
+        "description": "中分類名入力欄のラベル"
+    },
     "subCategoryNameHint": "小分類名（例: フェルト）",
+    "@subCategoryNameHint": {
+        "description": "小分類名入力欄のヒントテキスト"
+    },
     "duplicateSubCategoryName": "この中分類には同じ名前の小分類がすでに登録されています",
+    "@duplicateSubCategoryName": {
+        "description": "小分類名が同一中分類内で重複している場合のエラーメッセージ"
+    },
     "editSubCategoryOfCategory": "「{categoryName}」の小分類を編集",
     "@editSubCategoryOfCategory": {
         "placeholders": { "categoryName": { "type": "String" } }
     },
     "subCategoryNameLabel": "小分類名",
+    "@subCategoryNameLabel": {
+        "description": "小分類名入力欄のラベル"
+    },
     "fetchColorGroupsFailed": "色系統の取得に失敗しました: {message}",
     "@fetchColorGroupsFailed": {
         "placeholders": { "message": { "type": "String" } }
     },
     "noColorGroupsFound": "色系統が見つかりませんでした",
+    "@noColorGroupsFound": {
+        "description": "色系統データが取得できなかった場合のメッセージ"
+    },
     "addColorOptionTitle": "新しい色を追加",
+    "@addColorOptionTitle": {
+        "description": "色追加ダイアログのタイトル"
+    },
     "editColorOptionTitle": "色を編集",
+    "@editColorOptionTitle": {
+        "description": "色編集ダイアログのタイトル"
+    },
     "selectColorTitle": "色を選択",
+    "@selectColorTitle": {
+        "description": "色選択ダイアログのタイトル"
+    },
     "decide": "決定",
+    "@decide": {
+        "description": "色選択ダイアログの決定ボタンラベル"
+    },
     "colorNameRequiredError": "色名を入力してください",
+    "@colorNameRequiredError": {
+        "description": "色名未入力時のバリデーションエラー"
+    },
     "duplicateColorName": "同じ名前の色がすでに登録されています",
+    "@duplicateColorName": {
+        "description": "色名が重複している場合のエラーメッセージ"
+    },
     "colorNameHint": "色名（例: 水色）",
+    "@colorNameHint": {
+        "description": "色名入力欄のヒントテキスト"
+    },
     "hexCodeHint": "カラーコード（任意, 例: #64B5F6）",
+    "@hexCodeHint": {
+        "description": "カラーコード入力欄のヒントテキスト"
+    },
     "addUnitTitle": "新しい単位を追加",
+    "@addUnitTitle": {
+        "description": "単位追加ダイアログのタイトル"
+    },
     "unitNameHint": "単位名（例: 巻）",
+    "@unitNameHint": {
+        "description": "単位名入力欄のヒントテキスト"
+    },
     "duplicateUnitName": "同じ名前の単位がすでに登録されています",
+    "@duplicateUnitName": {
+        "description": "単位名が重複している場合のエラーメッセージ"
+    },
     "editUnitTitle": "単位を編集",
+    "@editUnitTitle": {
+        "description": "単位編集ダイアログのタイトル"
+    },
     "unitNameLabel": "単位名",
+    "@unitNameLabel": {
+        "description": "単位名入力欄のラベル"
+    },
 
     "shoppingListTitle": "買い物リスト",
+    "@shoppingListTitle": {
+        "description": "買い物リスト画面のタイトル"
+    },
     "shoppingListEmptyMessage": "買い物リストは空です",
+    "@shoppingListEmptyMessage": {
+        "description": "買い物リストが空の場合のメッセージ"
+    },
     "purchaseTooltip": "購入",
+    "@purchaseTooltip": {
+        "description": "購入操作ボタンのツールチップ"
+    },
     "purchaseQuantityLabel": "購入数",
+    "@purchaseQuantityLabel": {
+        "description": "購入数入力欄のラベル"
+    },
     "purchaseAllButton": "一括購入",
+    "@purchaseAllButton": {
+        "description": "買い物リストの全アイテムを一括購入するボタンのラベル"
+    },
     "backToItemListButton": "在庫一覧へ戻る",
-    "shoppingListPurchaseReason": "買い物リストからの購入"
+    "@backToItemListButton": {
+        "description": "在庫一覧画面へ戻るボタンのラベル"
+    },
+    "shoppingListPurchaseReason": "買い物リストからの購入",
+    "@shoppingListPurchaseReason": {
+        "description": "買い物リストからの購入時の在庫増加履歴理由"
+    }
 }

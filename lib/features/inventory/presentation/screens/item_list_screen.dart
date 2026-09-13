@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_inventory/l10n/app_localizations.dart';
 
@@ -70,12 +71,32 @@ class ItemListScreen extends ConsumerStatefulWidget {
 }
 
 class _ItemListScreenState extends ConsumerState<ItemListScreen> {
+  /// 検索条件エリアの表示モード（通常/縮小）を次回起動時にも
+  /// 引き継ぐためのSharedPreferencesキー。
+  static const _searchAreaCompactPrefKey = 'item_list.search_area_compact';
+
   late final TextEditingController _searchController;
+  bool _isSearchAreaCompact = false;
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
+    _loadSearchAreaDisplayMode();
+  }
+
+  Future<void> _loadSearchAreaDisplayMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    final compact = prefs.getBool(_searchAreaCompactPrefKey) ?? false;
+    if (!mounted) return;
+    setState(() => _isSearchAreaCompact = compact);
+  }
+
+  void _setSearchAreaCompact(bool value) {
+    setState(() => _isSearchAreaCompact = value);
+    SharedPreferences.getInstance().then(
+      (prefs) => prefs.setBool(_searchAreaCompactPrefKey, value),
+    );
   }
 
   @override
@@ -116,6 +137,86 @@ class _ItemListScreenState extends ConsumerState<ItemListScreen> {
               [];
     final colorGroups = ref.watch(colorGroupListProvider).value ?? [];
     final itemsAsync = ref.watch(filteredItemsProvider);
+
+    // マスタ管理画面で、検索条件に指定中のカテゴリー・小分類・色系統が
+    // 削除されることがある。該当IDが選択肢から消えたまま検索条件Dropdownに
+    // 渡すとアサーションエラーになるため、消えていたら検索条件自体を解除する。
+    final hasInvalidInventoryType =
+        filter.inventoryTypeId != null &&
+        !inventoryTypes.any((t) => t.id == filter.inventoryTypeId);
+    final hasInvalidCategory =
+        !hasInvalidInventoryType &&
+        filter.categoryId != null &&
+        !categories.any((c) => c.id == filter.categoryId);
+    final hasInvalidSubCategory =
+        !hasInvalidInventoryType &&
+        !hasInvalidCategory &&
+        filter.subCategoryId != null &&
+        !subCategories.any((s) => s.id == filter.subCategoryId);
+    final hasInvalidColorGroup =
+        filter.colorGroupId != null &&
+        !colorGroups.any((g) => g.id == filter.colorGroupId);
+    if (hasInvalidInventoryType ||
+        hasInvalidCategory ||
+        hasInvalidSubCategory ||
+        hasInvalidColorGroup) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        if (hasInvalidInventoryType) {
+          filterController.setInventoryType(null);
+        } else if (hasInvalidCategory) {
+          filterController.setCategory(null);
+        } else if (hasInvalidSubCategory) {
+          filterController.setSubCategory(null);
+        }
+        if (hasInvalidColorGroup) {
+          filterController.setColorGroup(null);
+        }
+      });
+    }
+
+    String stockFilterLabel(StockFilter value) {
+      switch (value) {
+        case StockFilter.all:
+          return l10n.all;
+        case StockFilter.inStock:
+          return l10n.stockFilterInStock;
+        case StockFilter.lowStock:
+          return l10n.stockFilterLowStock;
+        case StockFilter.zero:
+          return l10n.stockFilterZero;
+      }
+    }
+
+    // 検索条件エリア縮小表示時に、セット中の検索条件を" / "区切りで
+    // まとめて表示するための要約文字列（条件が無ければ「すべて」）。
+    String searchConditionsSummary() {
+      final parts = <String>[];
+      if (filter.nameQuery.isNotEmpty) parts.add(filter.nameQuery);
+      for (final t in inventoryTypes) {
+        if (t.id == filter.inventoryTypeId) parts.add(t.name);
+      }
+      for (final c in categories) {
+        if (c.id == filter.categoryId) parts.add(c.name);
+      }
+      for (final s in subCategories) {
+        if (s.id == filter.subCategoryId) parts.add(s.name);
+      }
+      for (final g in colorGroups) {
+        if (g.id == filter.colorGroupId) {
+          parts.add(colorGroupLabel(context, g.name));
+        }
+      }
+      if (filter.favoriteMin != null || filter.favoriteMax != null) {
+        parts.add(
+          _favoriteRangeSummary(l10n, filter.favoriteMin, filter.favoriteMax),
+        );
+      }
+      if (filter.stockFilter != StockFilter.all) {
+        parts.add(stockFilterLabel(filter.stockFilter));
+      }
+      return parts.isEmpty ? l10n.all : parts.join(' / ');
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -161,197 +262,251 @@ class _ItemListScreenState extends ConsumerState<ItemListScreen> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                labelText: l10n.searchByNameLabel,
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.restart_alt),
-                  tooltip: l10n.searchResetTooltip,
-                  onPressed: () {
-                    _searchController.clear();
-                    filterController.resetSearchConditions();
-                  },
-                ),
+          if (_isSearchAreaCompact)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.manage_search),
+                    tooltip: l10n.expandSearchAreaTooltip,
+                    onPressed: () => _setSearchAreaCompact(false),
+                  ),
+                  Expanded(
+                    child: Text(
+                      searchConditionsSummary(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (filter.hasActiveSearchConditions)
+                    IconButton(
+                      icon: const Icon(Icons.restart_alt),
+                      tooltip: l10n.searchResetTooltip,
+                      onPressed: () {
+                        _searchController.clear();
+                        filterController.resetSearchConditions();
+                      },
+                    ),
+                ],
               ),
-              onChanged: filterController.setNameQuery,
+            )
+          else ...[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  labelText: l10n.searchByNameLabel,
+                  prefixIcon: IconButton(
+                    icon: const Icon(Icons.search),
+                    tooltip: l10n.collapseSearchAreaTooltip,
+                    onPressed: () => _setSearchAreaCompact(true),
+                  ),
+                  suffixIcon: filter.hasActiveSearchConditions
+                      ? IconButton(
+                          icon: const Icon(Icons.restart_alt),
+                          tooltip: l10n.searchResetTooltip,
+                          onPressed: () {
+                            _searchController.clear();
+                            filterController.resetSearchConditions();
+                          },
+                        )
+                      : null,
+                ),
+                onChanged: filterController.setNameQuery,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<int>(
-                    initialValue: filter.inventoryTypeId,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: l10n.inventoryTypeLabel,
-                    ),
-                    items: [
-                      DropdownMenuItem(value: null, child: Text(l10n.all)),
-                      ...inventoryTypes.map(
-                        (t) => DropdownMenuItem(
-                          value: t.id,
-                          child: Text(
-                            t.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                    onChanged: filterController.setInventoryType,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: DropdownButtonFormField<int>(
-                    initialValue: filter.categoryId,
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: l10n.categoryLabel),
-                    items: [
-                      DropdownMenuItem(value: null, child: Text(l10n.all)),
-                      ...categories.map(
-                        (c) => DropdownMenuItem(
-                          value: c.id,
-                          child: Text(
-                            c.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                    onChanged: filterController.setCategory,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: DropdownButtonFormField<int>(
-                    initialValue: filter.subCategoryId,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: l10n.subCategoryLabel,
-                    ),
-                    items: [
-                      DropdownMenuItem(value: null, child: Text(l10n.all)),
-                      ...subCategories.map(
-                        (s) => DropdownMenuItem(
-                          value: s.id,
-                          child: Text(
-                            s.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                    onChanged: filter.categoryId == null
-                        ? null
-                        : filterController.setSubCategory,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<int>(
-                    initialValue: filter.colorGroupId,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: l10n.colorGroupLabel,
-                    ),
-                    items: [
-                      DropdownMenuItem(value: null, child: Text(l10n.all)),
-                      ...colorGroups.map(
-                        (g) => DropdownMenuItem(
-                          value: g.id,
-                          child: Text(
-                            colorGroupLabel(context, g.name),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                    onChanged: filterController.setColorGroup,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: InkWell(
-                    onTap: () => showFavoriteFilterDialog(context),
-                    child: InputDecorator(
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      initialValue: hasInvalidInventoryType
+                          ? null
+                          : filter.inventoryTypeId,
+                      isExpanded: true,
                       decoration: InputDecoration(
-                        labelText: l10n.filterByFavoriteLabel,
+                        labelText: l10n.inventoryTypeLabel,
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
+                      items: [
+                        DropdownMenuItem(value: null, child: Text(l10n.all)),
+                        ...inventoryTypes.map(
+                          (t) => DropdownMenuItem(
+                            value: t.id,
                             child: Text(
-                              _favoriteRangeSummary(
-                                l10n,
-                                filter.favoriteMin,
-                                filter.favoriteMax,
-                              ),
+                              t.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color:
-                                Theme.brightnessOf(context) == Brightness.light
-                                ? Colors.grey.shade700
-                                : Colors.white70,
+                        ),
+                      ],
+                      onChanged: filterController.setInventoryType,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      initialValue:
+                          hasInvalidInventoryType || hasInvalidCategory
+                          ? null
+                          : filter.categoryId,
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: l10n.categoryLabel,
+                      ),
+                      items: [
+                        DropdownMenuItem(value: null, child: Text(l10n.all)),
+                        ...categories.map(
+                          (c) => DropdownMenuItem(
+                            value: c.id,
+                            child: Text(
+                              c.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                      onChanged: filterController.setCategory,
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: DropdownButtonFormField<StockFilter>(
-                    initialValue: filter.stockFilter,
-                    isExpanded: true,
-                    decoration: InputDecoration(
-                      labelText: l10n.stockFilterLabel,
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      initialValue:
+                          hasInvalidInventoryType ||
+                              hasInvalidCategory ||
+                              hasInvalidSubCategory
+                          ? null
+                          : filter.subCategoryId,
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: l10n.subCategoryLabel,
+                      ),
+                      items: [
+                        DropdownMenuItem(value: null, child: Text(l10n.all)),
+                        ...subCategories.map(
+                          (s) => DropdownMenuItem(
+                            value: s.id,
+                            child: Text(
+                              s.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
+                      onChanged: filter.categoryId == null
+                          ? null
+                          : filterController.setSubCategory,
                     ),
-                    items: [
-                      DropdownMenuItem(
-                        value: StockFilter.all,
-                        child: Text(l10n.all),
-                      ),
-                      DropdownMenuItem(
-                        value: StockFilter.inStock,
-                        child: Text(l10n.stockFilterInStock),
-                      ),
-                      DropdownMenuItem(
-                        value: StockFilter.lowStock,
-                        child: Text(l10n.stockFilterLowStock),
-                      ),
-                      DropdownMenuItem(
-                        value: StockFilter.zero,
-                        child: Text(l10n.stockFilterZero),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      if (value != null) filterController.setStockFilter(value);
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField<int>(
+                      initialValue: hasInvalidColorGroup
+                          ? null
+                          : filter.colorGroupId,
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: l10n.colorGroupLabel,
+                      ),
+                      items: [
+                        DropdownMenuItem(value: null, child: Text(l10n.all)),
+                        ...colorGroups.map(
+                          (g) => DropdownMenuItem(
+                            value: g.id,
+                            child: Text(
+                              colorGroupLabel(context, g.name),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ],
+                      onChanged: filterController.setColorGroup,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => showFavoriteFilterDialog(context),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: l10n.filterByFavoriteLabel,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                _favoriteRangeSummary(
+                                  l10n,
+                                  filter.favoriteMin,
+                                  filter.favoriteMax,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color:
+                                  Theme.brightnessOf(context) ==
+                                      Brightness.light
+                                  ? Colors.grey.shade700
+                                  : Colors.white70,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: DropdownButtonFormField<StockFilter>(
+                      initialValue: filter.stockFilter,
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        labelText: l10n.stockFilterLabel,
+                      ),
+                      items: [
+                        DropdownMenuItem(
+                          value: StockFilter.all,
+                          child: Text(l10n.all),
+                        ),
+                        DropdownMenuItem(
+                          value: StockFilter.inStock,
+                          child: Text(l10n.stockFilterInStock),
+                        ),
+                        DropdownMenuItem(
+                          value: StockFilter.lowStock,
+                          child: Text(l10n.stockFilterLowStock),
+                        ),
+                        DropdownMenuItem(
+                          value: StockFilter.zero,
+                          child: Text(l10n.stockFilterZero),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        if (value != null) {
+                          filterController.setStockFilter(value);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
           const SizedBox(height: 4),
           const Divider(height: 1),
           Expanded(
@@ -555,5 +710,3 @@ class _ItemTile extends ConsumerWidget {
     );
   }
 }
-
-

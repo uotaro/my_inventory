@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使い方ガイド / Help Guide - my在庫(My Inventory)</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5a5a5a;
+    --border: #e2e2e2;
+    --accent: #6750a4;
+    --card-bg: #f7f6fa;
+    --lowstock-bg: #ffe3e7;
+    --lowstock-fg: #a3243f;
+    --header-bg: #607d8b;
+    --header-fg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121212;
+      --fg: #ececec;
+      --muted: #a8a8a8;
+      --border: #333333;
+      --accent: #cdbdfb;
+      --card-bg: #1c1c1f;
+      --lowstock-bg: #3a1f26;
+      --lowstock-fg: #ff9db0;
+      --header-bg: #455a64;
+      --header-fg: #ffffff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN",
+      "Hiragino Sans", Meiryo, Roboto, Arial, sans-serif;
+    line-height: 1.8;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+  }
+  h1 {
+    font-size: 1.7rem;
+    margin-bottom: 4px;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+  .lang-switch {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+  .lang-switch a {
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--fg);
+  }
+  .lang-switch a:hover { border-color: var(--accent); color: var(--accent); }
+
+  nav.toc {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 24px 0 40px;
+  }
+  nav.toc p { margin: 0 0 8px; font-weight: bold; }
+  nav.toc ol { margin: 0; padding-left: 1.3em; }
+  nav.toc a { color: var(--accent); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  h2 {
+    font-size: 1.3rem;
+    margin-top: 56px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    scroll-margin-top: 16px;
+  }
+  h3 {
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin-top: 32px;
+  }
+  p, li { font-size: 0.98rem; }
+  ul, ol { padding-left: 1.3em; }
+  a { color: var(--accent); }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .figure {
+    margin: 20px 0;
+    text-align: center;
+  }
+  .figure img {
+    max-width: 320px;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  .figure figcaption {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .icon-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0;
+  }
+  .icon-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--header-bg);
+    color: var(--header-fg);
+    border: 1px solid var(--header-bg);
+    border-radius: 999px;
+    padding: 4px 12px 4px 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  .icon-tag img {
+    width: 1.3em;
+    height: 1.3em;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  .inline-icon {
+    width: 1.15em;
+    height: 1.15em;
+    object-fit: contain;
+    vertical-align: -0.25em;
+    border-radius: 3px;
+    margin: 0 2px;
+  }
+
+  .lowstock-badge {
+    display: inline-block;
+    background: var(--lowstock-bg);
+    color: var(--lowstock-fg);
+    border-radius: 6px;
+    padding: 1px 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+
+  hr.section-divider {
+    margin: 64px 0;
+    border: none;
+    border-top: 2px solid var(--border);
+  }
+  footer {
+    margin-top: 56px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .back-to-top {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="lang-switch">
+    <a href="#ja-top">日本語</a>
+    <a href="#en-top">English</a>
+  </div>
+
+  <section id="ja">
+    <h1 id="ja-top">my在庫 使い方ガイド</h1>
+    <p class="updated">最終更新日: 2026年9月13日 ／ 対応バージョン: v2.1.0</p>
+
+    <p>
+      「my在庫(My Inventory)」は、手芸材料や食品ストックなど、身の回りの在庫を
+      分類・写真つきで管理できるアプリです。このページでは、各画面の使い方を
+      画面キャプチャ付きで説明します。
+    </p>
+
+    <nav class="toc">
+      <p>目次</p>
+      <ol>
+        <li><a href="#ja-item-list">在庫一覧画面</a></li>
+        <li><a href="#ja-item-edit">アイテムの登録・編集</a></li>
+        <li><a href="#ja-swipe">スワイプ操作（買い物リストへの追加・削除）</a></li>
+        <li><a href="#ja-shopping-list">買い物リスト</a></li>
+        <li><a href="#ja-master-data">マスタ管理</a></li>
+        <li><a href="#ja-app-info">アプリ情報</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="ja-item-list">1. 在庫一覧画面</h2>
+    <p>
+      アプリ起動後、最初に表示されるのが在庫一覧画面です。登録したアイテムが
+      リスト表示され、品名・大分類/中分類/小分類/色・お気に入り度・在庫数を
+      確認できます。
+    </p>
+
+    <figure class="figure">
+      <img src="images/01_item_list_filter.png" alt="在庫一覧画面（検索条件エリア展開時）">
+      <figcaption>図1: 在庫一覧画面（検索条件エリアを展開した状態）</figcaption>
+    </figure>
+
+    <h3>画面上部のアイコン</h3>
+    <div class="icon-row">
+      <span class="icon-tag"><img src="images/icon_barcode.png" alt="">バーコードで検索</span>
+      <span class="icon-tag"><img src="images/icon_sort.png" alt="">並べ替え</span>
+      <span class="icon-tag"><img src="images/icon_shoppinglist.png" alt="">買い物リスト</span>
+      <span class="icon-tag"><img src="images/icon_settings.png" alt="">マスタ管理</span>
+      <span class="icon-tag"><img src="images/icon_info.png" alt="">アプリ情報</span>
+    </div>
+    <p>
+      バーコードアイコンをタップするとカメラでバーコードをスキャンできます。
+      登録済みのバーコードならアイテム編集画面が、未登録のバーコードなら
+      新規登録画面が開きます（商品名は自動検索されることがあります）。
+    </p>
+
+    <h3>並べ替え</h3>
+    <p>
+      <img class="inline-icon" src="images/icon_sort.png" alt="並べ替えアイコン">（並べ替え）アイコンをタップすると「並べ替え設定」ダイアログが
+      開きます。「品名」「在庫数」「お気に入り」「分類」の中から並べ替えの
+      基準を選び、下部のスイッチで昇順／降順を切り替えられます。
+      「分類」を選んだ場合は、大分類→中分類→小分類の順に階層的に
+      並べ替えられます。<strong>リセット</strong>ボタンでデフォルト
+      （品名の昇順）に戻せます。設定した並べ替え条件はアプリを終了しても
+      保持され、次回起動時にも引き継がれます。
+    </p>
+
+    <figure class="figure">
+      <img src="images/03_sort_options.png" alt="並べ替え設定ダイアログ">
+      <figcaption>図3: 並べ替え設定ダイアログ</figcaption>
+    </figure>
+
+    <h3>検索・絞り込み</h3>
+    <p>
+      品名によるキーワード検索のほか、「大分類」「中分類」「小分類」
+      「色系統」「お気に入り」「在庫」の各条件で絞り込みができます。
+      条件をリセットしたいときは、検索欄右側の <strong>↻（リセット）</strong>
+      アイコンをタップしてください。
+    </p>
+    <p>
+      検索欄左の虫眼鏡アイコンをタップすると、検索条件エリアを1行に
+      まとめた縮小表示に切り替わります（現在の条件が「/」区切りで
+      表示されます）。もう一度アイコンをタップすると元の表示に戻ります。
+    </p>
+
+    <figure class="figure">
+      <img src="images/02_item_list_compact.png" alt="在庫一覧画面（検索条件エリア縮小表示）">
+      <figcaption>図2: 検索条件エリアを縮小表示に切り替えた状態</figcaption>
+    </figure>
+
+    <h3>在庫数の増減・在庫不足の表示</h3>
+    <p>
+      各アイテムの右側にある <strong>−／＋</strong> ボタンで、その場で
+      在庫数を1ずつ増減できます。在庫数が「在庫不足の目安」以下になった
+      アイテムは、行全体が <span class="lowstock-badge">薄い赤色</span>
+      でハイライトされ、ひと目で分かるようになっています（図1のリスト1行目）。
+    </p>
+    <p>
+      アイテムの行をタップすると、そのアイテムの編集画面が開きます。
+    </p>
+
+    <h2 id="ja-item-edit">2. アイテムの登録・編集</h2>
+    <p>
+      在庫一覧画面右下の <strong>＋</strong> ボタンで新規アイテムを登録できます。
+      既存アイテムをタップした場合は編集画面が開き、同じ項目を変更できます。
+    </p>
+
+    <figure class="figure">
+      <img src="images/04_item_edit.png" alt="アイテム編集画面">
+      <figcaption>図4: アイテムの登録・編集画面</figcaption>
+    </figure>
+
+    <p>登録・編集できる主な項目は次のとおりです。</p>
+    <ul>
+      <li><strong>画像</strong>: カメラで撮影、またはギャラリーから選択して登録できます。</li>
+      <li><strong>バーコード</strong>: 手入力のほか、カメラでスキャンして入力できます。</li>
+      <li><strong>品名</strong>（必須）</li>
+      <li><strong>大分類／中分類／小分類</strong>: 右の＋ボタンからその場で新しい分類を追加できます。</li>
+      <li><strong>色</strong>: 色名とスウォッチ（丸い色見本）が一覧に表示されます。</li>
+      <li><strong>単位</strong>（必須）: 「個」「本」「g」など。</li>
+      <li><strong>お気に入り</strong>: ★1〜5段階で評価できます。</li>
+      <li><strong>在庫数</strong>（必須）と<strong>在庫不足の目安</strong>（必須）: この目安以下になると一覧で赤くハイライトされます。</li>
+      <li><strong>メモ</strong>: 自由記述。</li>
+    </ul>
+    <p>
+      編集画面右上のチェックアイコンで保存、ゴミ箱アイコンでアイテムを
+      削除できます（削除前に確認ダイアログが表示されます）。
+    </p>
+
+    <h2 id="ja-swipe">3. スワイプ操作（買い物リストへの追加・削除）</h2>
+    <p>
+      在庫一覧の各アイテムを<strong>左方向にスワイプ</strong>すると、
+      「買い物リストに追加」と「削除」のボタンが現れます。すでに
+      買い物リストに入っているアイテムの場合は「除外」ボタンに変わります。
+    </p>
+
+    <figure class="figure">
+      <img src="images/05_swipe_actions.png" alt="在庫一覧でアイテムを左にスワイプした状態">
+      <figcaption>図5: アイテムを左にスワイプすると「追加」「削除」ボタンが表示される</figcaption>
+    </figure>
+
+    <div class="card">
+      <p style="margin:0;">
+        <strong>ポイント:</strong> 「削除」はアイテム自体をアプリから完全に削除する操作、
+        「追加／除外」は買い物リストへの出し入れだけを行う操作です。誤って
+        削除しないよう、ボタンの色（追加＝青、削除＝赤）とアイコンで見分けてください。
+      </p>
+    </div>
+
+    <h2 id="ja-shopping-list">4. 買い物リスト</h2>
+    <p>
+      在庫一覧画面右上の <img class="inline-icon" src="images/icon_shoppinglist.png" alt="買い物リストアイコン"> アイコンから買い物リスト画面を開けます。
+      在庫一覧でスワイプして追加したアイテムがここに一覧表示されます。
+    </p>
+
+    <figure class="figure">
+      <img src="images/06_shopping_list.png" alt="買い物リスト画面">
+      <figcaption>図6: 買い物リスト画面</figcaption>
+    </figure>
+
+    <ul>
+      <li>各アイテムの <strong>−／＋</strong> ボタン、または数量部分をタップすることで「購入予定数」を設定できます。</li>
+      <li>購入予定数が1以上になると、行の右端に <strong>🛒✓（購入）</strong> アイコンが表示されます。これをタップすると、そのアイテム単体の在庫数に購入予定数が加算され、購入予定数は0に戻ります。</li>
+      <li>画面下の <strong>「一括購入」</strong> ボタンをタップすると、購入予定数が設定されている全アイテムをまとめて購入処理できます。</li>
+      <li>リストの項目は長押ししてドラッグすることで並べ替えできます。</li>
+      <li>アイテムを左にスワイプすると、買い物リストから除外できます（在庫データ自体は削除されません）。</li>
+    </ul>
+
+    <h2 id="ja-master-data">5. マスタ管理</h2>
+    <p>
+      在庫一覧画面右上の <img class="inline-icon" src="images/icon_settings.png" alt="マスタ管理アイコン"> アイコンからマスタ管理画面を開けます。
+      アイテム登録時に使う「大分類」「中分類」「小分類」「色」「単位」を
+      タブで切り替えながら追加・編集・削除できます。
+    </p>
+
+    <figure class="figure">
+      <img src="images/07_master_data.png" alt="マスタ管理画面（小分類タブ）">
+      <figcaption>図7: マスタ管理画面（小分類タブの例）</figcaption>
+    </figure>
+
+    <ul>
+      <li>中分類・小分類は、それぞれの親（大分類・中分類）ごとにグループ表示されます。</li>
+      <li>各行の鉛筆アイコンで編集、ゴミ箱アイコンで削除できます。</li>
+      <li>他のアイテムで使用中の分類・色・単位は削除できません（削除しようとするとメッセージが表示されます）。</li>
+      <li>大分類は最低1件、常に残す必要があります。</li>
+    </ul>
+
+    <h2 id="ja-app-info">6. アプリ情報</h2>
+    <p>
+      在庫一覧画面右上の <img class="inline-icon" src="images/icon_info.png" alt="アプリ情報アイコン"> アイコンからアプリ情報画面を開けます。
+      アプリのバージョン確認、このページ（このアプリの使い方）や
+      プライバシーポリシーへのリンクを確認できます。
+    </p>
+
+    <a class="back-to-top" href="#ja-top">↑ 先頭に戻る</a>
+  </section>
+
+  <hr class="section-divider">
+
+  <section id="en">
+    <h1 id="en-top">my在庫 (My Inventory) Help Guide</h1>
+    <p class="updated">Last updated: September 13, 2026 / Applies to: v2.1.0</p>
+
+    <p>
+      "My Inventory" helps you manage household stock — craft supplies, food
+      stock, and more — organized by category with photos. This page walks
+      through each screen with screenshots.
+    </p>
+
+    <nav class="toc">
+      <p>Contents</p>
+      <ol>
+        <li><a href="#en-item-list">Item List Screen</a></li>
+        <li><a href="#en-item-edit">Adding / Editing an Item</a></li>
+        <li><a href="#en-swipe">Swipe Actions (Add to / Remove from Shopping List)</a></li>
+        <li><a href="#en-shopping-list">Shopping List</a></li>
+        <li><a href="#en-master-data">Managing Master Data</a></li>
+        <li><a href="#en-app-info">App Info</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="en-item-list">1. Item List Screen</h2>
+    <p>
+      The item list screen is shown first when you open the app. It lists
+      every registered item along with its name, department/category/
+      subcategory/color, favorite rating, and quantity.
+    </p>
+
+    <figure class="figure">
+      <img src="images/01_item_list_filter.png" alt="Item list screen with the search area expanded">
+      <figcaption>Figure 1: Item list screen with the search area expanded</figcaption>
+    </figure>
+
+    <h3>Top bar icons</h3>
+    <div class="icon-row">
+      <span class="icon-tag"><img src="images/icon_barcode.png" alt="">Search by barcode</span>
+      <span class="icon-tag"><img src="images/icon_sort.png" alt="">Sort</span>
+      <span class="icon-tag"><img src="images/icon_shoppinglist.png" alt="">Shopping list</span>
+      <span class="icon-tag"><img src="images/icon_settings.png" alt="">Manage master data</span>
+      <span class="icon-tag"><img src="images/icon_info.png" alt="">App info</span>
+    </div>
+    <p>
+      Tap the barcode icon to scan a barcode with the camera. A known
+      barcode opens the item's edit screen; an unknown one opens the
+      registration screen (the product name may be looked up automatically).
+    </p>
+
+    <h3>Sorting</h3>
+    <p>
+      Tap the <img class="inline-icon" src="images/icon_sort.png" alt="Sort icon"> (sort) icon to open the "Sort Settings" dialog. Choose a
+      sort key — Name, Quantity, Favorite, or Classification — and use the
+      switch at the bottom to toggle ascending/descending order. When
+      sorting by Classification, items are ordered hierarchically by
+      department, then category, then subcategory. Tap
+      <strong>Reset</strong> to return to the default (Name, ascending).
+      Your sort settings persist even after closing the app.
+    </p>
+
+    <figure class="figure">
+      <img src="images/03_sort_options.png" alt="Sort settings dialog">
+      <figcaption>Figure 3: Sort settings dialog</figcaption>
+    </figure>
+
+    <h3>Search and filters</h3>
+    <p>
+      Besides free-text search by name, you can filter by department,
+      category, subcategory, color group, favorite rating, and stock
+      status. Tap the <strong>↻ (reset)</strong> icon next to the search
+      field to clear all active filters.
+    </p>
+    <p>
+      Tap the magnifier icon on the left of the search field to collapse
+      the filter area into a single summary line (active conditions are
+      joined with "/"). Tap the icon again to expand it back.
+    </p>
+
+    <figure class="figure">
+      <img src="images/02_item_list_compact.png" alt="Item list screen with the search area collapsed">
+      <figcaption>Figure 2: Search area collapsed into a summary line</figcaption>
+    </figure>
+
+    <h3>Adjusting quantity / low-stock highlight</h3>
+    <p>
+      Use the <strong>−/+</strong> buttons on the right of each item to
+      change its quantity by 1 on the spot. Items at or below their
+      "low-stock threshold" are highlighted with a
+      <span class="lowstock-badge">light red</span> row so they stand
+      out at a glance (see the first row in Figure 1).
+    </p>
+    <p>Tap an item's row to open its edit screen.</p>
+
+    <h2 id="en-item-edit">2. Adding / Editing an Item</h2>
+    <p>
+      Tap the <strong>+</strong> button at the bottom-right of the item
+      list to register a new item. Tapping an existing item opens the
+      same form for editing.
+    </p>
+
+    <figure class="figure">
+      <img src="images/04_item_edit.png" alt="Item edit screen">
+      <figcaption>Figure 4: Item registration / edit screen</figcaption>
+    </figure>
+
+    <p>Fields you can set:</p>
+    <ul>
+      <li><strong>Photo</strong>: take one with the camera or pick one from your gallery.</li>
+      <li><strong>Barcode</strong>: type it manually or scan it with the camera.</li>
+      <li><strong>Name</strong> (required)</li>
+      <li><strong>Department / Category / Subcategory</strong>: use the + button to add a new one on the spot.</li>
+      <li><strong>Color</strong>: shown with its name and a color swatch in the list.</li>
+      <li><strong>Unit</strong> (required): e.g. pcs, skein, g.</li>
+      <li><strong>Favorite rating</strong>: a 1–5 star scale.</li>
+      <li><strong>Quantity</strong> (required) and <strong>low-stock threshold</strong> (required): items at or below this threshold are highlighted in the list.</li>
+      <li><strong>Notes</strong>: free text.</li>
+    </ul>
+    <p>
+      Tap the checkmark icon at the top right to save, or the trash icon
+      to delete the item (a confirmation dialog appears first).
+    </p>
+
+    <h2 id="en-swipe">3. Swipe Actions (Add to / Remove from Shopping List)</h2>
+    <p>
+      <strong>Swipe an item to the left</strong> in the item list to
+      reveal "Add to shopping list" and "Delete" buttons. If the item is
+      already in the shopping list, the button changes to "Remove".
+    </p>
+
+    <figure class="figure">
+      <img src="images/05_swipe_actions.png" alt="An item swiped left in the item list">
+      <figcaption>Figure 5: Swiping an item left reveals "Add" and "Delete" buttons</figcaption>
+    </figure>
+
+    <div class="card">
+      <p style="margin:0;">
+        <strong>Note:</strong> "Delete" permanently removes the item from
+        the app, while "Add / Remove" only affects the shopping list.
+        Check the button color (Add = blue, Delete = red) and icon before
+        tapping to avoid deleting by mistake.
+      </p>
+    </div>
+
+    <h2 id="en-shopping-list">4. Shopping List</h2>
+    <p>
+      Open the shopping list from the <img class="inline-icon" src="images/icon_shoppinglist.png" alt="Shopping list icon"> icon at the top of the item
+      list. Items you swiped-to-add on the item list appear here.
+    </p>
+
+    <figure class="figure">
+      <img src="images/06_shopping_list.png" alt="Shopping list screen">
+      <figcaption>Figure 6: Shopping list screen</figcaption>
+    </figure>
+
+    <ul>
+      <li>Use the <strong>−/+</strong> buttons, or tap the quantity itself, to set the "quantity to purchase".</li>
+      <li>Once that quantity is 1 or more, a <strong>🛒✓ (purchase)</strong> icon appears at the end of the row. Tapping it adds the purchase quantity to that item's stock and resets the purchase quantity to 0.</li>
+      <li>Tap <strong>"Purchase All"</strong> at the bottom to process every item with a purchase quantity set, all at once.</li>
+      <li>Long-press and drag a row to reorder the list.</li>
+      <li>Swipe an item left to remove it from the shopping list (this does not delete the item itself).</li>
+    </ul>
+
+    <h2 id="en-master-data">5. Managing Master Data</h2>
+    <p>
+      Open master data management from the <img class="inline-icon" src="images/icon_settings.png" alt="Manage master data icon"> icon at the top of the
+      item list. Switch between tabs to add, edit, or delete the
+      departments, categories, subcategories, colors, and units used
+      when registering items.
+    </p>
+
+    <figure class="figure">
+      <img src="images/07_master_data.png" alt="Master data screen, subcategories tab">
+      <figcaption>Figure 7: Master data screen (subcategories tab example)</figcaption>
+    </figure>
+
+    <ul>
+      <li>Categories and subcategories are grouped under their parent (department / category).</li>
+      <li>Use the pencil icon to edit, or the trash icon to delete, a row.</li>
+      <li>A department, category, subcategory, color, or unit still used by an item cannot be deleted (a message explains why).</li>
+      <li>At least one department must always remain.</li>
+    </ul>
+
+    <h2 id="en-app-info">6. App Info</h2>
+    <p>
+      Open the app info screen from the <img class="inline-icon" src="images/icon_info.png" alt="App info icon"> icon at the top of the item
+      list. It shows the app version and links to this help guide and
+      to the privacy policy.
+    </p>
+
+    <a class="back-to-top" href="#en-top">↑ Back to top</a>
+  </section>
+
+  <footer>
+    my在庫(My Inventory) — Developed by lemox
+  </footer>
+
+</div>
+</body>
+</html>

@@ -64,6 +64,12 @@ class AppInfoScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
                 const Divider(height: 1),
                 ExternalLinkTile(
+                  leading: Icons.help_outline,
+                  title: l10n.helpGuideLabel,
+                  url: helpGuideUrl,
+                ),
+                const Divider(height: 1),
+                ExternalLinkTile(
                   leading: Icons.privacy_tip_outlined,
                   title: l10n.privacyPolicyLabel,
                   url: privacyPolicyUrl,

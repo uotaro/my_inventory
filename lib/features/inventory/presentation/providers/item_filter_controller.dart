@@ -17,6 +17,8 @@ const _sortAscendingPrefKey = 'item_filter.sort_ascending';
 
 @freezed
 abstract class ItemFilter with _$ItemFilter {
+  const ItemFilter._();
+
   const factory ItemFilter({
     int? inventoryTypeId,
     int? categoryId,
@@ -31,6 +33,18 @@ abstract class ItemFilter with _$ItemFilter {
     @Default(ItemSortKey.name) ItemSortKey sortKey,
     @Default(true) bool sortAscending,
   }) = _ItemFilter;
+
+  /// [resetSearchConditions] の対象となる検索条件が
+  /// 何かしらセットされているかどうか（並べ替え設定は含まない）。
+  bool get hasActiveSearchConditions =>
+      inventoryTypeId != null ||
+      categoryId != null ||
+      subCategoryId != null ||
+      colorGroupId != null ||
+      stockFilter != StockFilter.all ||
+      nameQuery.isNotEmpty ||
+      favoriteMin != null ||
+      favoriteMax != null;
 }
 
 @riverpod
