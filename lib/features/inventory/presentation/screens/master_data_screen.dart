@@ -341,7 +341,7 @@ class _CategoryTab extends ConsumerWidget {
         ReorderableListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          scrollController: ScrollController(),
+          primary: false,
           itemCount: categories.length,
           // ignore: deprecated_member_use
           onReorder: (oldIndex, newIndex) => handleReorder(
@@ -507,7 +507,7 @@ class _SubCategoryTab extends ConsumerWidget {
         ReorderableListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          scrollController: ScrollController(),
+          primary: false,
           itemCount: subCategories.length,
           // ignore: deprecated_member_use
           onReorder: (oldIndex, newIndex) => handleReorder(
