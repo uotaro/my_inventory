@@ -634,78 +634,76 @@ class _ItemTile extends ConsumerWidget {
           ),
         ],
       ),
-      child: Container(
-        color: isLowStock ? const Color(0xFFFFCFD6) : null,
-        child: ListTile(
-          leading: hasImage
-              ? CircleAvatar(backgroundImage: FileImage(imageFile))
-              : CircleAvatar(
-                  backgroundColor: swatchColor ?? Colors.grey.shade300,
-                  child: swatchColor == null
-                      ? Text(item.category.name.characters.first)
-                      : null,
-                ),
-          title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                subtitleParts.join(' / '),
+      child: ListTile(
+        tileColor: isLowStock ? const Color(0xFFFFCFD6) : null,
+        leading: hasImage
+            ? CircleAvatar(backgroundImage: FileImage(imageFile))
+            : CircleAvatar(
+                backgroundColor: swatchColor ?? Colors.grey.shade300,
+                child: swatchColor == null
+                    ? Text(item.category.name.characters.first)
+                    : null,
+              ),
+        title: Text(item.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              subtitleParts.join(' / '),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            if (item.favoriteRating > 0)
+              FavoriteStarsDisplay(rating: item.favoriteRating, size: 14),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove_circle_outline),
+              iconSize: 20,
+              visualDensity: VisualDensity.compact,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              onPressed: () => ref
+                  .read(itemRepositoryProvider)
+                  .adjustQuantity(
+                    item.id,
+                    -1,
+                    reason: l10n.manualAdjustmentReason,
+                  ),
+            ),
+            SizedBox(
+              width: 40,
+              child: Text(
+                '${item.quantity} ${item.unit.name}',
+                textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              if (item.favoriteRating > 0)
-                FavoriteStarsDisplay(rating: item.favoriteRating, size: 14),
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.remove_circle_outline),
-                iconSize: 20,
-                visualDensity: VisualDensity.compact,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                onPressed: () => ref
-                    .read(itemRepositoryProvider)
-                    .adjustQuantity(
-                      item.id,
-                      -1,
-                      reason: l10n.manualAdjustmentReason,
-                    ),
-              ),
-              SizedBox(
-                width: 40,
-                child: Text(
-                  '${item.quantity} ${item.unit.name}',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.add_circle_outline),
-                iconSize: 20,
-                visualDensity: VisualDensity.compact,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                onPressed: () => ref
-                    .read(itemRepositoryProvider)
-                    .adjustQuantity(
-                      item.id,
-                      1,
-                      reason: l10n.manualAdjustmentReason,
-                    ),
-              ),
-            ],
-          ),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ItemFormScreen(initialItem: item),
             ),
+            IconButton(
+              icon: const Icon(Icons.add_circle_outline),
+              iconSize: 20,
+              visualDensity: VisualDensity.compact,
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+              onPressed: () => ref
+                  .read(itemRepositoryProvider)
+                  .adjustQuantity(
+                    item.id,
+                    1,
+                    reason: l10n.manualAdjustmentReason,
+                  ),
+            ),
+          ],
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ItemFormScreen(initialItem: item),
           ),
         ),
       ),
