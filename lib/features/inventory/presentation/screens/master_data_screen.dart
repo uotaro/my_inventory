@@ -143,6 +143,11 @@ Future<void> _showDeleteErrorDialog(BuildContext context, Object error) async {
     message = l10n.inUseCannotDelete(error.name, error.itemCount);
   } else if (error is TypeInUseByCategoriesException) {
     message = l10n.typeInUseCannotDelete(error.name, error.categoryCount);
+  } else if (error is CategoryInUseBySubCategoriesException) {
+    message = l10n.categoryInUseBySubCategoriesCannotDelete(
+      error.name,
+      error.subCategoryCount,
+    );
   } else if (error is LastInventoryTypeException) {
     message = l10n.lastInventoryTypeCannotDelete;
   } else {

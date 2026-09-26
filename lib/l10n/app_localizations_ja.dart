@@ -334,6 +334,11 @@ class L10nJa extends L10n {
   }
 
   @override
+  String categoryInUseBySubCategoriesCannotDelete(String name, int count) {
+    return '「$name」には$count件の小分類が登録されているため削除できません。先に小分類を削除してください';
+  }
+
+  @override
   String get lastInventoryTypeCannotDelete => '大分類は1件以上データが必要です';
 
   @override

@@ -420,6 +420,13 @@
             "count": { "type": "int" }
         }
     },
+    "categoryInUseBySubCategoriesCannotDelete": "「{name}」には{count}件の小分類が登録されているため削除できません。先に小分類を削除してください",
+    "@categoryInUseBySubCategoriesCannotDelete": {
+        "placeholders": {
+            "name": { "type": "String" },
+            "count": { "type": "int" }
+        }
+    },
     "lastInventoryTypeCannotDelete": "大分類は1件以上データが必要です",
     "@lastInventoryTypeCannotDelete": {
         "description": "大分類が最後の1件で削除できない場合のエラーメッセージ"
