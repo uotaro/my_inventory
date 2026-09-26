@@ -23,6 +23,19 @@ class TypeInUseByCategoriesException implements Exception {
       'TypeInUseByCategoriesException: $name ($categoryCount categories)';
 }
 
+/// 紐づく小分類（SubCategory）が1件以上存在するカテゴリーを
+/// 削除しようとした場合に投げる。
+class CategoryInUseBySubCategoriesException implements Exception {
+  const CategoryInUseBySubCategoriesException(this.name, this.subCategoryCount);
+
+  final String name;
+  final int subCategoryCount;
+
+  @override
+  String toString() =>
+      'CategoryInUseBySubCategoriesException: $name ($subCategoryCount subCategories)';
+}
+
 /// 大分類（InventoryType）が最後の1件しかない状態で削除しようとした場合に投げる。
 class LastInventoryTypeException implements Exception {
   const LastInventoryTypeException();

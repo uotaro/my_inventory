@@ -143,6 +143,11 @@ Future<void> _showDeleteErrorDialog(BuildContext context, Object error) async {
     message = l10n.inUseCannotDelete(error.name, error.itemCount);
   } else if (error is TypeInUseByCategoriesException) {
     message = l10n.typeInUseCannotDelete(error.name, error.categoryCount);
+  } else if (error is CategoryInUseBySubCategoriesException) {
+    message = l10n.categoryInUseBySubCategoriesCannotDelete(
+      error.name,
+      error.subCategoryCount,
+    );
   } else if (error is LastInventoryTypeException) {
     message = l10n.lastInventoryTypeCannotDelete;
   } else {
@@ -336,7 +341,7 @@ class _CategoryTab extends ConsumerWidget {
         ReorderableListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          scrollController: ScrollController(),
+          primary: false,
           itemCount: categories.length,
           // ignore: deprecated_member_use
           onReorder: (oldIndex, newIndex) => handleReorder(
@@ -502,7 +507,7 @@ class _SubCategoryTab extends ConsumerWidget {
         ReorderableListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          scrollController: ScrollController(),
+          primary: false,
           itemCount: subCategories.length,
           // ignore: deprecated_member_use
           onReorder: (oldIndex, newIndex) => handleReorder(

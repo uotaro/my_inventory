@@ -336,6 +336,11 @@ class L10nEn extends L10n {
   }
 
   @override
+  String categoryInUseBySubCategoriesCannotDelete(String name, int count) {
+    return '\"$name\" has $count subcategories and cannot be deleted. Delete the subcategories first';
+  }
+
+  @override
   String get lastInventoryTypeCannotDelete =>
       'At least one department is required';
 

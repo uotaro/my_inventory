@@ -108,6 +108,7 @@
     "failedToOpenLink": "Failed to open the link",
     "inUseCannotDelete": "\"{name}\" is used by {count} item(s) and cannot be deleted",
     "typeInUseCannotDelete": "\"{name}\" is used by {count} categories and cannot be deleted",
+    "categoryInUseBySubCategoriesCannotDelete": "\"{name}\" has {count} subcategories and cannot be deleted. Delete the subcategories first",
     "lastInventoryTypeCannotDelete": "At least one department is required",
     "noTypesRegistered": "No departments registered",
     "addCategoryToType": "Add category to \"{typeName}\"",

@@ -703,6 +703,12 @@ abstract class L10n {
   /// **'「{name}」は{count}件の中分類で使われているため削除できません'**
   String typeInUseCannotDelete(String name, int count);
 
+  /// No description provided for @categoryInUseBySubCategoriesCannotDelete.
+  ///
+  /// In ja, this message translates to:
+  /// **'「{name}」には{count}件の小分類が登録されているため削除できません。先に小分類を削除してください'**
+  String categoryInUseBySubCategoriesCannotDelete(String name, int count);
+
   /// 大分類が最後の1件で削除できない場合のエラーメッセージ
   ///
   /// In ja, this message translates to:

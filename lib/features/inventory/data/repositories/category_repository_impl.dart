@@ -87,6 +87,17 @@ class CategoryRepositoryImpl implements CategoryRepository {
       throw MasterDataInUseException(category.name, count);
     }
 
+    final subCategoryCount = _db.subCategories.id.count();
+    final subCategoryCountQuery = _db.selectOnly(_db.subCategories)
+      ..addColumns([subCategoryCount])
+      ..where(_db.subCategories.categoryId.equals(id));
+    final subCategories = await subCategoryCountQuery
+        .map((row) => row.read(subCategoryCount) ?? 0)
+        .getSingle();
+    if (subCategories > 0) {
+      throw CategoryInUseBySubCategoriesException(category.name, subCategories);
+    }
+
     await (_db.delete(_db.categories)..where((t) => t.id.equals(id))).go();
   }
 
