@@ -70,6 +70,16 @@ class InventoryTypeRepositoryImpl implements InventoryTypeRepository {
   }
 
   @override
+  Future<void> updateSortOrders(Map<int, int> sortOrderById) {
+    return _db.transaction(() async {
+      for (final entry in sortOrderById.entries) {
+        await (_db.update(_db.inventoryTypes)..where((t) => t.id.equals(entry.key)))
+            .write(local.InventoryTypesCompanion(sortOrder: Value(entry.value)));
+      }
+    });
+  }
+
+  @override
   Future<void> deleteInventoryType(int id) async {
     final inventoryType =
         await (_db.select(_db.inventoryTypes)..where((t) => t.id.equals(id)))

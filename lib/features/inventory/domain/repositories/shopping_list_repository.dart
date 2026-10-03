@@ -14,8 +14,9 @@ abstract class ShoppingListRepository {
 
   Future<void> setPurchaseQuantity(int entryId, double quantity);
 
-  /// [entryId]のsortOrderを更新し、買い物リストの表示順を変更する。
-  Future<void> updateSortOrder(int entryId, int sortOrder);
+  /// [sortOrderById]（エントリID → 新しいsortOrder）を1回のトランザクションでまとめて
+  /// 反映し、買い物リストの表示順を変更する。途中で失敗した場合は全て元に戻る。
+  Future<void> updateSortOrders(Map<int, int> sortOrderById);
 
   /// 該当エントリの購入数をアイテムの在庫数に反映し、買い物リストから削除する。
   /// 購入数が0の場合は何もしない。

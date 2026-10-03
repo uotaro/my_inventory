@@ -95,12 +95,16 @@ class ShoppingListRepositoryImpl implements ShoppingListRepository {
   }
 
   @override
-  Future<void> updateSortOrder(int entryId, int sortOrder) {
-    return (_db.update(
-      _db.shoppingListEntries,
-    )..where((t) => t.id.equals(entryId))).write(
-      local.ShoppingListEntriesCompanion(sortOrder: Value(sortOrder)),
-    );
+  Future<void> updateSortOrders(Map<int, int> sortOrderById) {
+    return _db.transaction(() async {
+      for (final entry in sortOrderById.entries) {
+        await (_db.update(
+          _db.shoppingListEntries,
+        )..where((t) => t.id.equals(entry.key))).write(
+          local.ShoppingListEntriesCompanion(sortOrder: Value(entry.value)),
+        );
+      }
+    });
   }
 
   @override
