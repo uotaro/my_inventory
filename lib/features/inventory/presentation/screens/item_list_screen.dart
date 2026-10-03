@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_inventory/l10n/app_localizations.dart';
 
+import '../../../../core/utils/route_observer.dart';
 import '../../data/local/item_image_storage.dart';
 import '../../data/repositories/item_repository_impl.dart';
 import '../../data/repositories/product_lookup_repository_impl.dart';
@@ -70,13 +71,20 @@ class ItemListScreen extends ConsumerStatefulWidget {
   ConsumerState<ItemListScreen> createState() => _ItemListScreenState();
 }
 
-class _ItemListScreenState extends ConsumerState<ItemListScreen> {
+class _ItemListScreenState extends ConsumerState<ItemListScreen>
+    with RouteAware, TickerProviderStateMixin {
   /// 検索条件エリアの表示モード（通常/縮小）を次回起動時にも
   /// 引き継ぐためのSharedPreferencesキー。
   static const _searchAreaCompactPrefKey = 'item_list.search_area_compact';
 
   late final TextEditingController _searchController;
   bool _isSearchAreaCompact = false;
+
+  /// 行（アイテムID）ごとのスワイプ制御。一覧に対して1度だけ作る。
+  final _slidableControllers = <int, SlidableController>{};
+
+  SlidableController _slidableControllerFor(int itemId) =>
+      _slidableControllers.putIfAbsent(itemId, () => SlidableController(this));
 
   @override
   void initState() {
@@ -100,7 +108,28 @@ class _ItemListScreenState extends ConsumerState<ItemListScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) routeObserver.subscribe(this, route);
+  }
+
+  @override
+  void didPushNext() {
+    // 他画面へ移動する直前に、スワイプで開いている行を閉じておく。
+    // 開いている行は常に1つだけ（SlidableAutoCloseBehavior）なので、
+    // 閉じるのは1行だけで済む。戻ってきたときは閉じた状態になっている。
+    for (final controller in _slidableControllers.values) {
+      controller.close();
+    }
+  }
+
+  @override
   void dispose() {
+    routeObserver.unsubscribe(this);
+    for (final controller in _slidableControllers.values) {
+      controller.dispose();
+    }
     _searchController.dispose();
     super.dispose();
   }
@@ -516,11 +545,18 @@ class _ItemListScreenState extends ConsumerState<ItemListScreen> {
                 child: itemsAsync.when(
                   data: (items) => items.isEmpty
                       ? Center(child: Text(l10n.noMatchingItems))
-                      : ListView.separated(
-                          itemCount: items.length,
-                          separatorBuilder: (_, _) => const Divider(height: 1),
-                          itemBuilder: (context, index) =>
-                              _ItemTile(item: items[index]),
+                      : SlidableAutoCloseBehavior(
+                          child: ListView.separated(
+                            itemCount: items.length,
+                            separatorBuilder: (_, _) =>
+                                const Divider(height: 1),
+                            itemBuilder: (context, index) => _ItemTile(
+                              item: items[index],
+                              slidableController: _slidableControllerFor(
+                                items[index].id,
+                              ),
+                            ),
+                          ),
                         ),
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
@@ -575,7 +611,9 @@ Future<void> _confirmAndDeleteItem(
 }
 
 class _ItemTile extends ConsumerWidget {
-  const _ItemTile({required this.item});
+  const _ItemTile({required this.item, required this.slidableController});
+
+  final SlidableController slidableController;
 
   final Item item;
 
@@ -602,6 +640,7 @@ class _ItemTile extends ConsumerWidget {
 
     return Slidable(
       key: ValueKey(item.id),
+      controller: slidableController,
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
         extentRatio: 0.5,

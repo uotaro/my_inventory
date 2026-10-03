@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:my_inventory/core/utils/route_observer.dart';
 import 'package:my_inventory/features/inventory/data/local/item_image_storage.dart';
 import 'package:my_inventory/features/inventory/presentation/screens/item_list_screen.dart';
 import 'package:my_inventory/l10n/app_localizations.dart';
@@ -10,11 +11,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // 初回フレーム表示をブロックしないよう、runApp を待たせずに並行して行う。
   unawaited(warmUpItemImagesDirectory());
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,6 +37,7 @@ class MyApp extends StatelessWidget {
           indicatorColor: Colors.white,
         ),
       ),
+      navigatorObservers: [routeObserver],
       home: const ItemListScreen(),
     );
   }
