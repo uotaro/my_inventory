@@ -72,6 +72,16 @@ class SubCategoryRepositoryImpl implements SubCategoryRepository {
   }
 
   @override
+  Future<void> updateSortOrders(Map<int, int> sortOrderById) {
+    return _db.transaction(() async {
+      for (final entry in sortOrderById.entries) {
+        await (_db.update(_db.subCategories)..where((t) => t.id.equals(entry.key)))
+            .write(local.SubCategoriesCompanion(sortOrder: Value(entry.value)));
+      }
+    });
+  }
+
+  @override
   Future<void> deleteSubCategory(int id) {
     return _db.transaction(() async {
       await (_db.update(_db.items)..where((t) => t.subCategoryId.equals(id)))

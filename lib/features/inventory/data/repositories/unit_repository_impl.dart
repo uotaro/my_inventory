@@ -39,6 +39,16 @@ class UnitRepositoryImpl implements UnitRepository {
   }
 
   @override
+  Future<void> updateSortOrders(Map<int, int> sortOrderById) {
+    return _db.transaction(() async {
+      for (final entry in sortOrderById.entries) {
+        await (_db.update(_db.units)..where((t) => t.id.equals(entry.key)))
+            .write(local.UnitsCompanion(sortOrder: Value(entry.value)));
+      }
+    });
+  }
+
+  @override
   Future<void> deleteUnit(int id) async {
     final unit =
         await (_db.select(_db.units)..where((t) => t.id.equals(id)))

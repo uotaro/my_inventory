@@ -33,10 +33,11 @@ class ShoppingListScreen extends ConsumerWidget {
                   items: list,
                   oldIndex: oldIndex,
                   newIndex: newIndex,
+                  idOf: (e) => e.id,
                   sortOrderOf: (e) => e.sortOrder,
-                  persist: (e, sortOrder) => ref
+                  persist: (sortOrderById) => ref
                       .read(shoppingListRepositoryProvider)
-                      .updateSortOrder(e.id, sortOrder),
+                      .updateSortOrders(sortOrderById),
                 ),
                 itemBuilder: (context, index) => _ShoppingListTile(
                   key: ValueKey(list[index].id),

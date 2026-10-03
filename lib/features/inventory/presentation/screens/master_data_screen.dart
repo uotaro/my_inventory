@@ -201,10 +201,11 @@ class _InventoryTypeTab extends ConsumerWidget {
                 items: inventoryTypes,
                 oldIndex: oldIndex,
                 newIndex: newIndex,
+                idOf: (t) => t.id,
                 sortOrderOf: (t) => t.sortOrder,
-                persist: (t, sortOrder) => ref
+                persist: (sortOrderById) => ref
                     .read(inventoryTypeRepositoryProvider)
-                    .updateInventoryType(t.copyWith(sortOrder: sortOrder)),
+                    .updateSortOrders(sortOrderById),
               ),
               itemBuilder: (context, index) {
                 final inventoryType = inventoryTypes[index];
@@ -348,10 +349,11 @@ class _CategoryTab extends ConsumerWidget {
             items: categories,
             oldIndex: oldIndex,
             newIndex: newIndex,
+            idOf: (c) => c.id,
             sortOrderOf: (c) => c.sortOrder,
-            persist: (c, sortOrder) => ref
+            persist: (sortOrderById) => ref
                 .read(categoryRepositoryProvider)
-                .updateCategory(c.copyWith(sortOrder: sortOrder)),
+                .updateSortOrders(sortOrderById),
           ),
           itemBuilder: (context, index) {
             final category = categories[index];
@@ -514,10 +516,11 @@ class _SubCategoryTab extends ConsumerWidget {
             items: subCategories,
             oldIndex: oldIndex,
             newIndex: newIndex,
+            idOf: (s) => s.id,
             sortOrderOf: (s) => s.sortOrder,
-            persist: (s, sortOrder) => ref
+            persist: (sortOrderById) => ref
                 .read(subCategoryRepositoryProvider)
-                .updateSubCategory(s.copyWith(sortOrder: sortOrder)),
+                .updateSortOrders(sortOrderById),
           ),
           itemBuilder: (context, index) {
             final subCategory = subCategories[index];
@@ -581,10 +584,11 @@ class _ColorOptionTab extends ConsumerWidget {
                 items: colorOptions,
                 oldIndex: oldIndex,
                 newIndex: newIndex,
+                idOf: (c) => c.id,
                 sortOrderOf: (c) => c.sortOrder,
-                persist: (c, sortOrder) => ref
+                persist: (sortOrderById) => ref
                     .read(colorOptionRepositoryProvider)
-                    .updateColorOption(c.copyWith(sortOrder: sortOrder)),
+                    .updateSortOrders(sortOrderById),
               ),
               itemBuilder: (context, index) {
                 final colorOption = colorOptions[index];
@@ -658,10 +662,11 @@ class _UnitTab extends ConsumerWidget {
                 items: units,
                 oldIndex: oldIndex,
                 newIndex: newIndex,
+                idOf: (u) => u.id,
                 sortOrderOf: (u) => u.sortOrder,
-                persist: (u, sortOrder) => ref
+                persist: (sortOrderById) => ref
                     .read(unitRepositoryProvider)
-                    .updateUnit(u.copyWith(sortOrder: sortOrder)),
+                    .updateSortOrders(sortOrderById),
               ),
               itemBuilder: (context, index) {
                 final unit = units[index];

@@ -73,6 +73,16 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
+  Future<void> updateSortOrders(Map<int, int> sortOrderById) {
+    return _db.transaction(() async {
+      for (final entry in sortOrderById.entries) {
+        await (_db.update(_db.categories)..where((t) => t.id.equals(entry.key)))
+            .write(local.CategoriesCompanion(sortOrder: Value(entry.value)));
+      }
+    });
+  }
+
+  @override
   Future<void> deleteCategory(int id) async {
     final category =
         await (_db.select(_db.categories)..where((t) => t.id.equals(id)))
